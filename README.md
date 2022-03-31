@@ -24,7 +24,7 @@ To run XRPN, make sure the brogram file ("bin/xrpn") is copied or linked to a di
 
 ## FOCAL and the HP-41 system
 
-Since XRPN covers the function set of an HP-41CX calculator, you now have an environment where thousands of HP-41 calculator programs can run. You have at your fingertips programs covering engineering, finance, chemistry and physics to navigation, astronomy, forecasting, statistics and most areas of science and mathematics. With the enhanced features, you can make self-modifying programs, capture web pages, get full regexp capabilities, manipulate files and plenty more.
+Since XRPN covers the function set of the [HP-41CX calculator](https://www.hpmuseum.org/hp41.htm), you now have an environment where thousands of HP-41 calculator programs can run. You have at your fingertips programs covering engineering, finance, chemistry and physics to navigation, astronomy, forecasting, statistics and most areas of science and mathematics. With the enhanced features, you can make self-modifying programs, capture web pages, get full regexp capabilities, manipulate files and plenty more.
 
 With more than 250 built-in functions, I have some documenting ahead of me. Documentation will be added to the wiki in this repo. For now, you can get the [full documentation for the HP-41CX here (vol 1)](extra/HP-41CX_OwnersManualVol1.pdf) and [here (vol 2)](extra/HP-41CX_OwnersManualVol1.pdf). Note that I have not yet implemented the clock, the alarm and stopwatch functionality of the HP-41CX as I can't yet see much benefit to that. The functions TIME, DATE, DATE+, DDAYS, DOW, HR, HMS, HMS+, HMS- are implemented.
 
