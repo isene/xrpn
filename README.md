@@ -56,3 +56,7 @@ X>Y?
 AVIEW
 END
 ```
+
+## Note
+
+Thanks to the HP Calculator community, the Astrophysical Institute in Oslo and to my lovely Siv for inspirations.
