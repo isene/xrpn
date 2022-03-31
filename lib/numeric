@@ -1,0 +1,41 @@
+class Numeric
+  def frc
+    f = BigDecimal(self.to_s) - BigDecimal(self.to_s).to_i
+    return BigDecimal(f.to_s).to_s('F').to_f
+  end
+  def to_num(n=3, i=2, g=1, c=false, p=false)
+    # n: Threshold for when to show exponent
+    # i: Number og digits after the period
+    # g: Exponent grouping g=3 would always show exponent as a multiple of 3
+    # c: Use comma instead of period (European format)
+    # p: Separator per 3 digits (period if c=false, space when c=true)
+    n = g if g > n
+    self != 0 ? e = Math::log10(self.abs).floor : e = 0
+    ge = g*(e/g).to_i
+    x  = self.abs
+    x  = (x / 10 ** ge) if e.abs >= n 
+    s  = x.to_i.to_s
+    self < 0 ? m = "-" : m  = ""
+    s.sub!(/-/, '')
+    f  = x.frc.round(i)
+    f  = f.to_s.sub(/../, '')
+    i > 0 ? s.sub!(/(\d*\.)(\d{,#{i}}).*/, '\1\2') : s.sub!(/(\d*).*/, '\1') 
+    if e.abs >= n # If exponent kicks in
+      s += "." + f.ljust(i, "0")
+      s += "e"
+      if ge < 0
+        s += "-"
+        s.sub!(/0\.(\d)/, '\1.')
+      end
+      ge = ge.abs
+      s += "%02d" % [ge]
+    else # No exponent
+      o = "," if p and not c
+      o = " " if p and c
+      s.gsub!(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1#{o}") if p
+      s += "." + f.to_s.ljust(i, "0")
+    end
+    s.sub!(/\./, ',') if c
+    return m + s
+  end
+end

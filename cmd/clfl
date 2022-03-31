@@ -1,0 +1,11 @@
+class XRPN
+  def clfl
+    if @xmcont[0][0] == ""
+      return 
+    else
+      @xmcont = [@xmcont[0]]
+      @xmcont[0][3] = 0.0
+      savexm
+    end
+  end
+end

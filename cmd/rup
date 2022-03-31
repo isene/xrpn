@@ -1,0 +1,5 @@
+class XRPN
+  def rup
+    @x, @y, @z, @t = @t, @x, @y, @z
+  end
+end

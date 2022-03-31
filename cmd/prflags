@@ -1,0 +1,6 @@
+class XRPN
+  def prflags
+    @flg = @flg.sort.to_h
+    @flg.each_pair {|key, value| puts "#{key}: #{value}"}
+  end
+end

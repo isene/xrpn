@@ -1,0 +1,8 @@
+class XRPN
+  def rand
+    @l = @x
+    lift
+    r = Random.new
+    @x = r.rand()
+  end
+end

@@ -1,0 +1,11 @@
+class XRPN
+  def stoflag
+    flags = @x.split(" ")
+    flags.each do |fv|
+      f = fv.sub(/:.*/, '')
+      v = fv.sub(/\d\d:(\d)/, '\1')
+      v == "1" ? v = true : v = false
+      @flg["#{f}"] = v
+    end
+  end
+end

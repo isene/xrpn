@@ -1,0 +1,19 @@
+class XRPN
+  def atime24
+    t  = @x.to_f
+    case t
+    when ..-12
+      t = t.abs
+    when -12..-1
+      t  = t.abs
+      t += 12
+    when -1..0
+      t  = t.abs
+    end
+    t = BigDecimal(t.to_s).truncate(@i).to_f
+    h = t.to_i
+    m = (100 * (t - h)).to_i
+    s = (100 * (100 * (t -h) - m)).round(@i)
+    @a += "#{h}:#{m}:#{s}"
+  end
+end

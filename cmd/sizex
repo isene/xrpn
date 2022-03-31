@@ -1,0 +1,5 @@
+class XRPN
+  def size?
+    return "SIZE = A Lot"
+  end
+end

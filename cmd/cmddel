@@ -1,0 +1,5 @@
+class XRPN
+  def cmddel
+    @prg.delete_at(@x.to_i)
+  end
+end

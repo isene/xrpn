@@ -1,0 +1,10 @@
+class XRPN
+  def rtn
+    r = @rtn.pop
+    if r == nil
+      stop
+    else
+      @pc = r
+    end
+  end
+end

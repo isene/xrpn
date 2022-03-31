@@ -1,0 +1,5 @@
+class XRPN
+  def enter
+    lift
+  end
+end

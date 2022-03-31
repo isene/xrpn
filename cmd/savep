@@ -1,0 +1,5 @@
+class XRPN
+  def savep
+    File.write(Dir.home + "/.xrpn/data/" + @a + ".pr", @prg[@pg])
+  end
+end

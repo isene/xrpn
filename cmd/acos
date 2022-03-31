@@ -1,0 +1,8 @@
+class XRPN
+  def acos
+    @l = @x
+    @x = Math::acos(@x)
+    @x = @x * 180 / Math::PI if @deg == "deg"
+    @x = @x * 200 / Math::PI if @deg == "grad"
+  end
+end

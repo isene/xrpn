@@ -1,0 +1,11 @@
+class XRPN
+  def root
+    begin
+      @l = @x
+      @x = @y ** (1 / @x)
+      drop
+    rescue
+      return "Error: Root of negative number."
+    end
+  end
+end

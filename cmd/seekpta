@@ -1,0 +1,5 @@
+class XRPN
+  def seekpta
+    load_xm(@a, @x)
+  end
+end

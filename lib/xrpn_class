@@ -1,0 +1,31 @@
+# Define the basis for the RPN class
+class XRPN
+  attr_accessor :x, :y, :z, :t, :l, :a, :d, :i, :s, :g, :o, :srg, :reg, :flg, :clk24, :prg, :pg, :pc, :rtn, :xmfile, :xmcont
+  def initialize(file)
+    @x         = 0.0	  # X register
+    @y         = 0.0	  # Y register
+    @z         = 0.0    # Z register
+    @t         = 0.0    # T register
+    @l         = 0.0    # Last X register
+    @a         = ""     # Alpha register
+    @i         = 4      # Fix (and Sci/Eng) nu,ber of digiet after period
+    @s         = 9      # Threshold for when exponents kick in
+    @g         = 1      # Exponent grouping (set to 3 when ENG mode is set)
+    @d         = "deg"  # Degree mode (or "rad" for Radians or "grad" for 400°
+    @srg       = 11     # Statistics registers start
+    @reg       = {}     # Registers are stored in a Hash
+    @flg       = {}     # Flags are stored in a Hash
+    @flg["28"] = true   # Radix mark
+    @flg["29"] = true   # Digit separator mark
+    @flg["31"] = false  # Date format (MDY). "true" for DMY
+    @flg["44"] = false  # Continuous ON
+    @clk24     = false  # 24 hour time
+    @pg        = 0      # Active Page
+    @prg       = []     # Active Program
+    @prg[0]    = File.read(file).split("\n") unless $file == ""
+    @pc        = 0      # Active Program Counter (current step in the active program)
+    @rtn       = []     # Return stack
+    @xmfile    = ""     # Current eXtended Memory file
+    @xmcont    = [["", "", 0, 0.0]]
+  end
+end

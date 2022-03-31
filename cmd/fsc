@@ -1,0 +1,11 @@
+class XRPN
+  def fsc? (r)
+    if @flg[r] == true
+      return "YES"
+    else
+      @pc += 1 unless $debug
+      return "NO"
+    end
+    @flg[r] = false
+  end
+end

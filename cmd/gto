@@ -1,0 +1,17 @@
+class XRPN
+  def gto (l)
+    page, pos = locate_prg (l)
+    if pos == nil
+      if l.match(/".*"/)
+        return "Error: No such global label: #{l}"
+      else
+        return "Error: No such label: #{l}"
+      end
+    else
+      if @page != @pg
+        @pg  = page
+      end
+      @pc  = pos
+    end
+  end
+end

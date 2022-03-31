@@ -1,0 +1,26 @@
+def locate_prg (l)
+  lbl  = "LBL #{l}"
+  page = nil
+  pos  = nil
+  prgm = []
+  if lbl.match(/".*"/)
+    @prg.each_index do |p|
+      pos  = @prg[p].index {|e| e == lbl}
+      page = p unless pos == nil
+      break if pos != nil
+    end
+  else
+    pos  = @prg[@pg].index {|e| e == lbl }
+    page = @pg
+  end
+  if pos != nil
+    l = pos
+    until l == @prg[page].length do
+      line = @prg[page][l]
+      prgm.push(line)
+      break if line == "END"
+      l += 1
+    end
+  end
+  return page, pos, prgm
+end

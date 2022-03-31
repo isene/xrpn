@@ -1,0 +1,11 @@
+class XRPN
+  def adateiso
+    d = @x.to_s
+    d = "0" + d if d.match(/^\d\./)
+    if @flg["31"] # DMY
+      @a += d.sub(/(\d*)\.(\d\d)(\d\d\d\d)\d*/, '\3-\2-\1')
+    else # MDY
+      @a += d.sub(/(\d*)\.(\d\d)(\d\d\d\d)\d*/, '\3-\1-\2')
+    end
+  end
+end

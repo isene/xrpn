@@ -1,0 +1,6 @@
+class XRPN
+  def pagedel (p)
+    @prg.delete_at(p)
+    return "Deleted page #{p}"
+  end
+end

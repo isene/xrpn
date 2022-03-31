@@ -1,0 +1,5 @@
+class XRPN
+  def page?
+    return "Page = #{@pg}"
+  end
+end

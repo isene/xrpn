@@ -1,0 +1,17 @@
+class XRPN
+  def sign
+    @l = @x
+    lift
+    if @x.is_a? String
+      @x = 0
+      return
+    end
+    if @x >= 0
+      @x = 1
+    elsif @x < 0
+      @x = -1
+    else
+      @x = 0
+    end
+  end
+end

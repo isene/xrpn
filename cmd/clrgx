@@ -1,0 +1,10 @@
+class XRPN
+  def clrgx
+    b, e, i = x2bei(@x)
+    j = b
+    until j > e do
+      @reg[j] = 0
+      j += i
+    end
+  end
+end

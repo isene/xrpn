@@ -1,0 +1,5 @@
+class XRPN
+  def cf (r)
+    @flg[r] = false
+  end
+end

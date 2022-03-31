@@ -1,0 +1,5 @@
+class XRPN
+  def sreg (r)
+    @srg = r
+  end
+end

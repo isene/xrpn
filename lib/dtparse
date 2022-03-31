@@ -1,0 +1,8 @@
+def dtparse(date)
+  @flg["31"] ? d = date.to_i : m =  date.to_i
+  @flg["31"] ? m = ((date - date.to_i) * 100).to_i : d = ((date - date.to_i) * 100).to_i
+  y  = (((date * 100) - (date * 100).to_i) * 10000).to_i
+  dt = "#{y.to_s}-#{m.to_s}-#{d.to_s}"
+  return Date.parse(dt)
+end
+

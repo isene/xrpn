@@ -1,0 +1,12 @@
+class XRPN
+  def pcat
+    @prg.each_index do |i|
+      @prg[i].each do |l|
+        if l.match(/LBL ".*"/)
+          lbl = l.sub(/LBL "(.*)"/, '\1')
+          puts "Page #{i}: #{lbl}"
+        end
+      end
+    end
+  end
+end

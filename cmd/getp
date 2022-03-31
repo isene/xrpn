@@ -1,0 +1,11 @@
+class XRPN
+  def getp
+    f = Dir.home + "/.xrpn/data/" + @a + ".pr"
+    if File.exist?(f)
+      @prg[@prg.length] = JSON.parse(File.read(f)) 
+      @prg.uniq!
+    else
+      return "No such program file: #{@a}"
+    end
+  end
+end

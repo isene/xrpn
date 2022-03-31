@@ -1,0 +1,6 @@
+class XRPN
+  def lastx
+	lift
+    @x = @l
+  end
+end

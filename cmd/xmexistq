@@ -1,0 +1,13 @@
+class XRPN
+  def xmexist?
+    f  = Dir.home + "/.xrpn/data/" + @a
+    if File.exist?(f + ".da")
+      return "YES (DA)"
+    elsif File.exist?(f + ".as")
+      return "YES (AS)"
+    elsif File.exist?(f + ".pr")
+      return "YES (PR)"
+    else return "NO"
+    end
+  end
+end

@@ -1,0 +1,28 @@
+class XRPN
+  def arclrec
+    if @xmcont[0][0] == ""
+      return 
+    else
+      if @xmcont[0][3] > @xmcont.length - 2
+        @xmcont[0][3] = 0.0 
+		return "END OF FILE"
+      end
+      r, c = getpt
+      n = 24 - @a.length
+      n = 0 if n < 0
+      e = c + n
+      n > 0 ? s = @xmcont[r][c..e - 1] : s = "" 
+      @a += s
+      if e > @xmcont[r].length - 2
+        setpt(r + 1, 0)
+        @flg["17"]    = true
+      elsif n > 0
+        p c, n, @xmcont[0][3]
+        setpt(r, e + 1)
+        p "After", @xmcont[0][3]
+        @flg["17"]    = false
+      end
+      savexm
+    end
+  end
+end

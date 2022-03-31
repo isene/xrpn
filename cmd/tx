@@ -1,0 +1,5 @@
+class XRPN
+  def tx # T+X
+    return "T+X: No clock, alarm or stopwatch functions are implemented"
+  end
+end

@@ -1,0 +1,5 @@
+class XRPN
+  def adv
+    puts "\n"
+  end
+end

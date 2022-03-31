@@ -1,0 +1,10 @@
+class XRPN
+  def log
+    @l = @x
+    begin
+      @x = Math::log10(@x)
+    rescue
+      return "Error: Logarithm with negative number."
+    end
+  end
+end

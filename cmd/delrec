@@ -1,0 +1,10 @@
+class XRPN
+  def delrec
+    if @xmcont[0][0] == ""
+      return 
+    else
+      @xmcont.delete_at(@xmcont[0][3] + 1)
+      savexm
+    end
+  end
+end

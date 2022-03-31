@@ -1,0 +1,6 @@
+class String
+  # works up-to base 36
+  def convert_base(from, to)
+    self.to_i(from).to_s(to)
+  end
+end

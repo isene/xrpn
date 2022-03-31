@@ -1,0 +1,10 @@
+class XRPN
+  def ln
+    @l = @x
+    begin
+      @x = Math::log(@x)
+    rescue
+      return "Error: Natural logarithm with negative number."
+    end
+  end
+end

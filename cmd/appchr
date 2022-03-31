@@ -1,0 +1,11 @@
+class XRPN
+  def appchr
+    if @xmcont[0][0] == ""
+      return 
+    else
+      r = @xmcont[0][3].to_i + 1
+      @xmcont[r] += @a
+      savexm
+    end
+  end
+end

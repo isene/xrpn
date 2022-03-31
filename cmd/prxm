@@ -1,0 +1,19 @@
+class XRPN
+  def prxm
+    # Print content of current XM file
+    out = ""
+    @xmcont.each_index do |i|
+      if i == 0
+        out += "File    = #{@xmcont[0][0]}\n"
+        out += "Type    = #{@xmcont[0][1]}\n"
+        out += "Pointer = #{@xmcont[0][3].to_s}\n" 
+        next
+      end
+      out += "#{format('%03d', i - 1)}"
+      out += " "
+      out += "#{@xmcont[i].to_s}\n"
+    end
+    puts out
+    File.write(Dir.home + "/.xrpn/print/" + @a, out) if @a != ""
+  end
+end

@@ -1,0 +1,22 @@
+class XRPN
+  def saver
+    if @a != ""
+      if File.exist?(Dir.home + "/.xrpn/data/" + @a + ".da")
+        load_xm(@a)
+      else
+        crfld
+      end
+    end
+    if @xmcont[0][1] != "DA"
+      return "Not a data file"
+    end
+    @reg.each do |key, value|
+      next unless key.match(/\d\d\d*/)
+      r = key.to_i
+      value = 0.0 if value == nil
+      @xmcont[r + 1] = value
+    end
+    @xmcont.map! { |x| x || 0.0 }
+    savexm
+  end
+end

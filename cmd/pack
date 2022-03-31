@@ -1,0 +1,5 @@
+class XRPN
+  def pack
+    return "PACK: No need for packing clothes or anything else."
+  end
+end

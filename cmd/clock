@@ -1,0 +1,5 @@
+class XRPN
+  def clock
+    return "CLOCK: Tick, tock... not implemented."
+  end
+end

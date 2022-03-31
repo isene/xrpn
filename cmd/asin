@@ -1,0 +1,8 @@
+class XRPN
+  def asin
+    @l = @x
+    @x = Math::asin(@x)
+    @x = @x * 180 / Math::PI if @deg == "deg"
+    @x = @x * 200 / Math::PI if @deg == "grad"
+  end
+end

@@ -1,0 +1,5 @@
+class XRPN
+  def dot
+    @flg["28"] = !@flg["28"]
+  end
+end

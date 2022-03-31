@@ -1,0 +1,5 @@
+class XRPN
+  def swap
+    @x, @y = @y, @x
+  end
+end

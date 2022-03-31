@@ -1,0 +1,5 @@
+class XRPN
+  def pse
+    sleep(1)
+  end
+end

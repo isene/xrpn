@@ -1,0 +1,5 @@
+class XRPN
+  def clkeys
+    return "CLKEYS: No need for this function as there is no calculator keyboard here."
+  end
+end

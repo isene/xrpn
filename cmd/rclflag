@@ -1,0 +1,14 @@
+class XRPN
+  def rclflag
+    lift
+    f = ""
+    @flg.each do |key, value| 
+      if key.match(/\d\d/)
+        value == true ? v = 1 : v = 0
+        f += "#{key}:#{v} " 
+      end
+    end
+    f.chop
+    @x = f.to_s
+  end
+end

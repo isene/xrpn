@@ -1,0 +1,19 @@
+def ind(l3)
+  case l3
+  when "x"
+    l2 = @p.x.to_i.to_s
+  when "y"
+    l2 = @p.y.to_i.to_s
+  when "z"
+    l2 = @p.z.to_i.to_s
+  when "t"
+    l2 = @p.t.to_i.to_s
+  when "l"
+    l2 = @p.l.to_i.to_s
+  else
+    l2 = @p.reg[l3].to_i.to_s 
+  end
+  l2 = "%02d" % [l2] if l2 == l2.to_i.to_s
+  return l2
+end
+

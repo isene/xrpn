@@ -1,0 +1,5 @@
+class XRPN
+  def chs
+    @x = -@x
+  end
+end

@@ -1,0 +1,6 @@
+class XRPN
+  def clp (p)
+    page, pos, prgm = locate_prg (p)
+    @prg[page] -= prgm
+  end
+end

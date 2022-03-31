@@ -1,0 +1,5 @@
+class XRPN
+  def cmdadd
+    @prg.insert(@x.to_i, @a)
+  end
+end

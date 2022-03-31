@@ -1,0 +1,5 @@
+class XRPN
+  def rdn
+    @x, @y, @z, @t = @y, @z, @t, @x
+  end
+end

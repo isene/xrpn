@@ -1,0 +1,5 @@
+class XRPN
+  def setaf
+    return "SETAF: No clock, alarm or stopwatch functions are implemented"
+  end
+end

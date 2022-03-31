@@ -1,0 +1,9 @@
+class XRPN
+  def hr
+    @l = @x
+    s  = @x.to_i * 3600
+    s += (@x.frc * 100).to_i * 60
+    s += ((@x * 100).frc * 100).round(4)
+    @x = s / 3600
+  end
+end

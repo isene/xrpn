@@ -1,0 +1,12 @@
+class XRPN
+  def perch
+    begin
+      throw if @y == 0
+      @l = @x
+      @x = 100*((@x - @y) / @y)
+      drop
+    rescue
+      return "Error: Percentage change with zero in Y."
+    end
+  end
+end

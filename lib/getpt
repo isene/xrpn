@@ -1,0 +1,5 @@
+def getpt
+  r = @xmcont[0][3].to_i + 1
+  c = (@xmcont[0][3].frc * 1000).to_i
+  return r, c
+end

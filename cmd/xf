@@ -1,0 +1,18 @@
+class XRPN
+  def xf # X<>F
+    fsumx = 0
+	  7.times do |f|
+      fl     = "%02d" % [f]
+      fsumx += 2 ** f if @flg[fl]
+      fl     = "%02d" % [7 - f]
+      fx     = 2 ** (7 - f)
+      if @x / fx >= 1
+        @flg[fl] = true
+        @x -= fx
+      else
+        @flg[fl] = false
+      end
+	  end
+    @x = fsumx
+  end
+end

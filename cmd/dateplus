@@ -1,0 +1,10 @@
+class XRPN
+  def dateplus
+    @l = @x
+    date = dtparse(@y)
+    n    = (date+@x).to_s
+    new  = Date.parse(n)
+    @flg["31"] ? @x = new.day.to_f + new.month.to_f/100 + new.year.to_f/1000000 : @x =  new.month.to_f + new.day.to_f/100 + new.year.to_f/1000000
+	drop
+  end
+end

@@ -1,0 +1,9 @@
+class XRPN
+  def mean
+    @l = @x
+    lift
+    lift
+    @x = @reg[@srg] / @reg[@srg + 5]
+    @y = @reg[@srg + 2] / @reg[@srg + 5]
+  end
+end

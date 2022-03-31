@@ -1,0 +1,7 @@
+class XRPN
+  def end
+    p = @pc
+    rtn
+    @pc = 0 if @pc == p
+  end
+end

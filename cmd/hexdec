@@ -1,0 +1,6 @@
+class XRPN
+  def hexdec
+    @l = @x
+	@x = @x.to_s.convert_base(16, 10).to_f
+  end
+end

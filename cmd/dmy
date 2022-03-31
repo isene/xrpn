@@ -1,0 +1,5 @@
+class XRPN
+  def dmy
+    @flg["31"] = true
+  end
+end

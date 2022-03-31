@@ -1,0 +1,24 @@
+class XRPN
+  def posfl
+    if @xmcont[0][0] == ""
+      return 
+    else
+      r = @xmcont[0][3].to_i + 1
+        p r
+      until r == @xmcont.length do
+        m = @xmcont[r] =~ Regexp.new(@a)
+        p m
+        if m
+          lift
+          @xmcont[0][0] = (r - 1) + (m / 1000.0)
+          @x = @xmcont[0][0]
+          savexm
+          return
+        end
+        r += 1
+      end
+      lift
+      @x = -1.0
+    end
+  end
+end

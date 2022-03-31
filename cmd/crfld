@@ -1,0 +1,7 @@
+class XRPN
+  def crfld
+    f = Dir.home + "/.xrpn/data/" + @a + ".da"
+    File.write(f, [[f, "DA", 0, 0.0]])
+    load_xm(@a, 0.0)
+  end
+end

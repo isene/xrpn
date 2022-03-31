@@ -1,0 +1,8 @@
+class XRPN
+  def atox
+    @l = @x
+    lift
+    @x = @a[0].ord
+    @a = @a[1..]
+  end
+end

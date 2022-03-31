@@ -1,0 +1,7 @@
+class XRPN
+  def expx1
+    @l = @x
+    lift
+    @x = Math::exp(@x - 1)
+  end
+end

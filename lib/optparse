@@ -1,0 +1,18 @@
+# Handle the command line options
+options = {}
+optparse = OptionParser.new do |opts|
+  # Set a banner, displayed at the top of the help screen.
+  opts.banner = "Usage: rpn [options]"
+
+  # Define the options, and what they do
+  opts.on('-f', '--file RPN-file', 'Specify the file to process') { |f| $file = f }
+  opts.on('-h', 'Display SHORT help text') do
+    puts opts
+    exit
+  end
+  opts.on('--help', 'Display LONG help text') do
+    help
+    exit
+  end
+end
+optparse.parse!

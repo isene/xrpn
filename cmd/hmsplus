@@ -1,0 +1,11 @@
+class XRPN
+  def hmsplus
+	lastx = @x
+	hr
+	xy
+	hr
+	self.+
+	hms
+    @l = lastx
+  end
+end

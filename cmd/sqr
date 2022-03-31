@@ -1,0 +1,6 @@
+class XRPN
+  def sqr
+    @l = @x
+    @x = @x ** 2
+  end
+end

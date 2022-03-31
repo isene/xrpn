@@ -1,0 +1,21 @@
+class XRPN
+  def rcl (r)
+    x = false
+    case r.downcase
+    when "x"
+      x = @x
+    when "y"
+      x = @y
+    when "z"
+      x = @z
+    when "t"
+      x = @t
+    end
+    lift
+    x ? @x = x : @x = @reg[r]
+	  if @x == nil
+      @reg[r] = 0.0
+      @x = 0.0 
+    end
+  end
+end

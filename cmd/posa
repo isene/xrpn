@@ -1,0 +1,21 @@
+class XRPN
+  def posa
+    @l = @x
+    if @x.is_a? String
+      begin
+        @x = @a.index(@x) + 1
+      rescue
+        @x = 0.0
+      end
+    elsif @x.to_i.between?(0,255)
+      i = 1
+      @a.each_char do |c|
+        if c.ord == @x.to_i
+          @x = i
+          return
+        end
+        i += 1
+      end
+    end
+  end
+end

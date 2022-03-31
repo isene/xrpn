@@ -1,0 +1,6 @@
+class XRPN
+  def r_d
+    @l = @x
+	@x = @x * 180 / Math::PI
+  end
+end

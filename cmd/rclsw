@@ -1,0 +1,5 @@
+class XRPN
+  def rclsw
+    return "RCLSW: No clock, alarm or stopwatch functions are implemented"
+  end
+end

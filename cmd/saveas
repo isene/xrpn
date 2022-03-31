@@ -1,0 +1,5 @@
+class XRPN
+  def saveas
+    save_xm
+  end
+end

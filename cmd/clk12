@@ -1,0 +1,5 @@
+class XRPN
+  def clk12
+    @clk24 = false
+  end
+end

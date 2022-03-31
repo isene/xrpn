@@ -1,0 +1,7 @@
+class XRPN
+  def date
+    @l = @x
+    lift
+    @flg["31"] ? @x = Time.now.strftime("%d.%m%Y").to_f : @x = Time.now.strftime("%m.%d%Y").to_f
+  end
+end

@@ -1,0 +1,15 @@
+class XRPN
+  def getrx
+    b = @x.to_i
+    e = (@x.frc * 1000).to_i
+    i = -1
+    @xmcont.each do |r|
+      i += 1
+      next if i == 0
+      next if i < (b - 1)
+      return if i == e
+      dest = "%02d" % (i - 1)
+      @reg[dest] = r
+    end
+  end
+end

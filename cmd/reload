@@ -1,0 +1,5 @@
+class XRPN
+  def reload
+    read_cmd
+  end
+end

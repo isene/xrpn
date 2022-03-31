@@ -1,0 +1,5 @@
+class XRPN
+  def pasn
+    return "PASN: This is not a calculator with keys to assign functions to."
+  end
+end

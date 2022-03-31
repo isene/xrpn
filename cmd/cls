@@ -1,0 +1,10 @@
+class XRPN
+  def cls
+    @reg[@srg + 0] = 0.0
+    @reg[@srg + 1] = 0.0
+    @reg[@srg + 2] = 0.0
+    @reg[@srg + 3] = 0.0
+    @reg[@srg + 4] = 0.0
+    @reg[@srg + 5] = 0.0
+  end
+end

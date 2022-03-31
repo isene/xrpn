@@ -1,0 +1,19 @@
+class XRPN
+  def xnn (r) # X<> r
+	case r.downcase
+    when "x"
+      @l = @x
+    when "y"
+      @x, @y = @y, @x
+    when "z"
+      @x, @z = @z, @x
+    when "t"
+      @x, @t = @t, @x
+    when "l"
+      @x, @l = @l, @x
+    else
+      @reg[r] = 0 if @reg[r] == nil
+      @x, @reg[r] = @reg[r], @x
+    end
+  end
+end

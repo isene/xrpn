@@ -1,0 +1,5 @@
+class XRPN
+  def flsize
+    return "FLSIZE: Always plenty of room."
+  end
+end

@@ -1,0 +1,7 @@
+class XRPN
+  def sci (n)
+    @i = n.to_i
+    @s = 6
+    @g = 1
+  end
+end

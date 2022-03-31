@@ -1,0 +1,8 @@
+class XRPN
+  def clst
+    @x = 0.0
+    @y = 0.0
+    @z = 0.0
+    @t = 0.0
+  end
+end

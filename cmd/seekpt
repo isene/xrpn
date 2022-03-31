@@ -1,0 +1,8 @@
+class XRPN
+  def seekpt
+    @xmcont[0][3] = @x
+    @xmcont[0][3] = @xmcont.length.to_f - 2 if @xmcont[0][3] > @xmcont.length - 2
+    @xmcont[0][3] = 0.0 if @xmcont[0][3] < 0
+    save_xm
+  end
+end

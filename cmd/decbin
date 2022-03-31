@@ -1,0 +1,6 @@
+class XRPN
+  def decbin
+    @l = @x
+	@x = @x.to_s.convert_base(10, 2).to_f
+  end
+end

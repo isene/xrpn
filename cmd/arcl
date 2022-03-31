@@ -1,0 +1,20 @@
+class XRPN
+  def arcl (r)
+    a = false
+    case r.downcase
+    when "x"
+      a = @x
+    when "y"
+      a = @y
+    when "z"
+      a = @z
+    when "t"
+      a = @t
+    end
+    a ? @a += numformat(a) : @a += numformat(@reg[r])
+	  if @a == nil
+      @reg[r] = ""
+      @a = ""
+    end
+  end
+end

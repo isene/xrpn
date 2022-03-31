@@ -1,0 +1,6 @@
+class XRPN
+  def off
+	@flg["44"] = false
+	exit
+  end
+end

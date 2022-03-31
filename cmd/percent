@@ -1,0 +1,7 @@
+class XRPN
+  def %
+    @l = @x
+    @x = (@x * @y) / 100
+    drop
+  end
+end

@@ -1,0 +1,5 @@
+class XRPN
+  def invf (f)
+    @flg[f] = !@flg[f]
+  end
+end

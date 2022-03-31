@@ -1,0 +1,5 @@
+class XRPN
+  def rclaf
+    return "RCLAF: No clock, alarm or stopwatch functions are implemented"
+  end
+end

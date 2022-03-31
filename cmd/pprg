@@ -1,0 +1,25 @@
+class XRPN
+  def pprg
+    page = @pg
+    pos  = 0
+    if @a != ""
+      pr = "\"#{@a}\""
+      page, pos, prgm = locate_prg (pr)
+      if pos == nil
+        puts "No such program to print."
+        return
+      end
+    end
+    @prg[page].each_index do |i|
+      next if i < pos
+      print "#{format('%02d', i + 1)}"
+      if @prg[page][i].downcase.match(/lbl/)
+        print "◆"
+      else
+        print " "
+      end
+      puts  "#{@prg[page][i]}"
+      break if @prg[page][i] == "END"
+    end
+  end
+end

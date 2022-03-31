@@ -1,0 +1,5 @@
+class XRPN
+  def mdy
+    @flg["31"] = false
+  end
+end

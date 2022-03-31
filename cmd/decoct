@@ -1,0 +1,6 @@
+class XRPN
+  def decoct
+    @l = @x
+	@x = @x.to_s.convert_base(10, 8).to_f
+  end
+end

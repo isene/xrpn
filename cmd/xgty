@@ -1,0 +1,10 @@
+class XRPN
+  def xgty?
+    if @x > @y
+      return "YES"
+    else
+      @pc += 1 unless $debug
+      return "NO"
+    end
+  end
+end

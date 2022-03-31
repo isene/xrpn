@@ -1,0 +1,11 @@
+class XRPN
+  def recip
+    begin
+      throw if @x == 0
+      @l = @x
+      @x = 1 / @x
+    rescue
+      return "Error: Division by zero (1/0)."
+    end
+  end
+end

@@ -1,0 +1,5 @@
+class XRPN
+  def arcli
+    @a += @x.to_i.to_s
+  end
+end

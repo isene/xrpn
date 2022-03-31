@@ -1,0 +1,6 @@
+class XRPN
+  def prompt
+    puts @a
+    $prompt = true
+  end
+end

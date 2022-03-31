@@ -1,0 +1,5 @@
+class XRPN
+  def grad
+    @deg = "grad"
+  end
+end

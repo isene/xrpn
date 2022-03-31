@@ -1,0 +1,6 @@
+class XRPN
+  def cube
+    @l = @x
+    @x = @x ** 3
+  end
+end

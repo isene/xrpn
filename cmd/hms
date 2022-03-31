@@ -1,0 +1,10 @@
+class XRPN
+  def hms
+    @l = @x
+    h  = @x.to_i
+    st = @x * 3600
+    m  = (st/60 - h * 60).to_i
+    s  = (st - (m * 60 + h * 3600))
+    @x = @x.to_i + (m.to_f / 100) + (s / 10000)
+  end
+end

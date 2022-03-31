@@ -1,0 +1,11 @@
+class XRPN
+  def page (p)
+    if p.to_i >= @prg.length
+      return "Page number out of range."
+    else
+      @pg = p.to_i
+      @pc = 0
+      @rtn = []
+    end
+  end
+end

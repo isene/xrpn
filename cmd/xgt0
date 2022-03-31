@@ -1,0 +1,10 @@
+class XRPN
+  def xgt0?
+    if @x > 0
+      return "YES"
+    else
+      @pc += 1 unless $debug
+      return "NO"
+    end
+  end
+end

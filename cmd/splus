@@ -1,0 +1,16 @@
+class XRPN
+  def splus
+    @reg[(@srg.to_i + 0).to_s] = 0 if @reg[(@srg.to_i + 0).to_s] == nil
+    @reg[(@srg.to_i + 1).to_s] = 0 if @reg[(@srg.to_i + 1).to_s] == nil
+    @reg[(@srg.to_i + 2).to_s] = 0 if @reg[(@srg.to_i + 2).to_s] == nil
+    @reg[(@srg.to_i + 3).to_s] = 0 if @reg[(@srg.to_i + 3).to_s] == nil
+    @reg[(@srg.to_i + 4).to_s] = 0 if @reg[(@srg.to_i + 4).to_s] == nil
+    @reg[(@srg.to_i + 5).to_s] = 0 if @reg[(@srg.to_i + 5).to_s] == nil
+    @reg[(@srg.to_i + 0).to_s] += @x 
+    @reg[(@srg.to_i + 1).to_s] += @x * @x
+    @reg[(@srg.to_i + 2).to_s] += @y
+    @reg[(@srg.to_i + 3).to_s] += @y * @y
+    @reg[(@srg.to_i + 4).to_s] += @x * @y
+    @reg[(@srg.to_i + 5).to_s] += 1 
+  end
+end

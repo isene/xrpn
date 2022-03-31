@@ -1,0 +1,5 @@
+class XRPN
+  def abs
+    @x = @x.abs
+  end
+end

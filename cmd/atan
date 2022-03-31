@@ -1,0 +1,8 @@
+class XRPN
+  def atan
+    @l = @x
+    @x = Math::atan(@x)
+    @x = @x * 180 / Math::PI if @deg == "deg"
+    @x = @x * 200 / Math::PI if @deg == "grad"
+  end
+end

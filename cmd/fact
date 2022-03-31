@@ -1,0 +1,7 @@
+class XRPN
+  def fact
+    @l = @x
+    lift
+    @x = @x.to_i.fact
+  end
+end

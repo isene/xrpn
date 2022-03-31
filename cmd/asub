@@ -1,0 +1,6 @@
+class XRPN
+  def asub
+    return unless (@x.is_a? String and @y.is_a? String)
+    @a.sub!(Regexp.new(@x), @y)
+  end
+end

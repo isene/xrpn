@@ -1,0 +1,38 @@
+class XRPN
+  def dse (r)
+    case r.downcase
+    when "x"
+      c = @x
+    when "y"
+      c = @y
+    when "z"
+      c = @z
+    when "t"
+      c = @t
+    when "l"
+      c = @l
+    else
+      c = @reg[r]
+    end
+    b, e, i = x2bei(c)
+	i2 = i
+	i2 = 1 if i2 == 0
+    b -= i2
+    @pc += 1 if b <= e
+    c = bei2x(b, e, i)
+    case r.downcase
+    when "x"
+      @x = c
+    when "y"
+      @y = c
+    when "z"
+      @z = c
+    when "t"
+      @t = c
+    when "l"
+      @l = c
+    else
+      @reg[r] = c
+    end
+  end
+end

@@ -1,0 +1,5 @@
+class XRPN
+  def clralms
+    return "CLRALMS: No clock, alarm or stopwatch functions are implemented"
+  end
+end

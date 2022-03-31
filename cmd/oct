@@ -1,0 +1,5 @@
+class XRPN
+  def oct
+    decoct
+  end
+end

@@ -1,0 +1,5 @@
+class XRPN
+  def view (r)
+    puts @reg[r]
+  end
+end

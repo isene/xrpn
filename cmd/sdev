@@ -1,0 +1,7 @@
+class XRPN
+  def sdev
+    @l = @x
+    @x = Math::sqrt(((@reg[@srg + 5] * @reg[@srg + 1]) - (@reg[@srg] * @reg[@srg])) / (@reg[@srg + 5] * (@reg[@srg + 5] - 1)))
+    @y = Math::sqrt(((@reg[@srg + 5] * @reg[@srg + 3]) - (@reg[@srg + 2] * @reg[@srg + 2])) / (@reg[@srg + 5] * (@reg[@srg + 5] - 1)))
+  end
+end

@@ -1,0 +1,12 @@
+class XRPN
+  def purfl
+    f = Dir.home + "/.xrpn/data/" + @a
+    fl = [f + ".pr", f + ".as", f + ".da"]
+    fl.each do |file|
+      if File.exist?(file)
+        File.delete(file) 
+        @xmfile = "" if @xmfile == @a
+      end
+    end
+  end
+end

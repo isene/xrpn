@@ -1,0 +1,9 @@
+class XRPN
+  def ddate
+    @l = @x
+    dt1  = dtparse(@y)
+    dt2  = dtparse(@x)
+    drop
+    @x   = (dt1-dt2).to_i
+  end
+end

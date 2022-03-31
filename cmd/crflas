@@ -1,0 +1,7 @@
+class XRPN
+  def crflas
+    f = Dir.home + "/.xrpn/data/" + @a + ".as"
+    File.write(f, [[f, "AS", 0, 0.0]])
+    load_xm(@a, 0.0)
+  end
+end

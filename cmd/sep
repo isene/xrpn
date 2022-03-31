@@ -1,0 +1,5 @@
+class XRPN
+  def sep
+    @flg["29"] = !@flg["29"]
+  end
+end

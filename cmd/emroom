@@ -1,0 +1,5 @@
+class XRPN
+  def emroom
+    return "EMROOM: There's always plenty of room"
+  end
+end

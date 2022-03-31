@@ -1,0 +1,26 @@
+def load_xm(f, pt=nil) # Raw file name and pointer
+  f = Dir.home + "/.xrpn/data/" + f
+  fl  = [f + ".da", f + ".as"]
+  hit = false
+  fl.each do |file|
+    if File.exist?(file)
+    @xmcont = JSON.parse(File.read(file)) 
+    @xmfile = file
+    @xmcont[0][0] = file
+    unless pt == nil
+      @xmcont[0][3] = pt
+      save_xm
+    end
+    @xmcont[0][3] = 0.0 if @xmcont[0][3] < 0.0
+    @xmcont[0][3] = @xmcont.length.to_f - 2 if @xmcont[0][3] > @xmcont.length + 2
+    @xmcont[0][1] = "DA" if file.match(/da$/)
+    @xmcont[0][1] = "AS" if file.match(/as$/)
+    hit = true
+    end
+  end
+  if hit
+    puts "Loaded XM file: #{@a} (#{@xmcont[0][0]})"
+  else
+    puts "No such XM file: #{@a}"
+  end
+end

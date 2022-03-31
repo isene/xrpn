@@ -1,0 +1,5 @@
+class XRPN
+  def emdir
+    cat 4
+  end
+end

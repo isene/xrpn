@@ -1,0 +1,5 @@
+class XRPN
+  def stop
+    $debug = true
+  end
+end

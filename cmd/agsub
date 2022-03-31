@@ -1,0 +1,6 @@
+class XRPN
+  def agsub
+    return unless (@x.is_a? String and @y.is_a? String)
+    @a.gsub!(Regexp.new(@x), @y)
+  end
+end

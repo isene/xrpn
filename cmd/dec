@@ -1,0 +1,5 @@
+class XRPN
+  def dec
+    octdec
+  end
+end

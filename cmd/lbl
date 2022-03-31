@@ -1,0 +1,4 @@
+class XRPN
+  def lbl (l)
+  end
+end

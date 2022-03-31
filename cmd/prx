@@ -1,0 +1,5 @@
+class XRPN
+  def prx
+	  puts "X = " + numformat(@x)
+  end
+end

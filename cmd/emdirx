@@ -1,0 +1,12 @@
+class XRPN
+  def emdirx
+    fl = Dir[Dir.home+"/.xrpn/data/*"][@x.to_i - 1]
+    f  = fl.sub(/.*\/(.*)\...$/, '\1')
+    t  = fl.sub(/.*\.(..)$/, '\1').upcase
+    l  = File.size(fl) / 7
+    puts "#{f.ljust(12)}  #{t}  #{l.to_s.rjust(4)}"
+    @a = f
+    lift
+    @x = t
+  end
+end

@@ -1,0 +1,24 @@
+class XRPN
+  def cat (c)
+    case c.to_i
+    when 1
+      pcat
+    when 3
+      puts "Commands:"
+      i = 1
+      $cmd.each do |cm|
+        print cm.ljust(12)
+        print "\n" if i % 7 == 0 
+        i += 1
+      end
+      print "\n"
+    when 4
+      Dir[Dir.home+"/.xrpn/data/*"].each do |file|
+        f = file.sub(/.*\/(.*)\...$/, '\1')
+        t = file.sub(/.*\.(..)$/, '\1').upcase
+        l = File.size(file) / 7
+        puts "#{f.ljust(12)}  #{t}  #{l.to_s.rjust(4)}"
+      end
+    end
+  end
+end

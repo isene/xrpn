@@ -1,0 +1,72 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+# Get extensions
+require 'optparse'
+require 'io/console'
+require 'date'
+require 'bigdecimal'
+require 'open-uri'
+require 'json'
+
+# Read libraries
+Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file }
+$file = "" if $file == nil
+
+# Read all the RPN commands
+read_cmd
+
+# Initialize
+@p   = XRPN.new($file)
+@i, @s, @d = @p.i, @p.s, @p.o
+if $file == ""
+  $debug        = true
+  @p.prg[@p.pg] = ["LBL \"XRPN\"", "END"]
+else
+  $debug = false
+end
+@p.prg[@p.pg] = hp_41(@p.prg[@p.pg]) # Substitute various HP-41 commands with VIS commands
+
+# Read config file
+load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf')
+
+# The core of the RPN program
+until @p.pc == @p.prg[@p.pg].length do
+  # Enter debug mode if $debug or $prompt is set, else get next program line
+  ($debug or $prompt) ? debug_mode : @line = @p.prg[@p.pg][@p.pc]
+  # Split command in maximum three words (e.g. STO IND 13)
+  l1, l2, l3 = @line.split[0], @line.split[1], @line.split[2]
+  l2 = "%02d" % [l2] if l2 == l2.to_i.to_s
+  l3 = "%02d" % [l3] if l3 == l3.to_i.to_s
+  l2 = ind(l3) if l3 # If middle word is "IND" (or anything actually - since IND is the only possibility)
+  if not ($cmd.include?(l1.downcase) or l1.match(/^-*[\d\.,]+$/) or l1.match(/^".*/) ) # Catch unknown command
+    puts "No such command: #{l1}"
+    @p.stop
+  end
+  if l1.match(/^-*[\d\.,]+$/) # If a number is supplied
+    l1.sub!(/,/, '.')
+    @p.lift
+    @p.x = l1.to_f
+    @p.flg["22"] = true
+    @p.flg["23"] = false
+  elsif @line.match(/^".*"/) # If an Alpha string is supplied
+    @line.match(/^"\|.*/) ? @p.a += @line.sub(/\|-*/, '').gsub(/\"/, '') : @p.a = @line.gsub(/\"/, '')
+    @p.flg["22"] = false
+    @p.flg["23"] = true
+  elsif XRPN.method_defined?(l1.downcase) # Or execute the command with either 0, 1 or 2 parameters
+    begin
+      l2 ? ret = @p.send(l1.downcase, l2) : ret = @p.send(l1.downcase)
+    rescue ArgumentError
+      puts "Command needs an argument."
+    rescue TypeError
+      puts "Wrong type."
+    end
+    puts ret if $debug and ret.instance_of? String
+    puts ret if not $debug and ret.to_s.match(/Error:/)
+    @p.flg["22"] = false
+    @p.flg["23"] = false
+  end
+  @p.pc += 1 unless ($file == "" or $debug or $prompt)
+end
+
+# vim: set sw=2 sts=2 et ft=ruby fdm=syntax fdn=2 fcs=fold\:\ :

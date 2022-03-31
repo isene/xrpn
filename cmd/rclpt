@@ -1,0 +1,7 @@
+class XRPN
+  def rclpt
+    @l = @x
+	lift
+    @x = @xmcont[0][3]
+  end
+end

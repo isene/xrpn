@@ -1,0 +1,7 @@
+class XRPN
+  def eng (n)
+    @i = n.to_i
+    @g = 3
+    @s = 6
+  end
+end

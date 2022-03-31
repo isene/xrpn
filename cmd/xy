@@ -1,0 +1,5 @@
+class XRPN
+  def xy
+    @x, @y = @y, @x
+  end
+end

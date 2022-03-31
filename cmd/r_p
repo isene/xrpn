@@ -1,0 +1,21 @@
+class XRPN
+  def r_p
+    begin
+      throw if @x == 0
+      @l = @x
+      x = @x
+      y = @y
+      @x = Math::sqrt(x*x + y*y)
+      @y = Math::atan(y/x)
+      if x < 0  # Q2 & Q3
+        @y += Math::PI
+      elsif x >= 0 and y < 0 # Q4
+        @y += 2 * Math::PI
+      end
+      @y = @y * 180 / Math::PI if @deg == "deg"
+      @y = @y * 200 / Math::PI if @deg == "grad"
+    rescue
+      return "Error: Zero in X."
+    end
+  end
+end

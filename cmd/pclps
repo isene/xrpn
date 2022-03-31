@@ -1,0 +1,10 @@
+class XRPN
+  def pclps
+    pr = "\"#{@a}\""
+    page, pos = locate_prg (pr)
+    until pos == @prg[page].length do
+      @prg[page].delete_at(pos)
+    end
+    @prg[page].push("END")
+  end
+end

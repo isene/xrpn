@@ -1,0 +1,6 @@
+class XRPN
+  def lift
+	@l = @x
+    @y, @z, @t = @x, @y, @z
+  end
+end

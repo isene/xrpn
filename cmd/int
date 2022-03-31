@@ -1,0 +1,6 @@
+class XRPN
+  def int
+    @l = @x
+    @x = @x.to_i
+  end
+end

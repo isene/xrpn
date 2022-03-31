@@ -1,0 +1,7 @@
+class XRPN
+  def pow
+    @l = @x
+    @x = @y ** @x
+    drop
+  end
+end

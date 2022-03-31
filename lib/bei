@@ -1,0 +1,16 @@
+def x2bei (x)
+  b = x.to_i
+  e = (1000 * (x - b)).to_i
+  i = (((1000 * x) - (1000 * x).to_i) * 100).round()
+  i = 1 if i == 0
+  return b, e, i
+end
+
+def bei2x (b, e, i)
+  b = b.to_i
+  e = e.to_i
+  i = 1 if i == 0
+  i = i.to_i
+  x = b.to_f + (e.to_f / 1000) + (i.to_f / 100000)
+  return x
+end

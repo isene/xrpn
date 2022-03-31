@@ -1,0 +1,5 @@
+class XRPN
+  def reszfl
+    return "RESZFL: No need to resize files. Plenty of room here."
+  end
+end

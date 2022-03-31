@@ -1,0 +1,11 @@
+class XRPN
+  def getweb
+    @l = @x
+    lift
+    begin
+      @x = open(@a) {|f| f.read }
+    rescue
+      return "Cannot get the content of '#{a}'"
+    end
+  end
+end

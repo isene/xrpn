@@ -1,0 +1,6 @@
+class XRPN
+  def getrec
+    cla
+    arclrec
+  end
+end

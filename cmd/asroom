@@ -1,0 +1,5 @@
+class XRPN
+  def asroom
+    return "ASROOM: There's always plenty of room"
+  end
+end

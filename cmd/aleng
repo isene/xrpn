@@ -1,0 +1,6 @@
+class XRPN
+  def aleng
+	lift
+    @x = @a.length
+  end
+end

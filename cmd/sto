@@ -1,0 +1,19 @@
+class XRPN
+  def sto (r)
+    case r.downcase
+    when "x"
+      @l = @x
+      @x = @x
+    when "y"
+      @y = @x
+    when "z"
+      @z = @x
+    when "t"
+      @t = @x
+    when "l"
+      @l = @x
+    else
+      @reg[r] = @x
+    end
+  end
+end

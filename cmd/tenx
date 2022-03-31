@@ -1,0 +1,6 @@
+class XRPN
+  def tenx
+    @l = @x
+    @x = 10 ** @x
+  end
+end

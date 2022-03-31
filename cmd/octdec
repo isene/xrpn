@@ -1,0 +1,6 @@
+class XRPN
+  def octdec
+    @l = @x
+	@x = @x.to_s.convert_base(8, 10).to_f
+  end
+end

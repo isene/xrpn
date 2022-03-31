@@ -1,0 +1,11 @@
+class XRPN
+  def getr
+    # No reason to not allow ascii files to be read into regs
+    i = 0
+    @xmcont.each do |r|
+      i += 1
+      dest = "%02d" % (i - 1)
+      @reg[dest] = r
+    end
+  end
+end

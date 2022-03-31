@@ -1,0 +1,7 @@
+class XRPN
+  def fix (n)
+    @i = n
+    @s = 9
+    @g = 1
+  end
+end

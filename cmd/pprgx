@@ -1,0 +1,31 @@
+class XRPN
+  def pprgx 
+    # Print current program from Y to X (relative to current line if Y is negative
+    s = @y.to_i
+    e = @x.to_i
+    if (s == 0 and e == 0)
+      e = @prg[@pg].length
+    end
+    if s < 0
+      s = @pc + s
+      e = @pc + e + 1
+    end
+    s = 0 if s < 0
+    e = @prg[@pg].length if e > @prg[@pg].length
+    out = ""
+    @prg[@pg].each_index do |i|
+      next  if i < s
+      break if i > e - 1
+      out += "#{format('%02d', i + 1)}"
+      if @prg[@pg][i].downcase.match(/lbl/)
+        out += "◆"
+      else
+        out += " "
+      end
+      out += "#{@prg[@pg][i]}\n"
+      break if @prg[@pg][i] == "END"
+    end
+    puts out
+    File.write(Dir.home + "/.xrpn/print/" + @a, out) if @a != ""
+  end
+end

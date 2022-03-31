@@ -1,0 +1,5 @@
+class XRPN
+  def psize
+    return "PSIZE: No need for that function"
+  end
+end

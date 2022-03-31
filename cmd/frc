@@ -1,0 +1,6 @@
+class XRPN
+  def frc
+    @l = @x
+    @x = @x.frc
+  end
+end

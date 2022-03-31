@@ -1,0 +1,6 @@
+class XRPN
+  def dechex
+    @l = @x
+	@x = @x.to_s.convert_base(10, 16)
+  end
+end

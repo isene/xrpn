@@ -1,0 +1,6 @@
+class XRPN
+  def prregs
+    @reg = @reg.sort.to_h
+    @reg.each_pair {|key, value| puts "#{key}: #{numformat(value)}"}
+  end
+end

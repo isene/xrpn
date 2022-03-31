@@ -1,0 +1,8 @@
+class XRPN
+  def cos
+    @l = @x
+    @x = @x * Math::PI / 180 if @deg == "deg"
+    @x = @x * Math::PI / 200 if @deg == "grad"
+    @x = Math::cos(@x)
+  end
+end

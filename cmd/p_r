@@ -1,0 +1,11 @@
+class XRPN
+  def p_r
+    @l = @x
+    r = @x
+    t = @y
+    t = t * Math::PI / 180 if @deg == "deg"
+    t = t * Math::PI / 200 if @deg == "grad"
+    @x = r * Math::cos(t)
+    @y = r * Math::sin(t)
+  end
+end

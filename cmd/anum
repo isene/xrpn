@@ -1,0 +1,9 @@
+class XRPN
+  def anum
+    @l = @x
+    lift
+    n = @a.scan(/[\d.,e]+/).first
+    n.sub!(/,/, '.') unless @dot
+    @x = n.to_f
+  end
+end

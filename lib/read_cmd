@@ -1,0 +1,10 @@
+def read_cmd
+  $cmd = []
+  Dir[Dir.home+"/.xrpn/cmd/*"].each do |file|
+    load file
+    l = IO.readlines(file)[1]
+    c = l.sub(/\s*def (\S+).*/, '\1').chomp
+    $cmd.push(c)
+  end
+  $cmd.sort!
+end

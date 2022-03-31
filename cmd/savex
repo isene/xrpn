@@ -1,0 +1,8 @@
+class XRPN
+  def savex
+    @xmcont[@xmcont[0][3] + 1] = @x
+    @xmcont[0][3] += 1
+    @xmcont[0][3] = @xmcont.length.to_f - 2 if @xmcont[0][3] > @xmcont.length - 2
+    save_xm
+  end
+end

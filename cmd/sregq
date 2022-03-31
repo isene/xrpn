@@ -1,0 +1,5 @@
+class XRPN
+  def sreg?
+    return "ΣREG = " + @sreg
+  end
+end

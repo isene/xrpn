@@ -1,0 +1,16 @@
+class XRPN
+  def regmove
+    c = @x
+    b = c.to_i
+    e = (1000 * (c - b)).to_i
+    n = ((1000 * c).modulo(1).round(3) * 1000).to_i
+    n.times do |i|
+      f = (b + i).to_s
+      f = "%02d" % [f] if f == f.to_i.to_s
+      t = (e + i).to_s
+      t = "%02d" % [t] if t == t.to_i.to_s
+      @reg[f] = 0 if @reg[f] == nil
+      @reg[t] = @reg[f]
+    end
+  end
+end

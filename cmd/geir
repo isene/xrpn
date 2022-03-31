@@ -1,0 +1,9 @@
+class XRPN
+  def geir
+    puts
+    puts "Geir Isene <g@isene.com> https://isene.com"
+    puts "Creator of the XRPN programming language"
+    puts "Send me a message. Let's have an inspirational chat."
+    puts
+  end
+end

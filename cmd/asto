@@ -1,0 +1,19 @@
+class XRPN
+  def asto (r)
+    case r.downcase
+    when "x"
+      @l = @x
+      @x = @a
+    when "y"
+      @y = @a
+    when "z"
+      @z = @a
+    when "t"
+      @t = @a
+    when "l"
+      @l = @a
+    else
+      @reg[r] = @a
+    end
+  end
+end

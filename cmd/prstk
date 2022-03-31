@@ -1,0 +1,8 @@
+class XRPN
+  def prstk
+    puts "T = " + numformat(@t) + "   α = " + @a.to_s
+    puts "Z = " + numformat(@z)
+    puts "Y = " + numformat(@y)
+    puts "X = " + numformat(@x) + "   L = " + numformat(@l)
+  end
+end

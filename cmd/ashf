@@ -1,0 +1,5 @@
+class XRPN
+  def ashf
+    @a = @a[6..]
+  end
+end

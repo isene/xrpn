@@ -1,0 +1,10 @@
+class XRPN
+  def adate
+    d = @x.to_s
+    if @flg["31"] # DMY
+      @a += d.sub(/(\d*)\.(\d\d)\d\d(\d\d)\d*/, '\1.\2.\3')
+    else # MDY
+      @a += d.sub(/(\d*)\.(\d\d)\d\d(\d\d)\d*/, '\1/\2/\3')
+    end
+  end
+end

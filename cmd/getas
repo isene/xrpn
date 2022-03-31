@@ -1,0 +1,5 @@
+class XRPN
+  def getas
+    load_xm(@a)
+  end
+end

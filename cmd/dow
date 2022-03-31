@@ -1,0 +1,7 @@
+class XRPN
+  def dow
+    @l = @x
+    lift
+    @x = dtparse(@x).wday
+  end
+end

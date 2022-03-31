@@ -1,0 +1,5 @@
+class XRPN
+  def clx
+    @x = 0.0
+  end
+end

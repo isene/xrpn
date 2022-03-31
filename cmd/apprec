@@ -1,0 +1,11 @@
+class XRPN
+  def apprec
+    if @xmcont[0][0] == ""
+      return 
+    else
+      @xmcont[0][3] = @xmcont[0][3].to_i + 1.0
+      @xmcont.insert(@xmcont[0][3].to_i + 1, @a)
+      savexm
+    end
+  end
+end

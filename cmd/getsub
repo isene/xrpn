@@ -1,0 +1,5 @@
+class XRPN
+  def getsub
+    return "GETSUB: No need for that function. XRPN works with pages instead."
+  end
+end

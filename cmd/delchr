@@ -1,0 +1,12 @@
+class XRPN
+  def delchr
+    if @xmcont[0][0] == ""
+      return 
+    else
+      r = @xmcont[0][3].to_i + 1
+      c = (@xmcont[0][3].frc * 1000).to_i
+      @xmcont[r][c..(c + @x.to_i)] = ""
+      savexm
+    end
+  end
+end

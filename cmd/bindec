@@ -1,0 +1,6 @@
+class XRPN
+  def bindec
+    @l = @x
+	@x = @x.to_s.convert_base(2, 10).to_f
+  end
+end

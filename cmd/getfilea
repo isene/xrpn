@@ -1,0 +1,9 @@
+class XRPN
+  def getfilea
+    begin
+      @a = File.read(@a)
+    rescue
+      return "Cannot read the file '#{a}'"
+    end
+  end
+end

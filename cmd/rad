@@ -1,0 +1,5 @@
+class XRPN
+  def rad
+    @deg = "rad"
+  end
+end

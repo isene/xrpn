@@ -1,0 +1,20 @@
+class XRPN
+  def stsubtract (r)
+    case r.downcase
+    when "x"
+      @l = @x
+      @x -= @x
+    when "y"
+      @y -= @x
+    when "z"
+      @z -= @x
+    when "t"
+      @t -= @x
+    when "l"
+      @l -= @x
+    else
+      @reg[r]  = 0 if @reg[r] == nil
+      @reg[r] -= @x
+    end
+  end
+end

@@ -1,0 +1,77 @@
+def debug_mode
+  loop do
+    if $prompt
+      print ": "
+    else
+      puts "-" * 30
+      @p.prstk 
+      print "> "
+    end
+    @line = STDIN.gets.chomp
+    @line = [@line]
+    @line = hp_41(@line)[0]
+    case @line
+    when "q" # Quit
+      exit
+    when "Q" # Save and quit
+      save_state()
+      exit
+    when /S .*/
+      state = @line.sub(/S /, '')
+      save_state(state)
+    when "c"
+      @p.x   = 0.0
+      @p.y   = 0.0
+      @p.z   = 0.0
+      @p.t   = 0.0
+      @p.l   = 0.0
+      @p.a   = ""
+      @p.d   = "deg"
+      @p.i   = 4
+      @p.s   = 6
+      @p.srg = 11
+      @p.reg = {}
+      @p.flg = {}
+    when "r" # Reload all commands from the cmd directory
+      read_cmd
+      puts "Commands reloaded."
+    when "l" # Show current line
+      @line  = @p.prg[@p.pg][@p.pc]
+      puts "Line #{@p.pc + 1}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
+    when "n" # Show next line
+      if @p.pc + 1 > @p.prg[@p.pg].length
+        puts "End of program"
+      else
+        @line = @p.prg[@p.pg][@p.pc + 1]
+        puts "Line #{@p.pc + 2}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
+      end
+    when "p" # Show next line
+      if @p.pc - 1 < 0
+        puts "Beginning of program"
+      else
+        @line  = @p.prg[@p.pg][@p.pc - 1]
+        puts "Line #{@p.pc}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
+      end
+    when "s" # Single-step the next program line
+      @p.pc += 1 if $debug
+      @line  = @p.prg[@p.pg][@p.pc]
+      puts "Line #{@p.pc + 1}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
+      break
+    when "b" # Back-step one line
+      @p.pc -= 1 unless @p.pc == 0
+    when /^\+\+ /
+      @p.prg[@p.pg].insert(@p.pc, @line.sub(/^\+\+ /, ''))
+    when "--"
+      @p.prg[@p.pg].delete_at(@p.pc)
+    when "" # End debug mode
+      $debug = false
+      @p.pc += 1
+      @line = @p.prg[@p.pg][@p.pc]
+      break unless @p.flg["44"]
+    else
+      break unless @p.flg["44"]
+    end
+  end
+  $prompt = false
+end
+

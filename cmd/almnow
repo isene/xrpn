@@ -1,0 +1,5 @@
+class XRPN
+  def almnow
+    return "ALMNOW: No clock, alarm or stopwatch functions are implemented"
+  end
+end

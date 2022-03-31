@@ -1,0 +1,12 @@
+class XRPN
+  def xltnn?
+    r = @x.to_i
+    r = "%02d" % [r] if r == r.to_i.to_s
+    if @x < @reg[r]
+      return "YES"
+    else
+      @pc += 1 unless $debug
+      return "NO"
+    end
+  end
+end

@@ -1,0 +1,5 @@
+class XRPN
+  def clalma
+    return "CLALMA: No clock, alarm or stopwatch functions are implemented"
+  end
+end
