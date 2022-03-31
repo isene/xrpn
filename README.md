@@ -32,3 +32,27 @@ Any and all feedback is welcome. Send me an e-mail at `g@isene.com`.
 
 More to come :-)
 
+## Example program
+
+To give you a taste of XRPN, consider this program:
+
+```
+LBL "HELLO"
+"Input your name. Enclose your name in double-quotes and press Enter."
+PROMPT
+ASTO 00
+"Hello, "
+ARCL 00
+ADV
+AVIEW
+ADV
+13
+8
+*
+100
+X<>Y
+X>Y?
+"13 * 8 is greater than 100"
+AVIEW
+END
+```
