@@ -1,0 +1,10 @@
+class XRPN
+  def writefile
+    begin
+      @x = File.write(@a)
+			File.write(@a, @x)
+    rescue
+      return "Cannot write to the file '#{a}'"
+    end
+  end
+end
