@@ -12,6 +12,8 @@ optparse = OptionParser.new do |opts|
   end
   opts.on('--help', 'Display LONG help text') do
     help
+    puts
+    puts opts
     exit
   end
 end
