@@ -1,6 +1,6 @@
 class XRPN
   def fix (n)
-    @i = n
+    @i = n.to_i
     @s = 9
     @g = 1
   end
