@@ -45,7 +45,7 @@ def debug_mode
         @line = @p.prg[@p.pg][@p.pc + 1]
         puts "Line #{@p.pc + 2}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
       end
-    when "p" # Show next line
+    when "p" # Show previous line
       if @p.pc - 1 < 0
         puts "Beginning of program"
       else
