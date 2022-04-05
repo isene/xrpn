@@ -1,5 +1,5 @@
 def locate_prg (l)
-  lbl  = "LBL #{l}"
+  lbl  = "lbl #{l}"
   page = nil
   pos  = nil
   prgm = []
