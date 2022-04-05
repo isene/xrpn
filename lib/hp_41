@@ -2,7 +2,7 @@ def hp_41 (a)
   if a[0].match(/^\d\d/) # Remove line numbers from program
     @p.prg[@p.pg].map! { |x| x.sub( /\d\d./, "" ) }
   end
-  a.map!{|x| x.sub( /([a-zA-Z ]*)/, &:downcase))}
+  a.map!{|x| x.sub( /([a-zA-Z ]*)/, &:downcase)}
   a.map!{|x| x.sub( /1\/X/i,    "recip"      )}
   a.map!{|x| x.sub( /HMS\+/i,   "hmsplus"    )}
   a.map!{|x| x.sub( /HMS-/i,    "hmsminus"   )}
