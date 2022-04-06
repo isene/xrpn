@@ -11,7 +11,8 @@ class XRPN
       if @page != @pg
         @pg  = page
       end
-      @rtn.push(@pc)
+      @rtn.push(@pc) unless $debug
+	  p @rtn
       @pc  = pos
       $debug = false
     end

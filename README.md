@@ -6,7 +6,7 @@ XRPN is a stack-based programming language, similar to [Forth](https://en.wikipe
 
 XRPN is on-the-fly extensible. Language functions can be upgraded or implemented while programs are running.
 
-It runs programs in text files or manually in debug mode (if no text file is supplied or when a program stops).
+It runs programs in text files or manually in debug mode (if no text file is supplied or when a program stops). 
 
 The language is a superset of [FOCAL](https://www.hpmuseum.org/prog/hp41prog.htm), implementing the full set of [HP-41CX calculator](https://www.hpmuseum.org/hp41.htm) commands. It uses Reverse Polish Notation for calculations.
 

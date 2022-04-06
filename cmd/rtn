@@ -1,7 +1,7 @@
 class XRPN
   def rtn
     r = @rtn.pop
-    if r == nil or r == 0
+    if r == nil
       stop
     else
       @pc = r
