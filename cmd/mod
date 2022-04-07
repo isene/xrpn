@@ -4,7 +4,7 @@ class XRPN
       throw if @x == 0
       @l = @x
       @x = @y % @x
-      drop
+      dropy
     rescue
       return "Error: Modulo with zero in X"
     end

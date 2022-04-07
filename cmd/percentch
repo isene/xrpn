@@ -4,7 +4,7 @@ class XRPN
       throw if @y == 0
       @l = @x
       @x = 100*((@x - @y) / @y)
-      drop
+      dropy
     rescue
       return "Error: Percentage change with zero in Y."
     end

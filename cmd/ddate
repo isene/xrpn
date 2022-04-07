@@ -3,7 +3,7 @@ class XRPN
     @l = @x
     dt1  = dtparse(@y)
     dt2  = dtparse(@x)
-    drop
+    dropy
     @x   = (dt1-dt2).to_i
   end
 end

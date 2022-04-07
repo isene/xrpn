@@ -2,6 +2,6 @@ class XRPN
   def -
     @l = @x
     @x = @y - @x
-    drop
+    dropy
   end
 end

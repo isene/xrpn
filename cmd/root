@@ -3,7 +3,7 @@ class XRPN
     begin
       @l = @x
       @x = @y ** (1 / @x)
-      drop
+      dropy
     rescue
       return "Error: Root of negative number."
     end
