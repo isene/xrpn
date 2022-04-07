@@ -11,7 +11,8 @@ require 'json'
 
 # Read libraries
 Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file }
-$file = "" if $file == nil
+$file  = "" if $file  == nil
+@lfile = "" if @lfile == nil
 
 # Read all the RPN commands
 read_cmd
@@ -20,12 +21,13 @@ read_cmd
 @p   = XRPN.new($file)
 @i, @s, @d = @p.i, @p.s, @p.o
 if $file == ""
-  $debug        = true
   @p.prg[@p.pg] = ["LBL \"XRPN\"", "END"]
-else
-  $debug = false
 end
 @p.prg[@p.pg] = hp_41(@p.prg[@p.pg]) # Substitute various HP-41 commands with VIS commands
+if @lfile != ""
+  @p.prg[1] = File.read(@lfile).split("\n")
+  @p.prg[1] = hp_41(@p.prg[1]) 
+end
 
 # Read config file
 load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf')
@@ -67,7 +69,7 @@ until @p.pc == @p.prg[@p.pg].length do
       @p.flg["23"] = false
     end
   end
-  @p.pc += 1 unless ($file == "" or $debug or $prompt)
+  @p.pc += 1 unless ($debug or $prompt)
 end
 
 # vim: set sw=2 sts=2 et ft=ruby fdm=syntax fdn=2 fcs=fold\:\ :

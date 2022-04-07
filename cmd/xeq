@@ -12,7 +12,6 @@ class XRPN
         @pg  = page
       end
       @rtn.push(@pc) unless $debug
-	  p @rtn
       @pc  = pos
       $debug = false
     end

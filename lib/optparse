@@ -6,6 +6,7 @@ optparse = OptionParser.new do |opts|
 
   # Define the options, and what they do
   opts.on('-f', '--file RPN-file', 'Specify the file to process') { |f| $file = f }
+  opts.on('-l', '--load RPN-file', 'Specify a file to load (but not run)') { |l| @lfile = l }
   opts.on('-h', 'Display SHORT help text') do
     puts opts
     exit
