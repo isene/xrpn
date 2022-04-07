@@ -1,5 +1,5 @@
 class XRPN
-  def dropy
+  def drop
     @x, @y, @z = @y, @z, @t
   end
 end
