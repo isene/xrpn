@@ -22,7 +22,7 @@ A Ruby Gemfile will be created soon that will make all this a lot easier.
 
 ## Run
 
-To run XRPN, make sure the program file ("bin/xrpn") is copied or linked to a directory in your path. If you have "~/bin" in your path, the install scrip has already taken care of this. Simply run the environment via `xrpn` in a terminal to enter the "debug mode" and manually issue commands or do calculations. To run a program, save it in a text file (like "myprogram.txt") and run `xrpn -f myprogram.txt` or `xrpn --file myprogram.txt` to let xrpn execute it. If you want to load a program without running it immediately, you can use the `-l` or `--load` switch like this `xrpn -l myprogram.txt`. 
+To run XRPN, make sure the program file ("bin/xrpn") is copied or linked to a directory in your path. If you have "~/bin" in your path, the install scrip has already taken care of this. Simply run the environment via `xrpn` in a terminal to enter the "debug mode" and manually issue commands or do calculations. To run a program, save it in a text file (like "myprogram.txt") and run `xrpn -f myprogram.txt` or `xrpn --file myprogram.txt` to let xrpn execute it. If you want to load a program without running it immediately, you can use the `-l` or `--load` switch like this `xrpn -l myprogram.txt`. Note that the loaded program is placed in Page 1. XRPN always runs the program loaded into Page 0 - which is why the system adds a tiny program called XRPN into Page 0 if no program is loaded&run with the -f switch. 
 
 ## FOCAL and the HP-41 system
 
