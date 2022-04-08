@@ -1,13 +1,12 @@
 class XRPN
   def mod
+    @l = @x
     begin
-      throw if @x == 0
-      @l = @x
       @x = @y % @x
-      dropy
-    rescue
-      return "Error: Modulo with zero in X"
+    rescue ZeroDivisionError
+      @x = @y
     end
+    dropy
   end
 end
  
