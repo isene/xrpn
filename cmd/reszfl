@@ -3,3 +3,5 @@ class XRPN
     return "RESZFL: No need to resize files. Plenty of room here."
   end
 end
+ 
+# vim:ft=ruby:

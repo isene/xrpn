@@ -3,3 +3,5 @@ class XRPN
     decoct
   end
 end
+ 
+# vim:ft=ruby:

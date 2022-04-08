@@ -3,3 +3,5 @@ class XRPN
 	  puts "X = " + numformat(@x)
   end
 end
+ 
+# vim:ft=ruby:

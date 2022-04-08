@@ -5,3 +5,5 @@ class XRPN
     @pc = 0 if @pc == p
   end
 end
+ 
+# vim:ft=ruby:

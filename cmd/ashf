@@ -3,3 +3,5 @@ class XRPN
     @a = @a[6..]
   end
 end
+ 
+# vim:ft=ruby:

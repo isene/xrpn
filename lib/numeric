@@ -39,3 +39,5 @@ class Numeric
     return m + s
   end
 end
+ 
+# vim:ft=ruby:

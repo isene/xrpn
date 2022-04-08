@@ -7,3 +7,5 @@ class XRPN
     @x = s / 3600
   end
 end
+ 
+# vim:ft=ruby:

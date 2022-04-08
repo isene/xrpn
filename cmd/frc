@@ -4,3 +4,5 @@ class XRPN
     @x = @x.frc
   end
 end
+ 
+# vim:ft=ruby:

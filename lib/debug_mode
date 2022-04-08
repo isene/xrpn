@@ -75,3 +75,5 @@ def debug_mode
   $prompt = false
 end
 
+ 
+# vim:ft=ruby:

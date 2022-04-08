@@ -3,3 +3,5 @@ class XRPN
     return "PACK: No need for packing clothes or anything else."
   end
 end
+ 
+# vim:ft=ruby:

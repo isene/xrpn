@@ -3,3 +3,5 @@ class XRPN
     return "GETSUB: No need for that function. XRPN works with pages instead."
   end
 end
+ 
+# vim:ft=ruby:

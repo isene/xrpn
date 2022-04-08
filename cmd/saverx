@@ -27,3 +27,5 @@ class XRPN
     savexm
   end
 end
+ 
+# vim:ft=ruby:

@@ -2,3 +2,5 @@ class XRPN
   def lbl (l)
   end
 end
+ 
+# vim:ft=ruby:

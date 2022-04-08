@@ -9,3 +9,5 @@ class XRPN
     @y = r * Math::sin(t)
   end
 end
+ 
+# vim:ft=ruby:

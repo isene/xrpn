@@ -4,3 +4,5 @@ class XRPN
     return "Deleted page #{p}"
   end
 end
+ 
+# vim:ft=ruby:

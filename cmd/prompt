@@ -4,3 +4,5 @@ class XRPN
     $prompt = true
   end
 end
+ 
+# vim:ft=ruby:

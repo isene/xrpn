@@ -17,3 +17,5 @@ def ind(l3)
   return l2
 end
 
+ 
+# vim:ft=ruby:

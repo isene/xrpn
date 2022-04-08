@@ -3,3 +3,5 @@ class XRPN
     return "No need for an editor.\nEdit your files in ~/.xrpn/data/ with your favourite editor (VIM)."
   end
 end
+ 
+# vim:ft=ruby:

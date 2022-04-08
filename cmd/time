@@ -5,3 +5,5 @@ class XRPN
     @x = Time.now.strftime("%H.%M%s").to_f
   end
 end
+ 
+# vim:ft=ruby:

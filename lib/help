@@ -8,3 +8,5 @@ XRPN implements indirect adressing, self-modification and features well beyond t
 For detailed information, visit the GitHub page: https://github.com/isene/xrpn
 HELPTEXT
 end
+ 
+# vim:ft=ruby:

@@ -5,3 +5,5 @@ class XRPN
     @y = Math::sqrt(((@reg[@srg + 5] * @reg[@srg + 3]) - (@reg[@srg + 2] * @reg[@srg + 2])) / (@reg[@srg + 5] * (@reg[@srg + 5] - 1)))
   end
 end
+ 
+# vim:ft=ruby:

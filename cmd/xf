@@ -16,3 +16,5 @@ class XRPN
     @x = fsumx
   end
 end
+ 
+# vim:ft=ruby:

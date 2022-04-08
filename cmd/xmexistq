@@ -11,3 +11,5 @@ class XRPN
     end
   end
 end
+ 
+# vim:ft=ruby:

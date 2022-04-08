@@ -6,3 +6,5 @@ class XRPN
     @x = Math::tan(@x)
   end
 end
+ 
+# vim:ft=ruby:

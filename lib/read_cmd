@@ -8,3 +8,5 @@ def read_cmd
   end
   $cmd.sort!
 end
+ 
+# vim:ft=ruby:

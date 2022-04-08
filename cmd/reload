@@ -3,3 +3,5 @@ class XRPN
     read_cmd
   end
 end
+ 
+# vim:ft=ruby:

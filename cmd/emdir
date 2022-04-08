@@ -3,3 +3,5 @@ class XRPN
     cat 4
   end
 end
+ 
+# vim:ft=ruby:

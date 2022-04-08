@@ -8,3 +8,5 @@ class XRPN
     @x = @x.to_i + (m.to_f / 100) + (s / 10000)
   end
 end
+ 
+# vim:ft=ruby:

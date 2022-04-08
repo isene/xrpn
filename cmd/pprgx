@@ -29,3 +29,5 @@ class XRPN
     File.write(Dir.home + "/.xrpn/print/" + @a, out) if @a != ""
   end
 end
+ 
+# vim:ft=ruby:

@@ -5,3 +5,5 @@ class XRPN
     dropy
   end
 end
+ 
+# vim:ft=ruby:

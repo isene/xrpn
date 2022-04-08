@@ -3,3 +3,5 @@ class XRPN
     @prg.insert(@x.to_i, @a)
   end
 end
+ 
+# vim:ft=ruby:

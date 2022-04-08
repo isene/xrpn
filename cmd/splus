@@ -14,3 +14,5 @@ class XRPN
     @reg[(@srg.to_i + 5).to_s] += 1 
   end
 end
+ 
+# vim:ft=ruby:

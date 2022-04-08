@@ -3,3 +3,5 @@ class XRPN
     puts @a
   end
 end
+ 
+# vim:ft=ruby:

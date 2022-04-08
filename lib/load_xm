@@ -24,3 +24,5 @@ def load_xm(f, pt=nil) # Raw file name and pointer
     puts "No such XM file: #{@a}"
   end
 end
+ 
+# vim:ft=ruby:

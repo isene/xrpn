@@ -16,3 +16,5 @@ def save_state (fn = "conf")
   File.write(Dir.home + "/.xrpn/" + fn, cont)
 end
 
+ 
+# vim:ft=ruby:

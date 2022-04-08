@@ -3,3 +3,5 @@ class XRPN
     return "AOFF: As with AON, no real need for that function"
   end
 end
+ 
+# vim:ft=ruby:

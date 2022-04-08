@@ -7,3 +7,5 @@ class XRPN
     @x   = (dt1-dt2).to_i
   end
 end
+ 
+# vim:ft=ruby:

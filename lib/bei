@@ -14,3 +14,5 @@ def bei2x (b, e, i)
   x = b.to_f + (e.to_f / 1000) + (i.to_f / 100000)
   return x
 end
+ 
+# vim:ft=ruby:

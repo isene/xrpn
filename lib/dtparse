@@ -6,3 +6,5 @@ def dtparse(date)
   return Date.parse(dt)
 end
 
+ 
+# vim:ft=ruby:

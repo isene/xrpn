@@ -3,3 +3,5 @@ class XRPN
     @flg[r] = false
   end
 end
+ 
+# vim:ft=ruby:

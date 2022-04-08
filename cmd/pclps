@@ -8,3 +8,5 @@ class XRPN
     @prg[page].push("END")
   end
 end
+ 
+# vim:ft=ruby:

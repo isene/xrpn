@@ -3,3 +3,5 @@ class XRPN
     pprg
   end
 end
+ 
+# vim:ft=ruby:

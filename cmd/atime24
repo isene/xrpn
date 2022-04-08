@@ -17,3 +17,5 @@ class XRPN
     @a += "#{h}:#{m}:#{s}"
   end
 end
+ 
+# vim:ft=ruby:

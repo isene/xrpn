@@ -4,3 +4,5 @@ class String
     self.to_i(from).to_s(to)
   end
 end
+ 
+# vim:ft=ruby:

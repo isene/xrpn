@@ -1,3 +1,5 @@
 def save_xm
   File.write(@xmcont[0][0], @xmcont) if File.exist?(@xmcont[0][0])
 end
+ 
+# vim:ft=ruby:

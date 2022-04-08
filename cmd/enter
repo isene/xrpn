@@ -3,3 +3,5 @@ class XRPN
     lift
   end
 end
+
+# vim:ft=ruby:

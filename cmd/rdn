@@ -3,3 +3,5 @@ class XRPN
     @x, @y, @z, @t = @y, @z, @t, @x
   end
 end
+ 
+# vim:ft=ruby:

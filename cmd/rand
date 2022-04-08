@@ -6,3 +6,5 @@ class XRPN
     @x = r.rand()
   end
 end
+ 
+# vim:ft=ruby:

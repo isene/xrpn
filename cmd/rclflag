@@ -12,3 +12,5 @@ class XRPN
     @x = f.to_s
   end
 end
+ 
+# vim:ft=ruby:

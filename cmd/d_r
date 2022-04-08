@@ -4,3 +4,5 @@ class XRPN
 	@x = @x * Math::PI / 180
   end
 end
+ 
+# vim:ft=ruby:

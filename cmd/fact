@@ -5,3 +5,5 @@ class XRPN
     @x = @x.to_i.fact
   end
 end
+ 
+# vim:ft=ruby:

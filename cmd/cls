@@ -8,3 +8,5 @@ class XRPN
     @reg[@srg + 5] = 0.0
   end
 end
+ 
+# vim:ft=ruby:

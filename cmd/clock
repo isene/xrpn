@@ -3,3 +3,5 @@ class XRPN
     return "CLOCK: Tick, tock... not implemented."
   end
 end
+ 
+# vim:ft=ruby:

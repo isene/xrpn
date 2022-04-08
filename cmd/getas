@@ -3,3 +3,5 @@ class XRPN
     load_xm(@a)
   end
 end
+ 
+# vim:ft=ruby:

@@ -3,3 +3,5 @@ class XRPN
     @prg.delete_at(@x.to_i)
   end
 end
+ 
+# vim:ft=ruby:

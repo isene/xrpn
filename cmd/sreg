@@ -3,3 +3,5 @@ class XRPN
     @srg = r
   end
 end
+ 
+# vim:ft=ruby:

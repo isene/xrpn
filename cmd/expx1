@@ -5,3 +5,5 @@ class XRPN
     @x = Math::exp(@x - 1)
   end
 end
+ 
+# vim:ft=ruby:

@@ -6,3 +6,5 @@ class XRPN
     @x = Math::cos(@x)
   end
 end
+ 
+# vim:ft=ruby:

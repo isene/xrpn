@@ -4,3 +4,5 @@ class XRPN
 	@x = @x.to_s.convert_base(16, 10).to_f
   end
 end
+ 
+# vim:ft=ruby:

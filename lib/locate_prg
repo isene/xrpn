@@ -24,3 +24,5 @@ def locate_prg (l)
   end
   return page, pos, prgm
 end
+ 
+# vim:ft=ruby:

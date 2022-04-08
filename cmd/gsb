@@ -3,3 +3,5 @@ class XRPN
     xeq (l)
   end
 end
+ 
+# vim:ft=ruby:

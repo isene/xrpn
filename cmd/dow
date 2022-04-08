@@ -5,3 +5,5 @@ class XRPN
     @x = dtparse(@x).wday
   end
 end
+ 
+# vim:ft=ruby:

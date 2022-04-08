@@ -5,3 +5,5 @@ class XRPN
     @x = @xmcont[0][3]
   end
 end
+ 
+# vim:ft=ruby:

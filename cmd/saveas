@@ -3,3 +3,5 @@ class XRPN
     save_xm
   end
 end
+ 
+# vim:ft=ruby:

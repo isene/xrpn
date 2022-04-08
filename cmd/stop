@@ -3,3 +3,5 @@ class XRPN
     $debug = true
   end
 end
+ 
+# vim:ft=ruby:

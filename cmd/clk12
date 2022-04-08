@@ -3,3 +3,5 @@ class XRPN
     @clk24 = false
   end
 end
+ 
+# vim:ft=ruby:

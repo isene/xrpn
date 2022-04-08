@@ -19,3 +19,5 @@ optparse = OptionParser.new do |opts|
   end
 end
 optparse.parse!
+ 
+# vim:ft=ruby:

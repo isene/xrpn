@@ -3,3 +3,5 @@ class XRPN
     File.write(Dir.home + "/.xrpn/data/" + @a + ".pr", @prg[@pg])
   end
 end
+ 
+# vim:ft=ruby:

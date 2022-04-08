@@ -3,3 +3,5 @@ class XRPN
     return "Page = #{@pg}"
   end
 end
+ 
+# vim:ft=ruby:

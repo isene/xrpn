@@ -3,3 +3,5 @@ class XRPN
     return "PASN: This is not a calculator with keys to assign functions to."
   end
 end
+ 
+# vim:ft=ruby:

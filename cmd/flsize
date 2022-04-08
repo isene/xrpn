@@ -3,3 +3,5 @@ class XRPN
     return "FLSIZE: Always plenty of room."
   end
 end
+ 
+# vim:ft=ruby:

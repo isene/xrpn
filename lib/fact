@@ -3,3 +3,5 @@ class Integer
     (1..self).reduce(:*) || 1
   end
 end
+ 
+# vim:ft=ruby:

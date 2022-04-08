@@ -1,3 +1,5 @@
 def setpt(r, c)
   @xmcont[0][3] = r - 1 + (0.001 * c).round(4)
 end
+ 
+# vim:ft=ruby:

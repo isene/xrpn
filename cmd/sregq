@@ -3,3 +3,5 @@ class XRPN
     return "ΣREG = " + @sreg
   end
 end
+ 
+# vim:ft=ruby:

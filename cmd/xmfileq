@@ -3,3 +3,5 @@ class XRPN
     return "XMFILE = #{@xmfile}"
   end
 end
+ 
+# vim:ft=ruby:

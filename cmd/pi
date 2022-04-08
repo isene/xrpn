@@ -5,3 +5,5 @@ class XRPN
     @x = Math::PI
   end
 end
+ 
+# vim:ft=ruby:

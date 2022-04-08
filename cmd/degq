@@ -3,3 +3,5 @@ class XRPN
     p @deg
   end
 end
+ 
+# vim:ft=ruby:

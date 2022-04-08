@@ -4,3 +4,5 @@ class XRPN
     @reg.each_pair {|key, value| puts "#{key}: #{numformat(value)}"}
   end
 end
+ 
+# vim:ft=ruby:

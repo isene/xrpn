@@ -5,3 +5,5 @@ class XRPN
     @flg["31"] ? @x = Time.now.strftime("%d.%m%Y").to_f : @x = Time.now.strftime("%m.%d%Y").to_f
   end
 end
+ 
+# vim:ft=ruby:

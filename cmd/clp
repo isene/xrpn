@@ -4,3 +4,5 @@ class XRPN
     @prg[page] -= prgm
   end
 end
+ 
+# vim:ft=ruby:

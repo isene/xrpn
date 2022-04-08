@@ -7,3 +7,5 @@ class XRPN
     puts
   end
 end
+ 
+# vim:ft=ruby:

@@ -3,3 +3,5 @@ class XRPN
     sleep(1)
   end
 end
+ 
+# vim:ft=ruby:

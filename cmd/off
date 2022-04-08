@@ -4,3 +4,5 @@ class XRPN
 	exit
   end
 end
+ 
+# vim:ft=ruby:

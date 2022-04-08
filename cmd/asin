@@ -6,3 +6,5 @@ class XRPN
     @x = @x * 200 / Math::PI if @deg == "grad"
   end
 end
+ 
+# vim:ft=ruby:

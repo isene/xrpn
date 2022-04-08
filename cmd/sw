@@ -3,3 +3,5 @@ class XRPN
     return "SW: No clock, alarm or stopwatch functions are implemented"
   end
 end
+ 
+# vim:ft=ruby:

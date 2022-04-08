@@ -6,3 +6,5 @@ class XRPN
     @x = Math::sin(@x)
   end
 end
+ 
+# vim:ft=ruby:

@@ -4,3 +4,5 @@ class XRPN
     return "Pages #{@x.to_i} and #{@y.to_i} swapped"
   end
 end
+ 
+# vim:ft=ruby:

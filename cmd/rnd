@@ -3,3 +3,5 @@ class XRPN
     @x = @x.round(@i)
   end
 end
+ 
+# vim:ft=ruby:

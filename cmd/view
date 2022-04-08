@@ -3,3 +3,5 @@ class XRPN
     puts @reg[r]
   end
 end
+ 
+# vim:ft=ruby:

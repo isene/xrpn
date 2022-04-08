@@ -3,3 +3,5 @@ class XRPN
     return "ASROOM: There's always plenty of room"
   end
 end
+ 
+# vim:ft=ruby:

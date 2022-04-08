@@ -3,3 +3,5 @@ class XRPN
     @reg.each_key {|key| @reg[key] = 0 }
   end
 end
+ 
+# vim:ft=ruby:

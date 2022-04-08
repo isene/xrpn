@@ -3,3 +3,5 @@ class XRPN
     return "FIX = #{@i}"
   end
 end
+ 
+# vim:ft=ruby:

@@ -3,3 +3,5 @@ class XRPN
     `xdg-open ~/.xrpn/extra/beep41.wav`
   end
 end
+ 
+# vim:ft=ruby:

@@ -4,3 +4,5 @@ class XRPN
     @a.gsub!(Regexp.new(@x), @y)
   end
 end
+ 
+# vim:ft=ruby:

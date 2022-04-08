@@ -3,3 +3,5 @@ class XRPN
     return "SIZE = A Lot"
   end
 end
+ 
+# vim:ft=ruby:

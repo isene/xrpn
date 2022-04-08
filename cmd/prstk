@@ -6,3 +6,5 @@ class XRPN
     puts "X = " + numformat(@x) + "   L = " + numformat(@l)
   end
 end
+ 
+# vim:ft=ruby:

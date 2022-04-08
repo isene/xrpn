@@ -2,3 +2,5 @@ class XRPN
   def cld
   end
 end
+ 
+# vim:ft=ruby:

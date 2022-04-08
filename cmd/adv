@@ -3,3 +3,5 @@ class XRPN
     puts "\n"
   end
 end
+ 
+# vim:ft=ruby:

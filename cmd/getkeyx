@@ -5,3 +5,5 @@ class XRPN
     key ? @x = key.ord : @x = 0
   end
 end
+ 
+# vim:ft=ruby:
