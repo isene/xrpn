@@ -1,6 +1,7 @@
 class XRPN
   def lift
-	@l = @x
+    return if @nolift
+    @l = @x
     @y, @z, @t = @x, @y, @z
   end
 end

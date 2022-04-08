@@ -1,7 +1,8 @@
 # Define the basis for the RPN class
 class XRPN
-  attr_accessor :x, :y, :z, :t, :l, :a, :d, :i, :s, :g, :o, :srg, :reg, :flg, :clk24, :prg, :pg, :pc, :rtn, :xmfile, :xmcont
+  attr_accessor :nolift, :x, :y, :z, :t, :l, :a, :d, :i, :s, :g, :o, :srg, :reg, :flg, :clk24, :prg, :pg, :pc, :rtn, :xmfile, :xmcont
   def initialize(file)
+    @nolift    = false  # Disable stacklift
     @x         = 0.0	  # X register
     @y         = 0.0	  # Y register
     @z         = 0.0    # Z register

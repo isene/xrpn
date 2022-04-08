@@ -33,7 +33,8 @@ end
 load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf')
 
 # The core of the RPN program
-@i = 0 # Counter to prevent infinite loops
+@nl = false # Nolift
+@i  = 0     # Counter to prevent infinite loops
 until @p.pc == @p.prg[@p.pg].length do
   # Enter debug mode if $debug or $prompt is set, else get next program line
   ($debug or $prompt) ? debug_mode : @line = @p.prg[@p.pg][@p.pc]
@@ -70,8 +71,10 @@ until @p.pc == @p.prg[@p.pg].length do
       @p.flg["23"] = false
     end
   end
+  @p.nolift = false if @nl
+  @p.nolift ? @nl = true : @nl = false
   @p.pc += 1 unless ($debug or $prompt)
-  @i += 1 unless ($debug or @i < 0)
+  @i    += 1 unless ($debug or @i < 0) # Handling of potential infinite loops
   if @i > 1000
     puts "Looped 1000 times. Press 'c' to continue indefinitely or any other key to stop."
     ans = STDIN.getch
