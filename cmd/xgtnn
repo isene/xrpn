@@ -5,7 +5,7 @@ class XRPN
     if @x > @reg[r]
       return "YES"
     else
-      @pc += 1 unless $debug
+      @pc += 1 unless $debug and not $sst
       return "NO"
     end
   end

@@ -53,9 +53,10 @@ def debug_mode
         puts "Line #{@p.pc}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
       end
     when "s" # Single-step the next program line
-      @p.pc += 1 if $debug
+      @p.pc += 1
       @line  = @p.prg[@p.pg][@p.pc]
       puts "Line #{@p.pc + 1}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
+      $sst   = true
       break
     when "b" # Back-step one line
       @p.pc -= 1 unless @p.pc == 0
@@ -64,9 +65,10 @@ def debug_mode
     when "--"
       @p.prg[@p.pg].delete_at(@p.pc)
     when "" # End debug mode
-      $debug = false
       @p.pc += 1
-      @line = @p.prg[@p.pg][@p.pc]
+      @line  = @p.prg[@p.pg][@p.pc]
+      $debug = false
+      $sst   = false
       break unless @p.flg["44"]
     else
       break unless @p.flg["44"]
