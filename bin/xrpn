@@ -39,7 +39,7 @@ until @p.pc == @p.prg[@p.pg].length do
   # Enter debug mode if $debug or $prompt is set, else get next program line
   ($debug or $prompt) ? debug_mode : @line = @p.prg[@p.pg][@p.pc]
   # Split command in maximum three words (e.g. STO IND 13)
-  if @line.match(/^-*[\d\.,]+$/) # If a number is supplied
+  if @line.match(/^-*[\d\.,e]+$/) # If a number is supplied
     @line.sub!(/,/, '.')
     @p.lift
     @p.x = @line.to_f

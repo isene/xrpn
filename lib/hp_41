@@ -4,6 +4,7 @@ def hp_41 (a)
   end
   a.map!{|x| x.sub( /([a-zA-Z ]*)/, &:downcase)}
   a.map!{|x| x.sub( /ENTER^/i,  "enter"      )}
+  a.map!{|x| x.sub( /E(\d+)/i,  '1e\1'       )}
   a.map!{|x| x.sub( /1\/X/i,    "recip"      )}
   a.map!{|x| x.sub( /HMS\+/i,   "hmsplus"    )}
   a.map!{|x| x.sub( /HMS-/i,    "hmsminus"   )}
