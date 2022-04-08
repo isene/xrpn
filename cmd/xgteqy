@@ -1,11 +1,6 @@
 class XRPN
   def xgteqy?
-    if @x >= @y
-      return "YES"
-    else
-      @pc += 1 unless $debug and not $sst
-      return "NO"
-    end
+    @x >= @y ? conditional(true) : conditional(false)
   end
 end
  

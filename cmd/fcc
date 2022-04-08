@@ -1,12 +1,7 @@
 class XRPN
   def fcc? (r)
-    if @flg[r] == false
-      return "YES"
-    else
-      @pc += 1 unless $debug and not $sst
-      return "NO"
-    end
-    @flg[r] = false
+    @flg[r] == false ? conditional(true) : conditional(false)
+    @flg[r]  = false
   end
 end
  

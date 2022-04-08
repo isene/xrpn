@@ -1,11 +1,6 @@
 class XRPN
   def xeq0?
-    if @x == 0
-      return "YES"
-    else
-      @pc += 1 unless $debug and not $sst
-      return "NO"
-    end
+    @x == 0 ? conditional(true) : conditional(false)
   end
 end
  

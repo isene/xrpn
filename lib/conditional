@@ -1,0 +1,10 @@
+def conditional(t)
+  if t
+    return "YES"
+  else
+    @pc += 1 unless $debug and not $sst
+    return "NO"
+  end
+end
+ 
+# vim:ft=ruby:

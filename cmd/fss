@@ -1,12 +1,7 @@
 class XRPN
   def fss? (r)
-    if @flg[r] == true
-      return "YES"
-    else
-      @pc += 1 unless $debug and not $sst
-      return "NO"
-    end
-    @flg[r] = true
+    @flg[r] == true ? conditional(true) : conditional(false)
+    @flg[r]  = true
   end
 end
  
