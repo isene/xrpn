@@ -64,6 +64,8 @@ until @p.pc == @p.prg[@p.pg].length do
         puts "Command needs an argument."
       rescue TypeError
         puts "Wrong type."
+      rescue Math::DomainError
+        puts "Number out of domain."
       end
       puts ret if $debug and ret.instance_of? String
       puts ret if not $debug and ret.to_s.match(/Error:/)
