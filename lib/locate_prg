@@ -14,10 +14,13 @@ def locate_prg (l)
       pos = i + @pc if e == lbl
       break if pos != nil
     end
-    @prg[@pg][0..@pc].each_with_index do |e, i|
-      pos = i if e == lbl
-      break if pos != nil
-    end
+   pos = @prg[@pg].index {|e| e == lbl} if pos == nil
+   #if pos == nil
+   #  @prg[@pg][0..@pc].each_with_index do |e, i|
+   #    pos = i if e == lbl
+   #    break if pos != nil
+   #  end
+   #end
     page = @pg
   end
   if pos != nil
