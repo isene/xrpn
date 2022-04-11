@@ -54,6 +54,10 @@ def debug_mode
       end
     when "s" # Single-step the next program line
       @p.pc += 1
+      if @p.pc == @p.prg[@p.pg].length
+        @line = "END"
+        break
+      end
       @line  = @p.prg[@p.pg][@p.pc]
       puts "Line #{@p.pc + 1}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
       $sst   = true
