@@ -12,6 +12,7 @@ class XRPN
     @reg[(@srg.to_i + 3).to_s] -= @y * @y
     @reg[(@srg.to_i + 4).to_s] -= @x * @y
     @reg[(@srg.to_i + 5).to_s] -= 1 
+    @nolift = true
   end
 end
  

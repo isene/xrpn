@@ -1,6 +1,7 @@
 class XRPN
   def enter
     lift
+    @nolift = true
   end
 end
 
