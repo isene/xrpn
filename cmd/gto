@@ -1,5 +1,9 @@
 class XRPN
   def gto (l)
+    if l.match(/^\./)
+      @pc = l.sub(/^\./, "").to_i - 1
+      return
+    end
     page, pos = locate_prg (l)
     if pos == nil
       if l.match(/".*"/)
