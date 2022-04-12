@@ -2,11 +2,16 @@
 options = {}
 optparse = OptionParser.new do |opts|
   # Set a banner, displayed at the top of the help screen.
-  opts.banner = "Usage: rpn [options]"
+  opts.banner = "Usage: xrpn [options]"
 
   # Define the options, and what they do
-  opts.on('-f', '--file RPN-file', 'Specify the file to process') { |f| $file = f }
-  opts.on('-l', '--load RPN-file', 'Specify a file to load (but not run)') { |l| @lfile = l }
+  opts.on('-f', '--file RPN-file', 'Specify the file to process')         { |f| $file  = f }
+  opts.on('-l', '--load RPN-file', 'Specify a file to load, but not run') { |l| @lfile = l }
+  opts.on('-x', '--X X-value', 'Set initial value in the X register')     { |x| @x = x.to_f }
+  opts.on('-y', '--Y Y-value', 'Set initial value in the Y register')     { |y| @y = y.to_f }
+  opts.on('-z', '--Z Z-value', 'Set initial value in the Z register')     { |z| @z = z.to_f }
+  opts.on('-t', '--T T-value', 'Set initial value in the T register')     { |t| @t = t.to_f }
+  opts.on('-a', '--Alpha Alpha-string', 'Set initial string in Alpha')    { |a| @a = a.to_s }
   opts.on('-h', 'Display SHORT help text') do
     puts opts
     exit

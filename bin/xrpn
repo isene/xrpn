@@ -10,6 +10,7 @@ require 'open-uri'
 require 'json'
 
 # Read libraries
+@x, @y, @z, @t, @a = 0, 0, 0, 0, ""
 Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file }
 $file  = "" if $file  == nil
 @lfile = "" if @lfile == nil
@@ -20,6 +21,7 @@ read_cmd
 # Initialize
 @p   = XRPN.new($file)
 @i, @s, @d = @p.i, @p.s, @p.o
+@p.x, @p.y, @p.z, @p.t, @p.a = @x, @y, @z, @t, @a
 if $file == ""
   @p.prg[@p.pg] = ["LBL \"XRPN\"", "END"]
 end
