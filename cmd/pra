@@ -1,0 +1,7 @@
+class XRPN
+  def pra
+	  puts "α = \"#{@a}\""
+  end
+end
+ 
+# vim:ft=ruby:
