@@ -11,13 +11,18 @@ require 'json'
 
 # INITIALIZE
 @x, @y, @z, @t, @a = 0, 0, 0, 0, ""
-Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file } # Read libraries
-read_cmd                                               # Read XRPN commands
+Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file }  # Read libraries
+read_cmd                                                # Read XRPN commands
 @p = XRPN.new($rfile)
 @p.x, @p.y, @p.z, @p.t, @p.a = @x, @y, @z, @t, @a
 @p.prg[@p.pg] = ["LBL \"XRPN\"", "END"] unless $rfile   # Put dummy program in page 0 if no file to run
-@p.prg[@p.pg] = File.read($lfile).split("\n") if $lfile # Read file to load but not run if -l switch is used
-@p.prg[@p.pg] = hp_41(@p.prg[@p.pg])                    # Substitute HP-41 commands with XRPN commands
+@p.prg[@p.pg] = hp_41(@p.prg[@p.pg]) if $rfile          # Substitute HP-41 commands with XRPN commands
+if $lfile                                               # Read file to load but not run if -l switch is used
+  $lfile.each_with_index do |f, i|
+    @p.prg[i] = File.read(f).split("\n")
+    @p.prg[i] = hp_41(@p.prg[i])
+  end
+end
 read_state($sfile) if $sfile                            # Read state file in ~.xrpn/ if -s switch is used
 $debug = true      if $lfile or $sfile                  # Do not run loaded program or program in state file
 load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf') # Read config file
