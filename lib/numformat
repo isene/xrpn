@@ -1,6 +1,6 @@
 def numformat(n)
-  return "Inf" if n.infinite?
   return n unless n.is_a? Numeric
+  return "Inf" if n.infinite?
   return n.to_num(@s,@i,@g,!@flg["28"],@flg["29"])
 end
 

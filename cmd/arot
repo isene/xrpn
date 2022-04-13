@@ -5,7 +5,7 @@ class XRPN
       @a = @a[(r + 1)..] + @a[0..r]
     elsif @x < 0
       r  = (@x - 1).abs.to_i
-      @a = @a[-(r - 1)..] + @a[0..r]
+      @a = @a[(r - 1)..] + @a[0..(r - 2)]
     end
   end
 end
