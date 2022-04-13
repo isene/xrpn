@@ -5,9 +5,9 @@ optparse = OptionParser.new do |opts|
   opts.banner = "Usage: xrpn [options]"
 
   # Define the options, and what they do
-  opts.on('-f', '--file XRPN-file', 'Specify the file to process')         { |f| $file  = f  }
-  opts.on('-l', '--load XRPN-file', 'Specify a file to load, but not run') { |l| @lfile = l  }
-  opts.on('-s', '--state STATE', 'Load a State file')                      { |s| @sfile = s  }
+  opts.on('-f', '--file XRPN-file', 'Specify the file to process')         { |f| $rfile = f  }
+  opts.on('-l', '--load XRPN-file', 'Specify a file to load, but not run') { |l| $lfile = l  }
+  opts.on('-s', '--state STATE', 'Load a State file')                      { |s| $sfile = s  }
   opts.on('-x', '--X X-value', 'Set initial value in the X register')      { |x| @x = x.to_f }
   opts.on('-y', '--Y Y-value', 'Set initial value in the Y register')      { |y| @y = y.to_f }
   opts.on('-z', '--Z Z-value', 'Set initial value in the Z register')      { |z| @z = z.to_f }

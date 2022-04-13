@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
 
-# Get extensions
+# GET EXTENSIONS
 require 'optparse'
 require 'io/console'
 require 'date'
@@ -9,35 +9,19 @@ require 'bigdecimal'
 require 'open-uri'
 require 'json'
 
-# Read libraries
-@x, @y, @z, @t, @a = 0, 0, 0, 0, ""
-Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file }
-$file  = "" if $file  == nil
-@lfile = "" if @lfile == nil
-@sfile = "" if @sfile == nil
+Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file } # Read libraries
+read_cmd                                               # Read XRPN commands
 
-# Read all the RPN commands
-read_cmd
+# INITIALIZE
+@p = XRPN.new($rfile)
+@p.prg[@p.pg] = ["LBL \"XRPN\"", "END"] unless $rfile   # Put dummy program in page 0 if no file to run
+@p.prg[@p.pg] = File.read($lfile).split("\n") if $lfile # Read file to load but not run if -l switch is used
+@p.prg[@p.pg] = hp_41(@p.prg[@p.pg])                    # Substitute HP-41 commands with XRPN commands
+read_state($sfile) if $sfile                            # Read state file in ~.xrpn/ if -s switch is used
+$debug = true      if $lfile or $sfile                  # Do not run loaded program or program in state file
+load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf') # Read config file
 
-# Initialize
-@p   = XRPN.new($file)
-@i, @s, @d = @p.i, @p.s, @p.o
-@p.x, @p.y, @p.z, @p.t, @p.a = @x, @y, @z, @t, @a
-if $file == ""
-  @p.prg[@p.pg] = ["LBL \"XRPN\"", "END"]
-end
-@p.prg[@p.pg] = hp_41(@p.prg[@p.pg]) # Substitute various HP-41 commands with VIS commands
-if @lfile != ""
-  @p.prg[@p.pg] = File.read(@lfile).split("\n")
-  @p.prg[@p.pg] = hp_41(@p.prg[@p.pg])
-  $debug = true
-end
-read_state(@sfile) if @sfile != ""
-
-# Read config file
-load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf')
-
-# The core of the RPN program
+# THE CORE OF THE RPN PROGRAM
 @nl = false # Nolift
 @i  = 0     # Counter to prevent infinite loops
 until @p.pc == @p.prg[@p.pg].length do

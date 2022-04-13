@@ -23,7 +23,7 @@ class XRPN
     @clk24     = false  # 24 hour time
     @pg        = 0      # Active Page
     @prg       = []     # Active Program
-    @prg[0]    = File.read(file).split("\n") unless $file == ""
+    @prg[0]    = File.read(file).split("\n") if $rfile
     @pc        = 0      # Active Program Counter (current step in the active program)
     @rtn       = []     # Return stack
     @xmfile    = ""     # Current eXtended Memory file
