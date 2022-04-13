@@ -1,0 +1,6 @@
+def read_state (fn = "conf")
+  @p.flg["23"] = false
+  load (Dir.home + "/.xrpn/" + fn)
+end
+ 
+# vim:ft=ruby:

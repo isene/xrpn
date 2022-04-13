@@ -14,6 +14,7 @@ require 'json'
 Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file }
 $file  = "" if $file  == nil
 @lfile = "" if @lfile == nil
+@sfile = "" if @sfile == nil
 
 # Read all the RPN commands
 read_cmd
@@ -27,9 +28,11 @@ if $file == ""
 end
 @p.prg[@p.pg] = hp_41(@p.prg[@p.pg]) # Substitute various HP-41 commands with VIS commands
 if @lfile != ""
-  @p.prg[1] = File.read(@lfile).split("\n")
-  @p.prg[1] = hp_41(@p.prg[1]) 
+  @p.prg[@p.pg] = File.read(@lfile).split("\n")
+  @p.prg[@p.pg] = hp_41(@p.prg[@p.pg])
+  $debug = true
 end
+read_state(@sfile) if @sfile != ""
 
 # Read config file
 load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf')
