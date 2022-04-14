@@ -1,0 +1,10 @@
+def error(msg)
+  if @p.flg["25"]
+    @p.flg["25"] = false
+  else
+    puts msg
+    @p.stop
+  end
+end
+ 
+# vim:ft=ruby:

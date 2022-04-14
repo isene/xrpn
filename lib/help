@@ -1,10 +1,12 @@
-def error(msg)
-  if @p.flg["25"]
-    @p.flg["25"] = false
-  else
-    puts msg
-    @p.stop
-  end
+def help
+puts <<HELPTEXT
+XRPN is a stack-based programming language. It uses Reverse Polish Notation for calculations.
+The language is a superset of FOCAL, implementing the full set of HP-41CX calculator commands.
+XRPN is on-the-fly extensible. Language functions can be upgraded or implemented while programs are running.
+It runs programs in text files or manually in debug mode (if no text file is supplied or when a program stops)
+XRPN implements indirect adressing, self-modification and features well beyond the FOCAL language.
+For detailed information, visit the GitHub page: https://github.com/isene/xrpn
+HELPTEXT
 end
  
 # vim:ft=ruby:
