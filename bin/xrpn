@@ -57,10 +57,11 @@ until @p.pc == @p.prg[@p.pg].length do
         l2 ? ret = @p.send(l1.downcase, l2) : ret = @p.send(l1.downcase)
       rescue ArgumentError
         puts "Command needs an argument."
+        @p.stop
       rescue TypeError
-        puts "Wrong type."
+        error("Wrong type.")
       rescue Math::DomainError
-        puts "Number out of domain."
+        error("Number out of domain.")
       end
       puts ret if $debug and ret.instance_of? String
       puts ret if not $debug and ret.to_s.match(/Error:/)
