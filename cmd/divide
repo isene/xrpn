@@ -1,13 +1,8 @@
 class XRPN
   def /
-    begin
-      throw if @x == 0
-      @l = @x
-      @x = @y / @x
-      dropy
-    rescue
-      return "Error: Division by zero"
-    end
+    @l = @x
+    @x = @y / @x
+    dropy
   end
 end
  

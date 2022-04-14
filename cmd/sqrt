@@ -1,11 +1,7 @@
 class XRPN
   def sqrt
     @l = @x
-    begin
-      @x = Math::sqrt(@x)
-    rescue
-      return "Error: Square root of negative number."
-    end
+    @x = Math::sqrt(@x)
   end
 end
  

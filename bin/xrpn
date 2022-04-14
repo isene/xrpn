@@ -59,9 +59,13 @@ until @p.pc == @p.prg[@p.pg].length do
         puts "Command needs an argument."
         @p.stop
       rescue TypeError
-        error("Wrong type.")
+        error("ERROR: Wrong type.")
+      rescue ZeroDivisionError
+        error("ERROR: Division by zero.")
+      rescue FloatDomainError
+        error("ERROR: Number out of range.")
       rescue Math::DomainError
-        error("Number out of domain.")
+        error("ERROR: Number out of domain.")
       end
       puts ret if $debug and ret.instance_of? String
       puts ret if not $debug and ret.to_s.match(/Error:/)
