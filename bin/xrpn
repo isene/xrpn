@@ -40,8 +40,14 @@ until @p.pc == @p.prg[@p.pg].length do
     @p.x = @line.to_f
     @p.flg["22"] = true
     @p.flg["23"] = false
-  elsif @line.match(/^".*"/) # If an Alpha string is supplied
-    @line.match(/^"\|.*/) ? @p.a += @line.sub(/\|-*/, '').gsub(/\"/, '') : @p.a = @line.gsub(/\"/, '')
+  elsif @line.match(/^>?".*"/) # If an Alpha string is supplied
+    if @line.match(/^"\|/)
+      @p.a += @line.sub(/\|-?/, '').gsub(/\"/, '')
+    elsif @line.match(/^>"/)
+      @p.a += @line.sub(/>/, '').gsub(/\"/, '')
+    else
+      @p.a = @line.gsub(/\"/, '')
+    end
     @p.flg["22"] = false
     @p.flg["23"] = true
   else
