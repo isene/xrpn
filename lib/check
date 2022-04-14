@@ -1,0 +1,26 @@
+def check(file)
+  load Dir.home+"/.xrpn/lib/read_cmd"
+  read_cmd
+  errors = 0
+  if File.exist?(file) 
+    cfile = File.read(file).split("\n")
+  else
+    puts "No such file: #{file}"
+    exit
+  end
+  cfile41 = hp_41(cfile.dup)
+  cfile41.each_with_index do |line, i|
+    if line.match(/^-*[\d\.,e]+$/)
+    elsif line.match(/^>?".*"/)
+    else
+      l1 = line.split[0]
+      if not $cmd.include?(l1.downcase)
+        puts "Line #{i + 1}: No such command: #{cfile[i]}"
+        errors += 1
+      end
+    end
+  end
+  puts "Errors = #{errors}"
+end
+ 
+# vim:ft=ruby:

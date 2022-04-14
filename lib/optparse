@@ -6,10 +6,9 @@ optparse = OptionParser.new do |opts|
 
   # Define the options, and what they do
   opts.on('-f', '--file program', 'Specify the file to process')             { |f| $rfile = f  }
-  opts.on('-l', '--load program(s)', Array, 'Specify file(s) to load, but not run') do |l| 
-    $lfile = l
-  end
+  opts.on('-l', '--load program(s)', Array, 'File(s) to load, but not run')  { |l| $lfile = l  }
   opts.on('-s', '--state STATE', 'Load a State file')                        { |s| $sfile = s  }
+  opts.on('-c', '--check program', 'Program file to check for errors')       { |c| check(c); exit }
   opts.on('-x', '--X X-value', 'Set initial value in the X register')        { |x| @x = x.to_f }
   opts.on('-y', '--Y Y-value', 'Set initial value in the Y register')        { |y| @y = y.to_f }
   opts.on('-z', '--Z Z-value', 'Set initial value in the Z register')        { |z| @z = z.to_f }

@@ -54,7 +54,7 @@ until @p.pc == @p.prg[@p.pg].length do
     l2 = "%02d" % [l2] if l2 == l2.to_i.to_s
     l3 = "%02d" % [l3] if l3 == l3.to_i.to_s
     l2 = ind(l3) if l3 # If middle word is "IND" (or anything actually - since IND is the only possibility)
-    if not ($cmd.include?(l1.downcase) or l1.match(/^-*[\d\.,]+$/) or l1.match(/^".*/) ) # Catch unknown command
+    if not $cmd.include?(l1.downcase) # Catch unknown command
       puts "No such command: #{l1}"
       @p.stop
     elsif XRPN.method_defined?(l1.downcase) # Or execute the command with either 1 or 2 parts
