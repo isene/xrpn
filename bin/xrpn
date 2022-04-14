@@ -28,29 +28,28 @@ $debug = true      if $lfile or $sfile                  # Do not run loaded prog
 load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf') # Read config file
 
 # THE CORE OF THE RPN PROGRAM
-@nl = false # Nolift
+@nl = false # Nolift set to false
 @i  = 0     # Counter to prevent infinite loops
 until @p.pc == @p.prg[@p.pg].length do
-  # Enter debug mode if $debug or $prompt is set, else get next program line
+  # Enter debug mode if $debug or $prompt is set, else read next program line
   ($debug or $prompt) ? debug_mode : @line = @p.prg[@p.pg][@p.pc]
-  # Split command in maximum three words (e.g. STO IND 13)
   if @line.match(/^-*[\d\.,e]+$/) # If a number is supplied
     @line.sub!(/,/, '.')
     @p.lift
     @p.x = @line.to_f
-    @p.flg["22"] = true
+    @p.flg["22"] = true  # Number has been entered
     @p.flg["23"] = false
-  elsif @line.match(/^>?".*"/) # If an Alpha string is supplied
+  elsif @line.match(/^>?".*"/) # If an Alpha string is supplied 
     if @line.match(/^"\|/)
-      @p.a += @line.sub(/\|-?/, '').gsub(/\"/, '')
+      @p.a += @line.sub(/\|-?/, '').gsub(/\"/, '') # Append to Alpha if "|abc", "|-abc"
     elsif @line.match(/^>"/)
-      @p.a += @line.sub(/>/, '').gsub(/\"/, '')
+      @p.a += @line.sub(/>/, '').gsub(/\"/, '')    # Append to Alpha if >"abc"
     else
-      @p.a = @line.gsub(/\"/, '')
+      @p.a = @line.gsub(/\"/, '') # ...or set Alpha to the supplied string
     end
     @p.flg["22"] = false
-    @p.flg["23"] = true
-  else
+    @p.flg["23"] = true  # String has been entered
+  else # Split command in maximum three words (e.g. STO IND 13)
     l1, l2, l3 = @line.split[0], @line.split[1], @line.split[2]
     l2 = "%02d" % [l2] if l2 == l2.to_i.to_s
     l3 = "%02d" % [l3] if l3 == l3.to_i.to_s
@@ -58,7 +57,7 @@ until @p.pc == @p.prg[@p.pg].length do
     if not ($cmd.include?(l1.downcase) or l1.match(/^-*[\d\.,]+$/) or l1.match(/^".*/) ) # Catch unknown command
       puts "No such command: #{l1}"
       @p.stop
-    elsif XRPN.method_defined?(l1.downcase) # Or execute the command with either 0, 1 or 2 parameters
+    elsif XRPN.method_defined?(l1.downcase) # Or execute the command with either 1 or 2 parts
       begin
         l2 ? ret = @p.send(l1.downcase, l2) : ret = @p.send(l1.downcase)
       rescue ArgumentError
@@ -73,7 +72,7 @@ until @p.pc == @p.prg[@p.pg].length do
       rescue Math::DomainError
         error("ERROR: Number out of domain.")
       end
-      puts ret if $debug and ret.instance_of? String
+      puts ret if     $debug and ret.instance_of? String
       puts ret if not $debug and ret.to_s.match(/Error:/)
       @p.flg["22"] = false
       @p.flg["23"] = false
