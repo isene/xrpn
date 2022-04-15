@@ -1,8 +1,8 @@
 class XRPN
   def sin
     @l = @x
-    @x = @x * Math::PI / 180 if @deg == "deg"
-    @x = @x * Math::PI / 200 if @deg == "grad"
+    @x = @x.to_rad  if @deg == "deg"
+    @x = @x.to_radg if @deg == "grad"
     @x = Math::sin(@x)
   end
 end

@@ -1,14 +1,33 @@
 class Numeric
+
   def frc
     f = BigDecimal(self.to_s) - BigDecimal(self.to_s).to_i
     return BigDecimal(f.to_s).to_s('F').to_f
   end
+	
+  def to_rad
+	  self * Math::PI / 180 
+  end
+  def to_radg
+	  self * Math::PI / 200 
+  end
+  def to_deg
+	  self * 180 / Math::PI 
+  end
+  def to_grad
+	  self * 200 / Math::PI 
+  end
+  
   def to_num(n=3, i=2, g=1, c=false, p=false)
-    # n: Threshold for when to show exponent
-    # i: Number og digits after the period
-    # g: Exponent grouping g=3 would always show exponent as a multiple of 3
-    # c: Use comma instead of period (European format)
-    # p: Separator per 3 digits (period if c=false, space when c=true)
+    # n:  Threshold for when to show exponent
+    # i:  Number og digits after the period
+    # g:  Exponent grouping g=3 would always show exponent as a multiple of 3
+    # c:  Use comma instead of period (European format)
+    # p:  Separator per 3 digits (period if c=false, space when c=true)
+    # e:  Exponent
+    # ge: Grouped exponent
+    # x:  Absolute value of number less exponent
+    # s:  String to be displayed
     n = g if g > n
     self != 0 ? e = Math::log10(self.abs).floor : e = 0
     ge = g*(e/g).to_i
@@ -17,7 +36,7 @@ class Numeric
     s  = x.to_i.to_s
     self < 0 ? m = "-" : m  = ""
     s.sub!(/-/, '')
-    f  = x.frc.round(i)
+    f  = x.frc.to_s[0..(i + 1)].to_f
     f  = f.to_s.sub(/../, '')
     i > 0 ? s.sub!(/(\d*\.)(\d{,#{i}}).*/, '\1\2') : s.sub!(/(\d*).*/, '\1') 
     if e.abs >= n # If exponent kicks in
