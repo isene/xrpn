@@ -38,6 +38,7 @@ Usage: xrpn [options]
     -a, --Alpha Alpha-string         Set initial string in Alpha
     -h                               Display SHORT help text
         --help                       Display LONG help text
+    -v, --version                    Display the XRPN version number
 ```
 
 ## FOCAL and the HP-41 system

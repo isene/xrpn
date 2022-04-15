@@ -14,16 +14,9 @@ optparse = OptionParser.new do |opts|
   opts.on('-z', '--Z Z-value', 'Set initial value in the Z register')        { |z| @z = z.to_f }
   opts.on('-t', '--T T-value', 'Set initial value in the T register')        { |t| @t = t.to_f }
   opts.on('-a', '--Alpha Alpha-string', 'Set initial string in Alpha')       { |a| @a = a.to_s }
-  opts.on('-h', 'Display SHORT help text') do
-    puts opts
-    exit
-  end
-  opts.on('--help', 'Display LONG help text') do
-    help
-    puts
-    puts opts
-    exit
-  end
+  opts.on('-h', 'Display SHORT help text')                                   { puts opts; exit }
+  opts.on('--help', 'Display LONG help text')                     { help; puts; puts opts; exit}
+  opts.on('-v', '--version', 'Display the XRPN version number')              { version; exit   }
 end
 optparse.parse!
  

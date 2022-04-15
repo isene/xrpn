@@ -1,0 +1,5 @@
+def version
+  puts "XRPN version: 0.9"
+end
+ 
+# vim:ft=ruby:
