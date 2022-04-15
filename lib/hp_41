@@ -6,6 +6,7 @@ def hp_41 (a)
   a.map!{|x| x.sub( /ENTER\^/i,  "enter"      )}
   a.map!{|x| x.sub( /R\^/i,      "rup"        )}
   a.map!{|x| x.sub( /X\^2/i,     "sqr"        )}
+  a.map!{|x| x.sub( /X\*\*2/i,   "sqr"        )}
   a.map!{|x| x.sub( /E(\d+)/i,   '1e\1'       )}
   a.map!{|x| x.sub( /1\/X/i,     "recip"      )}
   a.map!{|x| x.sub( /HMS\+/i,    "hmsplus"    )}
@@ -15,20 +16,32 @@ def hp_41 (a)
   a.map!{|x| x.sub( /Σ-/i,       "sminus"     )}
   a.map!{|x| x.sub( /S\+/i,      "splus"      )}
   a.map!{|x| x.sub( /S-/i,       "sminus"     )}
-  a.map!{|x| x.sub( /ST\+/i,     "stplus"     )}
-  a.map!{|x| x.sub( /ST-/i,      "stsubtract" )}
-  a.map!{|x| x.sub( /ST\*/i,     "stmultiply" )}
-  a.map!{|x| x.sub( /ST\//i,     "stdivide"   )}
+  a.map!{|x| x.sub( /SIGMA\+/i,  "splus"      )}
+  a.map!{|x| x.sub( /SIGMA-/i,   "sminus"     )}
+  a.map!{|x| x.sub( /SIGMAREG/,  "sreg"       )}
+  a.map!{|x| x.sub( /CLSIGMA/,   "cls"        )}
+  a.map!{|x| x.sub( /STO?\+/i,   "stplus"     )}
+  a.map!{|x| x.sub( /STO?-/i,    "stsubtract" )}
+  a.map!{|x| x.sub( /STO?\*/i,   "stmultiply" )}
+  a.map!{|x| x.sub( /STO?\//i,   "stdivide"   )}
   a.map!{|x| x.sub( /%CH/i,      "perch"      )}
   a.map!{|x| x.sub( /Y\^X/i,     "pow"        )}
+  a.map!{|x| x.sub( /Y\*\*X/i,   "pow"        )}
   a.map!{|x| x.sub( /LN1\+X/i,   "ln1x"       )}
   a.map!{|x| x.sub( /E\^X-1/i,   "expx1"      )} # Must come before next
   a.map!{|x| x.sub( /E\^X/i,     "exp"        )}
+  a.map!{|x| x.sub( /E\*\*X-1/i, "expx1"      )} # Must come before next
+  a.map!{|x| x.sub( /E\*\*X/i,   "exp"        )}
   a.map!{|x| x.sub( /10\^X/i,    "tenx"       )}
+  a.map!{|x| x.sub( /10\*\*X/i,  "tenx"       )}
   a.map!{|x| x.sub( /P-R/i,      "p_r"        )}
+  a.map!{|x| x.sub( /P->R/i,     "p_r"        )}
   a.map!{|x| x.sub( /R-P/i,      "r_p"        )}
+  a.map!{|x| x.sub( /R->P/i,     "r_p"        )}
   a.map!{|x| x.sub( /D-R/i,      "d_r"        )}
+  a.map!{|x| x.sub( /D->R/i,     "d_r"        )}
   a.map!{|x| x.sub( /R-D/i,      "r_d"        )}
+  a.map!{|x| x.sub( /R->D/i,     "r_d"        )}
   a.map!{|x| x.sub( /X<>Y/i,     "xy"         )}
   a.map!{|x| x.sub( /X<>F/i,     "xf"         )}
   a.map!{|x| x.sub( /X<>/i,      "xnn"        )}
@@ -38,6 +51,7 @@ def hp_41 (a)
   a.map!{|x| x.sub( /X=Y\?/i,    "xeqy?"      )}
   a.map!{|x| x.sub( /X#Y\?/i,    "xneqy?"     )}
   a.map!{|x| x.sub( /X!=Y\?/i,   "xneqy?"     )}
+  a.map!{|x| x.sub( /X<>Y\?/i,   "xneqy?"     )}
   a.map!{|x| x.sub( /X<Y\?/i,    "xlty?"      )}
   a.map!{|x| x.sub( /X<=Y\?/i,   "xlteqy?"    )}
   a.map!{|x| x.sub( /X>Y\?/i,    "xgty?"      )}
@@ -45,6 +59,7 @@ def hp_41 (a)
   a.map!{|x| x.sub( /X=0\?/i,    "xeq0?"      )}
   a.map!{|x| x.sub( /X#0\?/i,    "xneq0?"     )}
   a.map!{|x| x.sub( /X!=0\?/i,   "xneq0?"     )}
+  a.map!{|x| x.sub( /X<>0\?/i,   "xneq0?"     )}
   a.map!{|x| x.sub( /X<0\?/i,    "xlt0?"      )}
   a.map!{|x| x.sub( /X<=0\?/i,   "xlteq0?"    )}
   a.map!{|x| x.sub( /X>0\?/i,    "xgt0?"      )}
@@ -52,11 +67,13 @@ def hp_41 (a)
   a.map!{|x| x.sub( /X=NN\?/i,   "xeqnn?"     )}
   a.map!{|x| x.sub( /X#NN\?/i,   "xneqnn?"    )}
   a.map!{|x| x.sub( /X!=NN\?/i,  "xneqnn?"    )}
+  a.map!{|x| x.sub( /X<>NN\?/i,  "xneqnn?"    )}
   a.map!{|x| x.sub( /X<NN\?/i,   "xltnn?"     )}
   a.map!{|x| x.sub( /X<=NN\?/i,  "xlteqnn?"   )}
   a.map!{|x| x.sub( /X>NN\?/i,   "xgtnn?"     )}
   a.map!{|x| x.sub( /X>=NN\?/i,  "xgteqnn?"   )}
   a.map!{|x| x.sub( /T\+X/i,     "tx"         )}
+  a.map!{|x| x.sub( /GOTO/i,     "gto"        )}
   return a
 end
  
