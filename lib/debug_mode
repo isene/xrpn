@@ -76,12 +76,13 @@ def debug_mode
     when "b" # Back-step one line
       @p.pc -= 1 unless @p.pc == 0
     when /^\+\+ /
-      @p.prg[@p.pg].insert(@p.pc, @line.sub(/^\+\+ /, ''))
+      @p.prg[@p.pg].insert(@p.pc + 1, @line.sub(/^\+\+ /, ''))
     when "--"
       @p.prg[@p.pg].delete_at(@p.pc)
-    when "" # End debug mode
+    when nil # End debug mode
       @p.pc += 1
       @line  = @p.prg[@p.pg][@p.pc]
+      @line  = "end" if @line == nil
       $debug = false
       $sst   = false
       break unless @p.flg["44"]
