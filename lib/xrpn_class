@@ -1,6 +1,6 @@
 # Define the basis for the RPN class
 class XRPN
-  attr_accessor :nolift, :x, :y, :z, :t, :l, :a, :d, :i, :s, :g, :o, :srg, :reg, :flg, :clk24, :prg, :pg, :pc, :rtn, :xmfile, :xmcont
+  attr_accessor :nolift, :x, :y, :z, :t, :l, :a, :i, :s, :g, :deg, :srg, :reg, :flg, :clk24, :pg, :prg, :pc, :rtn, :xmfile, :xmcont
   def initialize(file)
     @nolift    = false  # Disable stacklift
     @x         = 0.0	  # X register
@@ -12,7 +12,7 @@ class XRPN
     @i         = 4      # Fix (and Sci/Eng) nu,ber of digiet after period
     @s         = 9      # Threshold for when exponents kick in
     @g         = 1      # Exponent grouping (set to 3 when ENG mode is set)
-    @d         = "deg"  # Degree mode (or "rad" for Radians or "grad" for 400°
+    @deg       = "deg"  # Degree mode (or "rad" for Radians or "grad" for 400°
     @srg       = 11     # Statistics registers start
     @reg       = {}     # Registers are stored in a Hash
     @flg       = {}     # Flags are stored in a Hash
