@@ -7,7 +7,7 @@ def hp_41 (a)
   a.map!{|x| x.sub( /R\^/i,      "rup"        )}
   a.map!{|x| x.sub( /X\^2/i,     "sqr"        )}
   a.map!{|x| x.sub( /X\*\*2/i,   "sqr"        )}
-  a.map!{|x| x.sub( /E(\d+)/i,   '1e\1'       )}
+  a.map!{|x| x.sub( /^E(\d+)/i,  '1e\1'       )}
   a.map!{|x| x.sub( /1\/X/i,     "recip"      )}
   a.map!{|x| x.sub( /HMS\+/i,    "hmsplus"    )}
   a.map!{|x| x.sub( /HMS-/i,     "hmsminus"   )}
