@@ -79,7 +79,10 @@ def debug_mode
       @p.prg[@p.pg].insert(@p.pc + 1, @line.sub(/^\+\+ /, ''))
     when "--"
       @p.prg[@p.pg].delete_at(@p.pc)
-    when nil # End debug mode
+    when nil # A simple ENTER
+      @line = "lift"
+      break
+    when "r" # End debug mode
       @p.pc += 1
       @line  = @p.prg[@p.pg][@p.pc]
       @line  = "end" if @line == nil
