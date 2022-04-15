@@ -1,7 +1,6 @@
 def hp_41 (a)
-  if a[0].match(/^\d\d/) # Remove line numbers from program
-    a.map! { |x| x.sub(/^\s*\d\d+[^0-9.]/, "" )}
-  end
+  a.map!{|x| x.sub( /^\s*/,      ""           )} # Remove spaces at start of line
+  a.map!{|x| x.sub( /^\d\d+\s[^0-9.]/, ""     )} # Remove line numbers from program
   a.map!{|x| x.sub( /\s+$/,      ""           )}
   a.map!{|x| x.sub( /([a-zA-Z ]*)/, &:downcase)}
   a.map!{|x| x.sub( /ENTER\^/i,  "enter"      )}
