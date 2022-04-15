@@ -35,7 +35,7 @@ def debug_mode
       @p.srg = 11
       @p.reg = {}
       @p.flg = {}
-    when "r" # Reload all commands from the cmd directory
+    when "R" # Reload all commands from the cmd directory
       read_cmd
       puts "Commands reloaded."
     when "l" # Show current line
