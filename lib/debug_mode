@@ -40,20 +40,28 @@ def debug_mode
       puts "Commands reloaded."
     when "l" # Show current line
       @line  = @p.prg[@p.pg][@p.pc]
-      puts "Line #{@p.pc + 1}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
+      puts "Line #{@p.pc + 1}: \"#{@line}\"" # Line 1 is @p.prg[@p.pg][0]
     when "n" # Show next line
       if @p.pc + 1 > @p.prg[@p.pg].length
         puts "End of program"
       else
         @line = @p.prg[@p.pg][@p.pc + 1]
-        puts "Line #{@p.pc + 2}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
+        puts "Line #{@p.pc + 2}: \"#{@line}\"" # Line 1 is @p.prg[@p.pg][0]
       end
     when "p" # Show previous line
       if @p.pc - 1 < 0
         puts "Beginning of program"
       else
         @line  = @p.prg[@p.pg][@p.pc - 1]
-        puts "Line #{@p.pc}: #{@line}" # Line 1 is @p.prg[@p.pg][0]
+        puts "Line #{@p.pc}: \"#{@line}\"" # Line 1 is @p.prg[@p.pg][0]
+      end
+    when "S" # Go to next line without executing it
+      @p.pc += 1
+      if @p.pc > @p.prg[@p.pg].length
+        puts "End of program"
+      else
+        @line = @p.prg[@p.pg][@p.pc + 1]
+        puts "Line #{@p.pc + 2}: \"#{@line}\"" # Line 1 is @p.prg[@p.pg][0]
       end
     when "s" # Single-step the next program line
       @p.pc += 1
