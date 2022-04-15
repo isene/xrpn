@@ -1,6 +1,5 @@
 class XRPN
   def getfile
-    @l = @x
     lift
     begin
       @x = File.read(@a)

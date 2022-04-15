@@ -1,5 +1,6 @@
 class XRPN
   def getkeyx
+    @l = @x
     key = STDIN.getch(min: 0, time: @x)
     lift
     key ? @x = key.ord : @x = 0

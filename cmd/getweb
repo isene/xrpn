@@ -1,6 +1,5 @@
 class XRPN
   def getweb
-    @l = @x
     lift
     begin
       @x = open(@a) {|f| f.read }

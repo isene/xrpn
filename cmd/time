@@ -1,6 +1,5 @@
 class XRPN
   def time
-    @l = @x
     lift
     @x = Time.now.strftime("%H.%M%s").to_f
   end

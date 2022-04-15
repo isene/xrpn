@@ -1,6 +1,5 @@
 class XRPN
   def pi
-    @l = @x
     lift
     @x = Math::PI
   end

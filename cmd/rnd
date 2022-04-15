@@ -1,5 +1,6 @@
 class XRPN
   def rnd
+    @l = @x
     @x = @x.round(@i)
   end
 end

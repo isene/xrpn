@@ -1,7 +1,6 @@
 class XRPN
   def getx
     # No reason to not allow ascii files to be read into regs
-    @l = @x
     lift
     @x = @xmcont[@xmcont[0][3] + 1]
     @xmcont[0][3] += 1

@@ -3,11 +3,9 @@ class XRPN
     f = Dir.home + "/.xrpn/data/" + @a
     if File.exist?(f + ".as")
       @xmcont = JSON.parse(File.read(f + ".as")) 
-      @l      = @x
       @x      = @xmcont[0][3]
     elsif File.exist?(f + ".da")
       @xmcont = JSON.parse(File.read(f + ".da")) 
-      @l      = @x
       @x      = @xmcont[0][3]
     else
       return "No such file: #{@a}"
