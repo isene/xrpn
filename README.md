@@ -3,7 +3,7 @@
 ## Introduction
 
 XRPN is a stack-based programming language, similar to [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)), but simpler in nature.
-
+ 
 XRPN is on-the-fly extensible. Language functions can be upgraded or implemented while programs are running.
 
 It runs programs in text files or manually in debug mode (if no text file is supplied or when a program stops). 
