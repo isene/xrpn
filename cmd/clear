@@ -1,0 +1,7 @@
+class XRPN
+  def clear
+    `clear`
+  end
+end
+ 
+# vim:ft=ruby:
