@@ -8,8 +8,10 @@ def debug_mode
       print "> "
     end
     @line = STDIN.gets.chomp
-    @line = [@line]
-    @line = hp_41(@line)[0]
+    unless @line.length == 1
+      @line = [@line]
+      @line = hp_41(@line)[0]
+    end
     case @line
     when "q" # Quit
       exit
