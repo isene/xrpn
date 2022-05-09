@@ -23,18 +23,21 @@ def debug_mode
       state = @line.sub(/< /, '')
       read_state(state)
     when "c"
+      system("clear")
+    when "C"
       @p.x   = 0.0
       @p.y   = 0.0
       @p.z   = 0.0
       @p.t   = 0.0
       @p.l   = 0.0
       @p.a   = ""
-      @p.d   = "deg"
+      @p.deg = "deg"
       @p.i   = 4
       @p.s   = 6
       @p.srg = 11
       @p.reg = {}
       @p.flg = {}
+      system("clear")
     when "R" # Reload all commands from the cmd directory
       read_cmd
       puts "Commands reloaded."

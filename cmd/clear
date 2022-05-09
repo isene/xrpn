@@ -1,6 +1,6 @@
 class XRPN
   def clear
-    `clear`
+    system("clear")
   end
 end
  
