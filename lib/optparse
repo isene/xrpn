@@ -16,7 +16,7 @@ optparse = OptionParser.new do |opts|
   opts.on('-a', '--Alpha Alpha-string', 'Set initial string in Alpha')       { |a| @a = a.to_s }
   opts.on('-h', 'Display SHORT help text')                                   { puts opts; exit }
   opts.on('--help', 'Display LONG help text')                     { help; puts; puts opts; exit}
-  opts.on('-v', '--version', 'Display the XRPN version number')              { version; exit   }
+  opts.on('-v', '--version', 'Display the XRPN version number')              { xrpn_version; exit }
 end
 optparse.parse!
  

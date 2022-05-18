@@ -1,0 +1,7 @@
+class XRPN
+  def version
+    xrpn_version
+  end
+end
+ 
+# vim:ft=ruby:
