@@ -6,7 +6,6 @@ def save_state (fn = "conf")
   cont   += "@p.t   = #{@p.t}\n"
   cont   += "@p.l   = #{@p.l}\n"
   cont   += "@p.a   = \"#{@p.a}\"\n"
-  cont   += "@p.d   = \"#{@p.d}\"\n"
   cont   += "@p.i   = #{@p.i}\n"
   cont   += "@p.s   = #{@p.s}\n"
   cont   += "@p.srg = #{@p.srg}\n"

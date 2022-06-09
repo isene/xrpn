@@ -1,0 +1,12 @@
+@p.x   = 0
+@p.y   = 0
+@p.z   = 0
+@p.t   = 0
+@p.l   = 0.0
+@p.a   = ""
+@p.i   = 4
+@p.s   = 9
+@p.srg = 11
+@p.reg = {}
+@p.flg = {"28"=>false, "29"=>true, "31"=>false, "44"=>false, "22"=>false, "23"=>false}
+@p.prg = [["LBL \"XRPN\"", "END"]]
