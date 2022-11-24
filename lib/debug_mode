@@ -1,4 +1,5 @@
 def debug_mode
+  prompt = TTY::Prompt.new
   loop do
     if $prompt
       print ": "
@@ -7,7 +8,18 @@ def debug_mode
       @p.prstk 
       print "> "
     end
-    @line = STDIN.gets.chomp
+    @ln = STDIN.getch
+    if ["+", "-", "*", "/", "%"].include?(@ln)
+      @ln   = [@ln]
+      @line = hp_41(@ln)[0]
+      break
+    elsif @ln == "\r" # A simple ENTER
+      @line = "lift"
+      puts "\n"
+      break
+    end
+    print "\e[E\e[2K" # Clears from the beginning of line (removes getch prompt)
+    @line = prompt.ask(">", value: @ln)
     unless @line.length == 1
       @line = [@line]
       @line = hp_41(@line)[0]
