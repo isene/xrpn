@@ -1,6 +1,6 @@
 class XRPN
   def prompt
-    puts @a
+    puts "\e[34m" + @a + "\e[0m"
     $prompt = true
   end
 end

@@ -5,10 +5,13 @@ def debug_mode
       @line = prompt.ask(":")
       break
     else
-      puts "-" * 30
+      puts "─" * 30
       @p.prstk
       print "> "
       @ln = STDIN.getch
+      while IO.select([STDIN], [], [], 0) != nil # Flush STDIN (remove control chars)
+        STDIN.getch
+      end
       if ["+", "-", "*", "/", "%"].include?(@ln)
         print "\e[32m" + @ln + "\e[0m\n"
         @ln   = [@ln]
@@ -28,9 +31,11 @@ def debug_mode
     end
     case @line
     when "q" # Quit
+      puts "\n"
       exit
     when "Q" # Save and quit
       save_state()
+      puts "\n"
       exit
     when /> .*/
       state = @line.sub(/> /, '')

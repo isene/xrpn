@@ -35,6 +35,7 @@ load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf') # Read confi
 until @p.pc == @p.prg[@p.pg].length do
   # Enter debug mode if $debug or $prompt is set, else read next program line
   ($debug or $prompt) ? debug_mode : @line = @p.prg[@p.pg][@p.pc]
+  @line = "" if @line == nil
   if @line.match(/^-*[\d\.,e]+$/) # If a number is supplied
     @line.sub!(/,/, '.')
     @p.lift
@@ -56,6 +57,7 @@ until @p.pc == @p.prg[@p.pg].length do
     l2 = "%02d" % [l2] if l2 == l2.to_i.to_s
     l3 = "%02d" % [l3] if l3 == l3.to_i.to_s
     l2 = ind(l3) if l3 # If middle word is "IND" (or anything actually - since IND is the only possibility)
+    l1 = "" if l1 == nil
     if not $cmd.include?(l1.downcase) # Catch unknown command
       puts "No such command: #{l1}"
       @p.stop
