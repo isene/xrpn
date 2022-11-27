@@ -1,6 +1,6 @@
 class XRPN
   def aview
-    puts @a
+    puts @a.color(39,1)
   end
 end
  

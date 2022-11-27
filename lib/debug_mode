@@ -22,7 +22,7 @@ def debug_mode
         puts "\n"
         break
       end
-      print "\e[E\e[2K" # Clears from the beginning of line (removes getch prompt)
+      print "\e[1G\e[K" # Clears from the beginning of line (removes getch prompt)
       @line = prompt.ask(">", value: @ln)
       unless @line == nil or @line.length == 1
         @line = [@line]

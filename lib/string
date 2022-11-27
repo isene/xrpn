@@ -1,0 +1,9 @@
+class String
+
+  def color (color_code, bold=false)
+    bold ? "\e[38;5;#{color_code};1m#{self}\e[0m" : "\e[38;5;#{color_code}m#{self}\e[0m"
+  end
+
+end
+ 
+# vim:ft=ruby:
