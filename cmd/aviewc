@@ -1,0 +1,7 @@
+class XRPN
+  def aviewc
+    puts @a.color(@x.to_i)
+  end
+end
+ 
+# vim:ft=ruby:
