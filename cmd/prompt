@@ -1,6 +1,6 @@
 class XRPN
   def prompt
-    puts @a.color(39,1)
+    puts @a.c_a(1)
     $prompt = true
   end
 end

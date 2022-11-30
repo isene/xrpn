@@ -78,7 +78,7 @@ END
 
 ## Documentation
 
-Is all in [the wiki page in this repo](https://github.com/isene/xrpn/wiki/XRPN-Documentation).
+...is all in [the wiki page in this repo](https://github.com/isene/xrpn/wiki/XRPN-Documentation).
 
 
 ## Note

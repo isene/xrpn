@@ -1,9 +1,9 @@
 class XRPN
   def prstk
-    puts "T = ".color(240) + numformat(@t).color(240,1) + "   α = ".color(39)  + @a.to_s.color(39,1)
-    puts "Z = ".color(240) + numformat(@z).color(240,1)
-    puts "Y = ".color(240) + numformat(@y).color(240,1)
-    puts "X = " + "\e[1m"  + numformat(@x)              + "   L = ".color(130) + numformat(@l).color(130,1)
+    puts "T = ".c_t + numformat(@t).c_t(1) + "   α = ".c_a + @a.to_s.c_a(1)
+    puts "Z = ".c_z + numformat(@z).c_z(1)
+    puts "Y = ".c_y + numformat(@y).c_y(1)
+    puts "X = ".c_x + numformat(@x).c_x(1) + "   L = ".c_l + numformat(@l).c_l(1)
   end
 end
  

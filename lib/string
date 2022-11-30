@@ -4,6 +4,25 @@ class String
     bold ? "\e[38;5;#{color_code};1m#{self}\e[0m" : "\e[38;5;#{color_code}m#{self}\e[0m"
   end
 
+  def c_x(bold=false)
+    color($colors["X"], bold)
+  end
+  def c_y(bold=false)
+    color($colors["Y"], bold)
+  end
+  def c_z(bold=false)
+    color($colors["Z"], bold)
+  end
+  def c_t(bold=false)
+    color($colors["T"], bold)
+  end
+  def c_l(bold=false)
+    color($colors["L"], bold)
+  end
+  def c_a(bold=false)
+    color($colors["A"], bold)
+  end
+
 end
  
 # vim:ft=ruby:
