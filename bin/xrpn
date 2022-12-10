@@ -10,6 +10,11 @@ require 'open-uri'
 require 'json'
 require 'tty-prompt'
 
+# ENSURE DIRs
+Dir.mkdir(Dir.home + "/.xrpn") unless File.exist?(Dir.home + "/.xrpn")
+["cmd", "data", "extra", "lib", "print"].each do |d|
+  Dir.mkdir(Dir.home + "/.xrpn/" + d) unless File.exist?(Dir.home + "/.xrpn/" + d)
+end
 
 # INITIALIZE
 @x, @y, @z, @t, @a = 0, 0, 0, 0, ""
@@ -27,9 +32,8 @@ if $lfile                                               # Read file to load but 
 end
 read_state($sfile) if $sfile                            # Read state file in ~.xrpn/ if -s switch is used
 $debug = true      if $lfile or $sfile                  # Do not run loaded program or program in state file
-load(Dir.home+'/.xrpn/lib/theme_dark') if File.exist?(Dir.home+'/.xrpn/lib/theme_dark') # Read theme file
-load(Dir.home+'/.xrpn/conf')           if File.exist?(Dir.home+'/.xrpn/conf')           # Read config file
-puts $theme
+load(Dir.home+'/.xrpn/lib/theme_dark')  if File.exist?(Dir.home+'/.xrpn/lib/theme_dark') # Read theme file
+load(Dir.home+'/.xrpn/conf')            if File.exist?(Dir.home+'/.xrpn/conf')           # Read config file
 load(Dir.home+'/.xrpn/lib/theme_light') if $theme == "light" and File.exist?(Dir.home+'/.xrpn/lib/theme_light') # Read theme file
 load(Dir.home+'/.xrpn/theme') if File.exist?(Dir.home+'/.xrpn/theme') # Override theme if user theme file exists
 
