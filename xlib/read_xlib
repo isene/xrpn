@@ -1,0 +1,5 @@
+def read_xlib
+  Dir[Dir.home+"/.xrpn/xlib/*"].each { |file| load file }
+end
+ 
+# vim:ft=ruby:

@@ -1,0 +1,23 @@
+def theme(t=$theme)
+  if t == "light"
+    $colors = {
+      "X" => 232,
+      "Y" => 241,
+      "Z" => 244,
+      "T" => 247,
+      "L" => 130,
+      "A" =>  39
+    }
+  else
+    $colors = {
+      "X" => 255,
+      "Y" => 246,
+      "Z" => 243,
+      "T" => 240,
+      "L" => 130,
+      "A" =>  39
+    }
+  end
+end
+ 
+# vim:ft=ruby:

@@ -12,16 +12,49 @@ require 'tty-prompt'
 
 # ENSURE DIRs
 Dir.mkdir(Dir.home + "/.xrpn") unless File.exist?(Dir.home + "/.xrpn")
-["cmd", "data", "extra", "lib", "print"].each do |d|
+["data", "extra", "print", "xcmd", "xlib"].each do |d|
   Dir.mkdir(Dir.home + "/.xrpn/" + d) unless File.exist?(Dir.home + "/.xrpn/" + d)
 end
 
-# INITIALIZE
+# READ LIBRARY AND COMMANDS
+Dir[Dir.home+"/.xrpn/xlib/*"].each { |file| load file }
+read_xcmd
+
+# INITIALIZE VARIABLES
 @x, @y, @z, @t, @a = 0, 0, 0, 0, ""
-Dir[Dir.home+"/.xrpn/lib/*"].each { |file| load file }  # Read libraries
-read_cmd                                                # Read XRPN commands
+
+# HANDLE COMMAND LINE OPTIONS
+options = {}
+optparse = OptionParser.new do |opts|
+  # Set a banner, displayed at the top of the help screen.
+  opts.banner = "Usage: xrpn [options]"
+
+  # Define the options, and what they do
+  opts.on('-f', '--file program', 'Specify the file to process')             { |f| $rfile = f  }
+  opts.on('-l', '--load program(s)', Array, 'File(s) to load, but not run')  { |l| $lfile = l  }
+  opts.on('-s', '--state STATE', 'Load a State file')                        { |s| $sfile = s  }
+  opts.on('-c', '--check program', 'Program file to check for errors')       { |c| check(c); exit }
+  opts.on('-x', '--X X-value', 'Set initial value in the X register')        { |x| @x = x.to_f }
+  opts.on('-y', '--Y Y-value', 'Set initial value in the Y register')        { |y| @y = y.to_f }
+  opts.on('-z', '--Z Z-value', 'Set initial value in the Z register')        { |z| @z = z.to_f }
+  opts.on('-t', '--T T-value', 'Set initial value in the T register')        { |t| @t = t.to_f }
+  opts.on('-a', '--Alpha Alpha-string', 'Set initial string in Alpha')       { |a| @a = a.to_s }
+  opts.on('-h', 'Display SHORT help text')                                   { puts opts; exit }
+  opts.on('--help', 'Display LONG help text')                     { help; puts; puts opts; exit}
+  opts.on('-v', '--version', 'Display the XRPN version number')              { xrpn_version; exit }
+end
+optparse.parse!
+
+# INITIALIZE CLASS
 @p = XRPN.new($rfile)
+
+# READ USER CONF
+load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf')
+
+# SET VARIABLES FROM OPTPARSE
 @p.x, @p.y, @p.z, @p.t, @p.a = @x, @y, @z, @t, @a
+
+# INITIALIZE XRPN PROGRAM
 @p.prg[@p.pg] = ["LBL \"XRPN\"", "END"] unless $rfile   # Put dummy program in page 0 if no file to run
 @p.prg[@p.pg] = hp_41(@p.prg[@p.pg]) if $rfile          # Substitute HP-41 commands with XRPN commands
 if $lfile                                               # Read file to load but not run if -l switch is used
@@ -32,9 +65,9 @@ if $lfile                                               # Read file to load but 
 end
 read_state($sfile) if $sfile                            # Read state file in ~.xrpn/ if -s switch is used
 $debug = true      if $lfile or $sfile                  # Do not run loaded program or program in state file
-load(Dir.home+'/.xrpn/lib/theme_dark')  if File.exist?(Dir.home+'/.xrpn/lib/theme_dark') # Read theme file
-load(Dir.home+'/.xrpn/conf')            if File.exist?(Dir.home+'/.xrpn/conf')           # Read config file
-load(Dir.home+'/.xrpn/lib/theme_light') if $theme == "light" and File.exist?(Dir.home+'/.xrpn/lib/theme_light') # Read theme file
+
+# THEME
+theme($theme)
 load(Dir.home+'/.xrpn/theme') if File.exist?(Dir.home+'/.xrpn/theme') # Override theme if user theme file exists
 
 
