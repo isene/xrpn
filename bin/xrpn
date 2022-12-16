@@ -10,7 +10,7 @@ require 'open-uri'
 require 'json'
 require 'tty-prompt'
 
-#$gem = Gem.latest_spec_for("xrpn").gem_dir if `gem list -i "^xrpn$"`
+#$gem = Gem.latest_spec_for("xrpn").gem_dir
 
 # ENSURE DIRs
 Dir.mkdir(Dir.home + "/.xrpn") unless File.exist?(Dir.home + "/.xrpn")
