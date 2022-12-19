@@ -1,4 +1,5 @@
 class XRPN
+# Run stopwatch (no stopwatch here)
   def runsw
     return "RUNSW: No clock, alarm or stopwatch functions are implemented"
   end

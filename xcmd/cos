@@ -1,4 +1,5 @@
 class XRPN
+# Return COS of X to X
   def cos
     @l = @x
     @x = @x.to_rad  if @deg == "deg"

@@ -1,4 +1,5 @@
 class XRPN
+# Add command in Alpha to the current program at line number in X (makes it possible to write self-modifying programs)
   def cmdadd
     @prg.insert(@x.to_i, @a)
   end

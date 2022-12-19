@@ -1,4 +1,5 @@
 class XRPN
+# Toggles Flag 28 (dot type - dot or comma as decimal separator)
   def dot
     @flg["28"] = !@flg["28"]
   end

@@ -1,4 +1,5 @@
 class XRPN
+# Set size of memory (no need, lots of room)
   def psize (n)
     return "SIZE: No need for that function"
   end

@@ -1,4 +1,5 @@
 class XRPN
+# Recall content of register named to Alpha
   def arcl (r)
     a = false
     case r.downcase

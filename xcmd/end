@@ -1,4 +1,5 @@
 class XRPN
+# End of program
   def end
     p = @pc
     rtn

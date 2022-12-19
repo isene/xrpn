@@ -1,4 +1,5 @@
 class XRPN
+# Lift stack
   def lift
     return if @nolift
     @y, @z, @t = @x, @y, @z

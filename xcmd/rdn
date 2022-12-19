@@ -1,4 +1,5 @@
 class XRPN
+# Roll down the stack
   def rdn
     @x, @y, @z, @t = @y, @z, @t, @x
   end

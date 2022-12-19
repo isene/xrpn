@@ -1,4 +1,5 @@
 class XRPN
+# Store divide (divide the content of reg n by X in reg n)
   def stdivide (r)
     case r.downcase
     when "x"

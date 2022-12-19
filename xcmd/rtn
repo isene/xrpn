@@ -1,4 +1,5 @@
 class XRPN
+# Return program pointer to the last place in the return stack
   def rtn
     r = @rtn.pop
     if r == nil

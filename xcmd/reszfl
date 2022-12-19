@@ -1,4 +1,5 @@
 class XRPN
+# Resize XM file (no need, lots of room)
   def reszfl
     return "RESZFL: No need to resize files. Plenty of room here."
   end

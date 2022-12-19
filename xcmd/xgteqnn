@@ -1,4 +1,5 @@
 class XRPN
+# Conditional - if not true, skip next program line
   def xgteqnn?
     r = @x.to_i
     r = "%02d" % [r] if r == r.to_i.to_s

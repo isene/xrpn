@@ -1,4 +1,5 @@
 class XRPN
+# Drop stack
   def drop
     @x, @y, @z = @y, @z, @t
   end

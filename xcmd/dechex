@@ -1,4 +1,5 @@
 class XRPN
+# Take X as a decimal number and convert to hexadecimal number in X
   def dechex
     @l = @x
 	@x = @x.to_s.convert_base(10, 16)

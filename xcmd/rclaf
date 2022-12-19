@@ -1,4 +1,5 @@
 class XRPN
+# Recall clock accuracy factor (no clock function)
   def rclaf
     return "RCLAF: No clock, alarm or stopwatch functions are implemented"
   end

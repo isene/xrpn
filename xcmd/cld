@@ -1,4 +1,5 @@
 class XRPN
+# Clear display (no need)
   def cld
   end
 end

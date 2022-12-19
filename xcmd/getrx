@@ -1,4 +1,5 @@
 class XRPN
+# Get registers by X (bbb.eee)
   def getrx
     b = @x.to_i
     e = (@x.frc * 1000).to_i

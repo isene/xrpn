@@ -1,4 +1,5 @@
 class XRPN
+# Get file size (alway plenty)
   def flsize
     return "FLSIZE: Always plenty of room."
   end

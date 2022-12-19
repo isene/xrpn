@@ -1,4 +1,5 @@
 class XRPN
+# Purge (remove) XM file
   def purfl
     f = Dir.home + "/.xrpn/data/" + @a
     fl = [f + ".pr", f + ".as", f + ".da"]

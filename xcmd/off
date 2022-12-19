@@ -1,4 +1,5 @@
 class XRPN
+# Ends XRPN.
   def off
 	@flg["44"] = false
 	exit

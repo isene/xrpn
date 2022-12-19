@@ -1,4 +1,5 @@
 class XRPN
+# Clear alarm by X (no alarm functions implemented)
   def clalmx
     return "CLALMX: No clock, alarm or stopwatch functions are implemented"
   end

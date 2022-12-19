@@ -1,4 +1,5 @@
 class XRPN
+# Read any file named in Alpha into X
   def getfile
     lift
     begin

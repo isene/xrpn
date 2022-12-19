@@ -1,4 +1,5 @@
 class XRPN
+# Recall flag status to X (uses different, more readable flag status format)
   def rclflag
     lift
     f = ""

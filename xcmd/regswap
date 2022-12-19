@@ -1,4 +1,5 @@
 class XRPN
+# Swap registers
   def regswap
     c = @x
     b = c.to_i

@@ -1,4 +1,5 @@
 class XRPN
+# Restore flag status from X (uses different, more readable flag status format)
   def stoflag
     flags = @x.split(" ")
     flags.each do |fv|

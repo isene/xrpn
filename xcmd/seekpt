@@ -1,4 +1,5 @@
 class XRPN
+# Set pointer of current XM file to X
   def seekpt
     @xmcont[0][3] = @x
     @xmcont[0][3] = @xmcont.length.to_f - 2 if @xmcont[0][3] > @xmcont.length - 2

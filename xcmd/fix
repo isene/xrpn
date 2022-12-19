@@ -1,4 +1,5 @@
 class XRPN
+# Fixed point display with n decimal places
   def fix (n)
     @i = n.to_i
     @s = 9

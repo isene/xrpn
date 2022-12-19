@@ -1,4 +1,5 @@
 class XRPN
+# Natural logarithm
   def ln
     @l = @x
     @x = Math::log(@x)

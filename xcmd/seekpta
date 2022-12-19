@@ -1,4 +1,5 @@
 class XRPN
+# Set pointer of XM file named in Alpha to X
   def seekpta
     load_xm(@a, @x)
   end

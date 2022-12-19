@@ -1,4 +1,5 @@
 class XRPN
+# Get current record from current XM file, replacing content of Alpha
   def getrec
     cla
     arclrec

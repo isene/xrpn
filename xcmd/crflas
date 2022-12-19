@@ -1,4 +1,5 @@
 class XRPN
+# Create ASCII file. No need to supply any file size.
   def crflas
     f = Dir.home + "/.xrpn/data/" + @a + ".as"
     File.write(f, [[f, "AS", 0, 0.0]])

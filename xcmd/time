@@ -1,4 +1,5 @@
 class XRPN
+# Return a formatted time in X to Alpha
   def time
     lift
     @x = Time.now.strftime("%H.%M%s").to_f

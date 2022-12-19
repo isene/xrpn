@@ -1,4 +1,5 @@
 class XRPN
+# Move registers
   def regmove
     c = @x
     b = c.to_i

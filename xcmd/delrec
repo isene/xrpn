@@ -1,4 +1,5 @@
 class XRPN
+# Delete current record from current XM file
   def delrec
     if @xmcont[0][0] == ""
       return 

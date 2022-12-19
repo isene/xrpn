@@ -1,4 +1,5 @@
 class XRPN
+# Decrease, skip if greater using named register
   def dse (r)
     case r.downcase
     when "x"

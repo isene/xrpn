@@ -1,4 +1,5 @@
 class XRPN
+# Convert decimal hours to HH.MMSSsss
   def hms
     @l = @x
     h  = @x.to_i

@@ -1,4 +1,5 @@
 class XRPN
+# Set alarm (no alarm functions implemented)
   def xyzalm
     return "XYZALM: No clock, alarm or stopwatch functions are implemented"
   end

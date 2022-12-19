@@ -1,4 +1,5 @@
 class XRPN
+# Stopwatch (no stopwatch here)
   def sw
     return "SW: No clock, alarm or stopwatch functions are implemented"
   end

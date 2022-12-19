@@ -1,4 +1,5 @@
 class XRPN
+# Clear a specific number of registers
   def clrgx
     b, e, i = x2bei(@x)
     j = b

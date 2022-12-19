@@ -1,4 +1,5 @@
 class XRPN
+# Add a line in the printout
   def int
     @l = @x
     @x = @x.to_i

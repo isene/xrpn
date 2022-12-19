@@ -1,4 +1,5 @@
 class XRPN
+# Add the date in Y and number of days in X and return result to X
   def dateplus
     @l = @x
     date = dtparse(@y)

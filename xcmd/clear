@@ -1,4 +1,5 @@
 class XRPN
+# Clear terminal display
   def clear
     system("clear")
   end

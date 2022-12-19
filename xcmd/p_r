@@ -1,4 +1,5 @@
 class XRPN
+# Polar to rectangular conversion
   def p_r
     @l = @x
     r = @x

@@ -1,4 +1,5 @@
 class XRPN
+# Y modulo X
   def mod
     @l = @x
     begin

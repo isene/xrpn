@@ -1,4 +1,5 @@
 class XRPN
+# Makes XRPN not end end on a single Enter in debug mode.
   def on
     @flg["44"] = true
   end

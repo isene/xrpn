@@ -1,4 +1,5 @@
 class XRPN
+# Store plus (add X to the content of reg n in reg n)
   def stplus (r)
     case r.downcase
     when "x"

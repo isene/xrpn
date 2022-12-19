@@ -1,4 +1,5 @@
 class XRPN
+# Checks if XM file named in Alpha exists (returns file type and YES or NO)
   def xmexist?
     f  = Dir.home + "/.xrpn/data/" + @a
     if File.exist?(f + ".da")

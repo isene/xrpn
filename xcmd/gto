@@ -1,4 +1,5 @@
 class XRPN
+# Goto (jump) to a string label, numbered label or line number (GTO "MyProg", GTO 31, GTO .214), using a dot before the line number)
   def gto (l)
     if l.match(/^\./)
       @pc = l.sub(/^\./, "").to_i - 1

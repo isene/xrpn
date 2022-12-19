@@ -1,4 +1,5 @@
 class XRPN
+# Programmable key assignment (no keys to assign to)
   def pasn
     return "PASN: This is not a calculator with keys to assign functions to."
   end

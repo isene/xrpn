@@ -1,4 +1,5 @@
 class XRPN
+# Write X as content to file named in Alpha
   def writefile
     begin
       @x = File.write(@a)

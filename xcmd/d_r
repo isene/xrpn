@@ -1,4 +1,5 @@
 class XRPN
+# Degrees to Radians conversion
   def d_r
     @l = @x
 	@x = @x * Math::PI / 180

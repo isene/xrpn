@@ -1,4 +1,5 @@
 class XRPN
+# Flag set? If not, skip next program line and set flag
   def fss? (r)
     @flg[r] == true ? conditional(true) : conditional(false)
     @flg[r]  = true

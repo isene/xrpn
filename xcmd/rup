@@ -1,4 +1,5 @@
 class XRPN
+# Roll up the stack
   def rup
     @x, @y, @z, @t = @t, @x, @y, @z
   end

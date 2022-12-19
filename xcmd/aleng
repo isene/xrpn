@@ -1,4 +1,5 @@
 class XRPN
+# Return length of Alpha string to X
   def aleng
 	lift
     @x = @a.length

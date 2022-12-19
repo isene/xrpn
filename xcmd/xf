@@ -1,4 +1,5 @@
 class XRPN
+# X exchange flag status (flags 0-7)
   def xf # X<>F
     fsumx = 0
 	  7.times do |f|

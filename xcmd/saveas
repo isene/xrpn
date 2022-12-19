@@ -1,4 +1,5 @@
 class XRPN
+# Save XM file
   def saveas
     save_xm
   end

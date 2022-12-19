@@ -1,4 +1,5 @@
 class XRPN
+# Return Day Of Week for date in X
   def dow
     @l = @x
     lift

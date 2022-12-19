@@ -1,4 +1,5 @@
 class XRPN
+# Print program
   def prp
     pprg
   end

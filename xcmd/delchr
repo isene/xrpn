@@ -1,4 +1,5 @@
 class XRPN
+# Delete X characters from current XM file starting at pointer
   def delchr
     if @xmcont[0][0] == ""
       return 

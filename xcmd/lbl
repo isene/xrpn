@@ -1,4 +1,5 @@
 class XRPN
+# Label in a program that you can GTO or XEQ to
   def lbl (l)
   end
 end

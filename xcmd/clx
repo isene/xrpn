@@ -1,4 +1,5 @@
 class XRPN
+# Clear X
   def clx
     @x = 0.0
     @nolift = true

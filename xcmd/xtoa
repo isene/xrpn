@@ -1,4 +1,5 @@
 class XRPN
+# Add character from character code in X to Alpha
   def xtoa
     @a += @x.to_i.chr
   end

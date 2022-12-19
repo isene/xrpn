@@ -1,4 +1,5 @@
 class XRPN
+# Return fractional part of X to X
   def frc
     @l = @x
     @x = @x.frc

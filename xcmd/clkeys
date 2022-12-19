@@ -1,4 +1,5 @@
 class XRPN
+# Clear key assignments (no keys to clear)
   def clkeys
     return "CLKEYS: No need for this function as there is no calculator keyboard here."
   end

@@ -1,4 +1,5 @@
 class XRPN
+# Subtract X from Y
   def -
     @l = @x
     @x = @y - @x

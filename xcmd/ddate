@@ -1,4 +1,5 @@
 class XRPN
+# Return the number of days between dates in X and Y to X
   def ddate
     @l = @x
     dt1  = dtparse(@y)

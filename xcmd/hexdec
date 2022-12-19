@@ -1,4 +1,5 @@
 class XRPN
+# Take X as a hexadecimal number and convert to decimal number in X
   def hexdec
     @l = @x
 	@x = @x.to_s.convert_base(16, 10).to_f

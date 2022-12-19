@@ -1,4 +1,5 @@
 class XRPN
+# Prints current working Page
   def page?
     return "Page = #{@pg}"
   end

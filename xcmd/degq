@@ -1,4 +1,5 @@
 class XRPN
+# Prints the current degrees mode
   def deg?
     p @deg
   end

@@ -1,4 +1,5 @@
 class XRPN
+# Print status of all flags
   def prflags
     @flg = @flg.sort.to_h
     @flg.each_pair {|key, value| puts "#{key}: #{value}"}

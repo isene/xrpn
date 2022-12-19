@@ -1,4 +1,5 @@
 class XRPN
+# Conditional - if not true, skip next program line
   def xgteqy?
     @x >= @y ? conditional(true) : conditional(false)
   end

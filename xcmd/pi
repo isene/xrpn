@@ -1,4 +1,5 @@
 class XRPN
+# Get PI to X
   def pi
     lift
     @x = Math::PI

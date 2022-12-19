@@ -1,4 +1,5 @@
 class XRPN
+# Rotate Alpha at character number given in X
   def arot
     if @x > 0
       r  = (@x - 1).to_i

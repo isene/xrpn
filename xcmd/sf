@@ -1,4 +1,5 @@
 class XRPN
+# Set flag n
   def sf (r)
     @flg[r] = true
   end

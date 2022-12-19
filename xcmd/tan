@@ -1,4 +1,5 @@
 class XRPN
+# Return TAN of X to X
   def tan
     @l = @x
     @x = @x.to_rad  if @deg == "deg"

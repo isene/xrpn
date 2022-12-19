@@ -1,4 +1,5 @@
 class XRPN
+# Halt program execution (and enter "Debug mode")
   def stop
     $debug = true
   end

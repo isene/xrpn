@@ -1,4 +1,5 @@
 class XRPN
+# Reload all commands in the ./xrpn/cmd directory (makes it possble to modify or add commands while a program is running)
   def reload
     read_cmd
   end

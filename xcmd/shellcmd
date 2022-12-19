@@ -1,4 +1,5 @@
 class XRPN
+# Executes the shell command in Alpha. Gives you access to all of Bash inside XRPN.
   def shellcmd
     system(@a)
   end

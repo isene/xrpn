@@ -1,4 +1,5 @@
 class XRPN
+# Make time into 24h format
   def clk24
     @clk24 = true
   end

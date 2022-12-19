@@ -1,4 +1,5 @@
 class XRPN
+# Swap registers
   def swap
     @x, @y = @y, @x
   end

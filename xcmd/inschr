@@ -1,4 +1,5 @@
 class XRPN
+# Insert Alpha at pointer in current XM file
   def inschr
     if @xmcont[0][0] == ""
       return 

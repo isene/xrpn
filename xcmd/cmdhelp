@@ -1,0 +1,23 @@
+class XRPN
+# Show help text for the command in Alpha
+  def cmdhelp
+    if $gem 
+      c_gem = $gem + "/xcmd/" + @a
+      c     = File.read(c_gem) if File.exist?(c_gem)
+    end
+    c_loc = Dir.home + "/.xrpn/xcmd/" + @a
+    c     = File.read(c_loc) if File.exist?(c_loc)
+    if c
+      c = c[/.*#.*\n/][2..-2]
+      c = nil if c["vim:"]
+    end
+    if not $cmd.include?(@a.downcase)
+      puts "No such command: #{@a}"
+    else
+      puts c if c
+      puts "No help for the command \"#{@a}\"" unless c
+    end
+  end
+end
+ 
+# vim:ft=ruby:

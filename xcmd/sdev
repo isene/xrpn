@@ -1,4 +1,5 @@
 class XRPN
+# Standard deviation for X and Y to the X and Y registers
   def sdev
     @l = @x
     lift

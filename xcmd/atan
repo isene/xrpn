@@ -1,4 +1,5 @@
 class XRPN
+# Return Arc TAN of X to X
   def atan
     @l = @x
     @x = Math::atan(@x)

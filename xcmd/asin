@@ -1,4 +1,5 @@
 class XRPN
+# Return Arc SIN of X to X
   def asin
     @l = @x
     @x = Math::asin(@x)

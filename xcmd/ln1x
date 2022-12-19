@@ -1,4 +1,5 @@
 class XRPN
+# For argumants close to 1
   def ln1x
     @l = @x
     @x = Math::log(1 + @x)

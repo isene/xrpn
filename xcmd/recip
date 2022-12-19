@@ -1,4 +1,5 @@
 class XRPN
+# Return 1/X to X
   def recip
     @l = @x
     @x = 1 / @x

@@ -1,4 +1,5 @@
 class XRPN
+# Show the XRPN version number
   def version
     xrpn_version
   end

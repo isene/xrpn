@@ -1,4 +1,5 @@
 class XRPN
+# Recall the pointer for current XM file to X
   def rclpt
     lift
     @x = @xmcont[0][3]

@@ -1,4 +1,5 @@
 class XRPN
+# Logarithm with base 10
   def log
     @l = @x
     @x = Math::log10(@x)

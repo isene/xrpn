@@ -1,4 +1,5 @@
 class XRPN
+# Returns size of memory (no need, lots of room)
   def size?
     return "SIZE = A Lot"
   end

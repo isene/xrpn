@@ -1,4 +1,5 @@
 class XRPN
+# Jump to label n and return here after an RTN or END is encountered
   def xeq (l)
     page, pos = locate_prg (l)
     if pos == nil

@@ -1,4 +1,5 @@
 class XRPN
+# Return 1\/X to X
   def /
     @l = @x
     @x = @y / @x

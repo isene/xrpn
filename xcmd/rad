@@ -1,4 +1,5 @@
 class XRPN
+# Set degree mode to GRAD (400 degrees in a circle)
   def rad
     @deg = "rad"
   end

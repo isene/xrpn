@@ -1,4 +1,5 @@
 class XRPN
+# Return a formatted time in X to Alpha
   def atime
     t  = @x.to_f
     am = true

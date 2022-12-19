@@ -1,4 +1,5 @@
 class XRPN
+# Return Y to the power of X to X
   def pow
     @l = @x
     @x = @y ** @x

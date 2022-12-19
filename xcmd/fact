@@ -1,4 +1,5 @@
 class XRPN
+# Return factorial of X to X
   def fact
     @l = @x
     lift

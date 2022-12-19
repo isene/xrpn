@@ -1,6 +1,6 @@
 class XRPN
+# Print current program from lines Y to X (relative to current line if Y is negative)
   def pprgx 
-    # Print current program from Y to X (relative to current line if Y is negative
     s = @y.to_i
     e = @x.to_i
     if (s == 0 and e == 0)

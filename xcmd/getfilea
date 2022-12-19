@@ -1,4 +1,5 @@
 class XRPN
+# Read any file named in Alpha into Alpha
   def getfilea
     begin
       @a = File.read(@a)

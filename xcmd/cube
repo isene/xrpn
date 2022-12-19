@@ -1,4 +1,5 @@
 class XRPN
+# Return X^3 to X
   def cube
     @l = @x
     @x = @x ** 3

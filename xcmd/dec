@@ -1,4 +1,5 @@
 class XRPN
+# Return the Decimal value of the Octal value in X
   def dec
     octdec
   end

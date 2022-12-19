@@ -1,4 +1,5 @@
 class XRPN
+# Natural exponent
   def exp
     @l = @x
     lift

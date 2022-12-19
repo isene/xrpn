@@ -1,4 +1,5 @@
 class XRPN
+# Get sub program (no need - XRPN works with pages for programs)
   def getsub
     return "GETSUB: No need for that function. XRPN works with pages instead."
   end

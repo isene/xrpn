@@ -1,4 +1,5 @@
 class XRPN
+# Swap sign of X (X becomes -X and -X becomes X)
   def sign
     @l = @x
     lift

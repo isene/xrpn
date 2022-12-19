@@ -1,4 +1,5 @@
 class XRPN
+# Toggles Flag 29 (separator for every 3 digits)
   def sep
     @flg["29"] = !@flg["29"]
   end

@@ -1,4 +1,5 @@
 class XRPN
+# Show global program labels across all Pages
   def pcat
     @prg.each_index do |i|
       @prg[i].each do |l|

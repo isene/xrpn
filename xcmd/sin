@@ -1,4 +1,5 @@
 class XRPN
+# Return SIN of X to X
   def sin
     @l = @x
     @x = @x.to_rad  if @deg == "deg"

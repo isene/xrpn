@@ -1,4 +1,5 @@
 class XRPN
+# Increase, skip if greader for named register
   def isg (r)
     case r.downcase
     when "x"

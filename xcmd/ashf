@@ -1,4 +1,5 @@
 class XRPN
+# Remove the 6 left-most characters from Alpha
   def ashf
     @a = @a[6..]
   end

@@ -1,4 +1,5 @@
 class XRPN
+# For arguments close to zero
   def expx1
     @l = @x
     lift

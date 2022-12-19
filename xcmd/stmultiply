@@ -1,4 +1,5 @@
 class XRPN
+# Store multiply (multiply the content of reg n by X in reg n)
   def stmultiply (r)
     case r.downcase
     when "x"

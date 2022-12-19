@@ -1,4 +1,5 @@
 class XRPN
+# Return Arc COS of X to X
   def acos
     @l = @x
     @x = Math::acos(@x)

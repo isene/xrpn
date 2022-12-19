@@ -1,5 +1,5 @@
 def debug_mode
-  prompt = TTY::Prompt.new
+  #prompt = TTY::Prompt.new
   loop do
     if $prompt
       @line = prompt.ask(":")
@@ -7,23 +7,7 @@ def debug_mode
     else
       puts "─" * 30
       @p.prstk
-      print "> "
-      @ln = STDIN.getch
-      while IO.select([STDIN], [], [], 0) != nil # Flush STDIN (remove control chars)
-        STDIN.getch
-      end
-      if ["+", "-", "*", "/", "%"].include?(@ln)
-        print "\e[32m" + @ln + "\e[0m\n"
-        @ln   = [@ln]
-        @line = hp_41(@ln)[0]
-        break
-      elsif @ln == "\r" # A simple ENTER
-        @line = "lift"
-        puts "\n"
-        break
-      end
-      print "\e[1G\e[K" # Clears from the beginning of line (removes getch prompt)
-      @line = prompt.ask(">", value: @ln)
+      @line = @debugprompt.ask(">")
       unless @line == nil or @line.length == 1
         @line = [@line]
         @line = hp_41(@line)[0]

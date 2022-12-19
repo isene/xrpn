@@ -1,4 +1,5 @@
 class XRPN
+# Easter egg
   def geir
     puts
     puts "Geir Isene <g@isene.com> https://isene.com"

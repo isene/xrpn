@@ -1,4 +1,5 @@
 class XRPN
+# Print content of eXtended Memory
   def prxm
     # Print content of current XM file
     out = ""

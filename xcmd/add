@@ -1,4 +1,5 @@
 class XRPN
+# Return X + Y to X
   def +
     @l = @x
     @x = @y + @x

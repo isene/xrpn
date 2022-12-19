@@ -1,4 +1,5 @@
 class XRPN
+# Add hours (HH.MMSSsss) or degrees
   def hmsminus
 	lastx = @x
 	hr

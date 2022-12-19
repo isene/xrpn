@@ -1,4 +1,5 @@
 class XRPN
+# Lift stack
   def enter
     lift
     @nolift = true

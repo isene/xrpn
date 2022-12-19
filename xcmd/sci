@@ -1,4 +1,5 @@
 class XRPN
+# Scientific format. Set number of decimals (fix) to n, threshold to for when exponents kick in to 9.
   def sci (n)
     @i = n.to_i
     @s = 6

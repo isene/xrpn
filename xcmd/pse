@@ -1,4 +1,5 @@
 class XRPN
+# Pause program for one second
   def pse
     sleep(1)
   end

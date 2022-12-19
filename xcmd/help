@@ -1,4 +1,5 @@
 class XRPN
+# Print help text
   def help
     puts
     puts "XRPN is a stack-based programming language. It uses Reverse Polish Notation for calculations."

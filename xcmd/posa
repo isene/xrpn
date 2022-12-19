@@ -1,4 +1,5 @@
 class XRPN
+# Find position of string in X in the Alpha register
   def posa
     @l = @x
     if @x.is_a? String

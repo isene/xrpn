@@ -1,4 +1,5 @@
 class XRPN
+# Drop only Z and Y
   def dropy
     @y, @z = @z, @t
   end

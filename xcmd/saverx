@@ -1,4 +1,5 @@
 class XRPN
+# Save a certain number of registers to XM data file
   def saverx
     b = @x.to_i
     e = (@x.frc * 1000).to_i

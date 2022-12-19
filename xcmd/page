@@ -1,4 +1,5 @@
 class XRPN
+# Make Page n the current working program Page
   def page (p)
     if p.to_i >= @prg.length
       return "Page number out of range."

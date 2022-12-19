@@ -1,4 +1,5 @@
 class XRPN
+# Waits 10 seconds for user to press a key (return Character Code to X, not HP-41 key code)
   def getkey
     key = STDIN.getch(min: 0, time: 10)
     lift

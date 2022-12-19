@@ -1,4 +1,5 @@
 class XRPN
+# Print X'th XM file (name and type and size)
   def emdirx
     fl = Dir[Dir.home+"/.xrpn/data/*"][@x.to_i - 1]
     f  = fl.sub(/.*\/(.*)\...$/, '\1')

@@ -77,6 +77,7 @@ load(Dir.home+'/.xrpn/theme') if File.exist?(Dir.home+'/.xrpn/theme') # Override
 # THE CORE OF THE RPN PROGRAM
 @nl = false # Nolift set to false
 @i  = 0     # Counter to prevent infinite loops
+@debugprompt = TTY::Prompt.new
 until @p.pc == @p.prg[@p.pg].length do
   # Enter debug mode if $debug or $prompt is set, else read next program line
   ($debug or $prompt) ? debug_mode : @line = @p.prg[@p.pg][@p.pc]

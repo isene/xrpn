@@ -1,4 +1,5 @@
 class XRPN
+# Substitute all instances in Alpha matching the regexp in X by the content in Y
   def agsub
     return unless (@x.is_a? String and @y.is_a? String)
     @a.gsub!(Regexp.new(@x), @y)

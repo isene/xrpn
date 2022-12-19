@@ -1,4 +1,5 @@
 class XRPN
+# How much room is left in XM file? (always plenty of space)
   def asroom
     return "ASROOM: There's always plenty of room"
   end

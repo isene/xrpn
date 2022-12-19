@@ -1,4 +1,5 @@
 class XRPN
+# Return absolute value of X to X
   def abs
     @x = @x.abs
   end

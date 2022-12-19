@@ -1,4 +1,5 @@
 class XRPN
+# X percent Y
   def %
     @l = @x
     @x = (@x * @y) / 100

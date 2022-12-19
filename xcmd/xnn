@@ -1,4 +1,5 @@
 class XRPN
+# Exchange X and content of register n
   def xnn (r) # X<> r
 	case r.downcase
     when "x"

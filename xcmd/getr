@@ -1,4 +1,5 @@
 class XRPN
+# Get all registers from XM data file and copy to registers
   def getr
     # No reason to not allow ascii files to be read into regs
     i = 0

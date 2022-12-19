@@ -1,4 +1,5 @@
 class XRPN
+# Append Alpha as next record in XM file
   def apprec
     if @xmcont[0][0] == ""
       return 

@@ -1,4 +1,5 @@
 class XRPN
+# Set date mode to DD.MMYYYY
   def dmy
     @flg["31"] = true
   end

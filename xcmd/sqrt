@@ -1,4 +1,5 @@
 class XRPN
+# Return square root of X to X
   def sqrt
     @l = @x
     @x = Math::sqrt(@x)

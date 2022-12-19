@@ -1,4 +1,5 @@
 class XRPN
+# Correct clock drift (no clock function)
   def correct
     return "CORRECT: No clock, alarm or stopwatch functions are implemented"
   end

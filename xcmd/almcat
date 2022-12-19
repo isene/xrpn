@@ -1,4 +1,5 @@
 class XRPN
+# Alarm catalog (no alarm functions implemented)
   def almcat
     return "ALMCAT: No clock, alarm or stopwatch functions are implemented"
   end

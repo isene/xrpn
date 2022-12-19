@@ -1,4 +1,5 @@
 class XRPN
+# Statistical mean of X and Y values (to X and Y registers)
   def mean
     @l = @x
     lift

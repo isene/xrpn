@@ -1,4 +1,5 @@
 class XRPN
+# Return square of X to X
   def sqr
     @l = @x
     @x = @x ** 2

@@ -1,4 +1,5 @@
 class XRPN
+# Recall the integer part of X to Alpha
   def arcli
     @a += @x.to_i.to_s
   end

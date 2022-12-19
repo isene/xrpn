@@ -1,4 +1,5 @@
 class XRPN
+# Save the current XM file to disk
   def savexm
     save_xm
   end

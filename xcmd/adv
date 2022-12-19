@@ -1,4 +1,5 @@
 class XRPN
+# Add a line in the printout
   def adv
     puts "\n"
   end

@@ -1,4 +1,5 @@
 class XRPN
+# Prompts for input (does not enter debug mode as with STOP)
   def prompt
     puts @a.c_a(1)
     $prompt = true

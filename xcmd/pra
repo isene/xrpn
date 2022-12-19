@@ -1,4 +1,5 @@
 class XRPN
+# Print Alpha
   def pra
 	  puts "α = \"#{@a}\""
   end

@@ -1,4 +1,5 @@
 class XRPN
+# Sound the legendary HP-41 BEEP
   def beep
     `xdg-open ~/.xrpn/extra/beep41.wav`
   end

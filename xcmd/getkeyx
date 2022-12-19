@@ -1,4 +1,5 @@
 class XRPN
+# Waits X seconds for user to press a key (return Character Code to X)
   def getkeyx
     @l = @x
     key = STDIN.getch(min: 0, time: @x)

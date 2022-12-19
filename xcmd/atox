@@ -1,4 +1,5 @@
 class XRPN
+# Return character code of first character in Alpha and remove that character
   def atox
     lift
     @x = @a[0].ord

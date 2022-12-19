@@ -1,4 +1,5 @@
 class XRPN
+# Clear named program
   def clp (p)
     page, pos, prgm = locate_prg (p)
     @prg[page] -= prgm

@@ -1,4 +1,5 @@
 class XRPN
+# Get content of Last X (L register) to X
   def lastx
     @y, @z, @t = @x, @y, @z
     @x = @l

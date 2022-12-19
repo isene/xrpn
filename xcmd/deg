@@ -1,4 +1,5 @@
 class XRPN
+# Set degree mode to "deg" (360 degrees in a circle)
   def deg
     @deg = "deg"
   end

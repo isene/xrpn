@@ -1,4 +1,5 @@
 class XRPN
+# Round X to current FIX number of decimal places
   def rnd
     @l = @x
     @x = @x.round(@i)

@@ -1,4 +1,5 @@
 class XRPN
+# Invert flag (toggle flag n)
   def invf (f)
     @flg[f] = !@flg[f]
   end

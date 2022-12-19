@@ -1,4 +1,5 @@
 class XRPN
+# Print current FIX setting
   def fix?
     return "FIX = #{@i}"
   end

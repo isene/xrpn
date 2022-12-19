@@ -1,4 +1,5 @@
 class XRPN
+# Catalog. Only CAT 1, 3 and 4 implemented
   def cat (c)
     case c.to_i
     when 1

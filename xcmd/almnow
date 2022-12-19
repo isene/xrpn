@@ -1,4 +1,5 @@
 class XRPN
+# Fire alarm now (no alarm functions implemented)
   def almnow
     return "ALMNOW: No clock, alarm or stopwatch functions are implemented"
   end

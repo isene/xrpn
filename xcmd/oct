@@ -1,4 +1,5 @@
 class XRPN
+# Convert decimal value in X to octal
   def oct
     decoct
   end

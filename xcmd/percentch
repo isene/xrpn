@@ -1,4 +1,5 @@
 class XRPN
+# Percentage change from Y to X
   def perch
     @l = @x
     @x = 100*((@x - @y) / @y)

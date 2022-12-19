@@ -1,4 +1,5 @@
 class XRPN
+# Delete line number in X from the current program (makes it possible to write self-modifying programs)
   def cmddel
     @prg.delete_at(@x.to_i)
   end

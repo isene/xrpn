@@ -1,4 +1,5 @@
 class XRPN
+# View (print) the content of register n
   def view (r)
     puts @reg[r]
   end

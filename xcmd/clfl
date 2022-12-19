@@ -1,4 +1,5 @@
 class XRPN
+# Clear content of XM file
   def clfl
     if @xmcont[0][0] == ""
       return 

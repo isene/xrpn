@@ -1,4 +1,5 @@
 class XRPN
+# Recall content of named register to X
   def rcl (r)
     x = false
     case r.downcase

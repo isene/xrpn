@@ -1,4 +1,5 @@
 class XRPN
+# Swap pages (page numbers in X and Y)
   def pageswap
     @prg[@x.to_i], @prg[@y.to_i] = @prg[@y.to_i], @prg[@x.to_i]
     return "Pages #{@x.to_i} and #{@y.to_i} swapped"

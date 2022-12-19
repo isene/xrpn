@@ -1,4 +1,5 @@
 class XRPN
+# Get room left in eXtended Memory (lots and lots)
   def emroom
     return "EMROOM: There's always plenty of room"
   end

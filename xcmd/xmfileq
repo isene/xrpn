@@ -1,4 +1,5 @@
 class XRPN
+# Print name of current XM file
   def xmfile?
     return "XMFILE = #{@xmfile}"
   end

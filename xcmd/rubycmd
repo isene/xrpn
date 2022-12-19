@@ -1,4 +1,5 @@
 class XRPN
+# Evaluate the Ruby command in Alpha. Gives you access to all of Ruby inside XRPN.
   def rubycmd
     eval(@a)
   end

@@ -1,4 +1,5 @@
 class XRPN
+# Delete data values from statistical accumulation
   def sminus
     @l = @x
     @reg[(@srg.to_i + 0).to_s] = 0 if @reg[(@srg.to_i + 0).to_s] == nil

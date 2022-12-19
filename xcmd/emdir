@@ -1,4 +1,5 @@
 class XRPN
+# Print data for all XM files (name and type and size)
   def emdir
     cat 4
   end

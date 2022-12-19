@@ -1,4 +1,5 @@
 class XRPN
+# Programmable Clear Programs (current and remaining programs)
   def pclps
     pr = "\"#{@a}\""
     page, pos = locate_prg (pr)

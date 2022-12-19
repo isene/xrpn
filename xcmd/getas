@@ -1,4 +1,5 @@
 class XRPN
+# Loads XM file (any tupe)
   def getas
     load_xm(@a)
   end

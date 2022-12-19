@@ -1,4 +1,5 @@
 class XRPN
+# Swap X and Y
   def xy
     @x, @y = @y, @x
   end

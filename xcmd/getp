@@ -1,4 +1,5 @@
 class XRPN
+# Get program from program file
   def getp
     f = Dir.home + "/.xrpn/data/" + @a + ".pr"
     if File.exist?(f)

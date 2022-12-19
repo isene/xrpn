@@ -1,4 +1,5 @@
 class XRPN
+# Return first number in Alpha to X
   def anum
     lift
     n = @a.scan(/[\d.,e]+/).first

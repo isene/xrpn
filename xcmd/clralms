@@ -1,4 +1,5 @@
 class XRPN
+# Clear all alarms (no alarm functions implemented)
   def clralms
     return "CLRALMS: No clock, alarm or stopwatch functions are implemented"
   end

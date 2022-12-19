@@ -1,4 +1,5 @@
 class XRPN
+# Store subtract (subtract X from the content of reg n in reg n)
   def stsubtract (r)
     case r.downcase
     when "x"

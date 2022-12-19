@@ -1,4 +1,5 @@
 class XRPN
+# Save X to the current XM data file record
   def savex
     @xmcont[@xmcont[0][3] + 1] = @x
     @xmcont[0][3] += 1

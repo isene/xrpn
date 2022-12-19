@@ -1,4 +1,5 @@
 class XRPN
+# Clear alarm by Alpha (no alarm functions implemented)
   def clalma
     return "CLALMA: No clock, alarm or stopwatch functions are implemented"
   end

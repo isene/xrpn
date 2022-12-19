@@ -1,4 +1,5 @@
 class XRPN
+# Print Stack (including Alpha and L)
   def prstk
     puts "T = ".c_t + numformat(@t).c_t(1) + "   α = ".c_a + @a.to_s.c_a(1)
     puts "Z = ".c_z + numformat(@z).c_z(1)

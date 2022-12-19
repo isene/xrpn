@@ -1,4 +1,5 @@
 class XRPN
+# Return start of statistical registers to X
   def sreg?
     return "ΣREG = " + @sreg
   end

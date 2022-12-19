@@ -1,4 +1,5 @@
 class XRPN
+# Return date in X (DD.MMYYYY or MM.DDYYYY) as YYYY-MM-DD in Alpha
   def adateiso
     d = @x.to_s
     d = "0" + d if d.match(/^\d\./)

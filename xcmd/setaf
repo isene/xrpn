@@ -1,4 +1,5 @@
 class XRPN
+# Set clock accuracy factor (no clock function)
   def setaf
     return "SETAF: No clock, alarm or stopwatch functions are implemented"
   end

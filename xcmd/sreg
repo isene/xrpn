@@ -1,4 +1,5 @@
 class XRPN
+# Set start of statistical registers to n
   def sreg (r)
     @srg = r
   end

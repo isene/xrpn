@@ -1,4 +1,5 @@
 class XRPN
+# Add to Alpha the next record in current XM file
   def arclrec
     if @xmcont[0][0] == ""
       return 

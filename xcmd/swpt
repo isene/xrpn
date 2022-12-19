@@ -1,4 +1,5 @@
 class XRPN
+# Stopwatch and pointers (no stopwatch here)
   def swpt
     return "SWPT: No clock, alarm or stopwatch functions are implemented"
   end

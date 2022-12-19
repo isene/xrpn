@@ -1,4 +1,5 @@
 class XRPN
+# Append Alpha to current XM file at pointer
   def hr
     @l = @x
     s  = @x.to_i * 3600

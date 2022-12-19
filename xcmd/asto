@@ -1,4 +1,5 @@
 class XRPN
+# Store Alpha to named register
   def asto (r)
     case r.downcase
     when "x"

@@ -1,4 +1,5 @@
 class XRPN
+# Go to ascii file editor (no need for that)
   def ed
     return "No need for an editor.\nEdit your files in ~/.xrpn/data/ with your favourite editor (VIM)."
   end

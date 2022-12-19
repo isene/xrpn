@@ -1,4 +1,5 @@
 class XRPN
+# Recall the pointer for XM file (named in ALpha) to X
   def rclpta
     f = Dir.home + "/.xrpn/data/" + @a
     if File.exist?(f + ".as")

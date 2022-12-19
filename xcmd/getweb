@@ -1,4 +1,5 @@
 class XRPN
+# Get web page with URL in Alpha into X
   def getweb
     lift
     begin

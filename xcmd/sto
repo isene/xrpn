@@ -1,4 +1,5 @@
 class XRPN
+# Store X in register n
   def sto (r)
     case r.downcase
     when "x"
