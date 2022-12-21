@@ -9,5 +9,4 @@
 @p.srg = 11
 @p.reg = {}
 @p.flg = {"28"=>false, "29"=>true, "31"=>false, "44"=>false, "22"=>false, "23"=>false}
-@p.prg = [["LBL \"XRPN\"", "END"]]
 $theme = "dark"

@@ -4,14 +4,16 @@ def read_xcmd
     Dir[$gem+"/xcmd/*"].each do |file|
       load file
       l = File.read(file)
-      c = l[/def .*\n/][4..-2]
+      c = l.sub(/.*\s*def /m, '')
+      c = c.sub(/\s.*/m, '')
       $cmd.push(c)
     end
   end
   Dir[Dir.home+"/.xrpn/xcmd/*"].each do |file|
     load file
     l = File.read(file)
-    c = l[/def .*\n/][4..-2]
+    c = l.sub(/.*\s*def /m, '')
+    c = c.sub(/\s.*/m, '')
     $cmd.push(c)
   end
   $cmd.sort!

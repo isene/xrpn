@@ -2,7 +2,7 @@ def debug_mode
   #prompt = TTY::Prompt.new
   loop do
     if $prompt
-      @line = prompt.ask(":")
+      @line = @debugprompt.ask(":")
       break
     else
       puts "─" * 30
