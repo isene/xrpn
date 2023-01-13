@@ -16,7 +16,7 @@ XRPN implements indirect addressing, self-modification and features well beyond 
 
 You need Ruby installed to get XRPN to work.
 
-To install XRPN, you can do `gem install 'xrpn'` or by cloning this repository and run the script `INSTALL.sh`.  It is only tested on Linux but should work well on Mac OS and BSD systems. If you are on Windows, please tell me if it works in that environment. The install script will put create a symbolic link in your home directory - named ".xrpn" to make it a hidden directory - pointing to the cloned repo. It will also attempt to add a symlink to "~/bin" to make it easy to run XRPN. If you install XRPN by cloning this repo, you also need to install the Ruby Gem tty-prompt: `gem install tty-prompt`. If you install via `gem install 'xrpn'`, then this dependency is automatically taken care of. The gem is slower on startup than running XRPN from this repo.
+To install XRPN, you can do `gem install 'xrpn'` or by cloning this repository and run the script `INSTALL.sh`.  It is only tested on Linux but should work well on Mac OS and BSD systems. If you are on Windows, please tell me if it works in that environment. The install script will put create a symbolic link in your home directory - named ".xrpn" to make it a hidden directory - pointing to the cloned repo. It will also attempt to add a symlink to "~/bin" to make it easy to run XRPN. If you install XRPN by cloning this repo, you also need to install the Ruby Gem tty-prompt: `gem install tty-prompt`. If you install via `gem install 'xrpn'`, then this dependency is automatically taken care of. The gem is slower on startup than running XRPN from this repo. Also, `speaker-test` must be installed to play tones, but this is preinstalled on most Lunux/BSD systems.
 
 ## Run
 

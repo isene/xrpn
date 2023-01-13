@@ -1,0 +1,14 @@
+class XRPN
+# Sound a tone with frequency in X and length (in sec) in Y
+  def tonexy
+    f = @x.to_f
+    l = @y.to_f
+    begin
+      %x|speaker-test -t sine -f #{f} -l 1  1> /dev/null 2>& 1 & sleep #{l} && kill -9 $!|
+    rescue
+      puts "speaker-test must be installed to play tones"
+    end
+  end
+end
+ 
+# vim:ft=ruby:

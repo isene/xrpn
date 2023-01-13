@@ -44,7 +44,7 @@ def debug_mode
       @p.flg = {}
       system("clear")
     when "R" # Reload all commands from the cmd directory
-      read_cmd
+      read_xcmd
       puts "Commands reloaded."
     when "l" # Show current line
       @line  = @p.prg[@p.pg][@p.pc]

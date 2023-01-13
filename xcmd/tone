@@ -1,0 +1,15 @@
+class XRPN
+# Sound a tone (0-9)
+  def tone (r)
+    r = r.to_i
+    return unless (0..9).include?(r)
+    t = [175, 197, 225, 263, 315, 394, 525, 629, 788, 1051]
+    begin
+      %x|speaker-test -t sine -f #{t[r]} -l 1  1> /dev/null 2>& 1 & sleep .28 && kill -9 $!|
+    rescue
+      puts "speaker-test must be installed to play tones"
+    end
+  end
+end
+ 
+# vim:ft=ruby:

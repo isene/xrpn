@@ -7,7 +7,7 @@ class XRPN
       pr = "\"#{@a}\""
       page, pos, prgm = locate_prg (pr)
       if pos == nil
-        puts "No such program to print."
+        puts "No such program to print #{pr}"
         return
       end
     end
