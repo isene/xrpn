@@ -1,0 +1,24 @@
+class XRPN
+# Open a file system file or make directory the current directory
+  def open
+    if File.directory?(@a) # Rescue for permission error
+      begin
+        Dir.chdir(@a)
+      rescue
+        puts "Cannot move to directory \"#{@a}\""
+      end
+    else
+      begin
+        if File.read(@a).force_encoding("UTF-8").valid_encoding?
+          system("exec $EDITOR #{@a}")
+        else
+          Thread.new { system("xdg-open #{@a} 2>/dev/null") }
+        end
+      rescue
+        puts "Cannot open file \"#{@a}\""
+      end
+    end
+  end
+end
+ 
+# vim:ft=ruby:

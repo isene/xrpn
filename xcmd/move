@@ -1,0 +1,23 @@
+class XRPN
+# Move file named in Alpha to filename in X
+  def move
+    begin
+      require 'fileutils'
+    rescue
+      puts "Ruby FileUtils needs to be installed."
+      return
+    end
+    item = @a
+    dest = @x
+    while File.exist?(dest)
+      dest = dest.chop + (dest[-1].to_i + 1).to_s
+    end
+    begin
+      FileUtils.mv(item, dest)
+    rescue StandardError => err
+      puts err.to_s
+    end
+  end
+end
+ 
+# vim:ft=ruby:

@@ -5,7 +5,7 @@ class XRPN
     begin
       @x = open(@a) {|f| f.read }
     rescue
-      return "Cannot get the content of '#{a}'"
+      return "Cannot get the content of \"#{a}\""
     end
   end
 end
