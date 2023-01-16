@@ -2,9 +2,9 @@ class XRPN
 # Read any file named in Alpha into Alpha
   def getfilea
     begin
-      @a = File.read(@a)
+      @a = File.read(@a).chomp
     rescue
-      return "Cannot read the file '#{a}'"
+      return "Cannot read the file \"#{a}\""
     end
   end
 end
