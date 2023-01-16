@@ -3,9 +3,9 @@ class XRPN
   def getfile
     lift
     begin
-      @x = File.read(@a)
+      @x = File.read(@a).chomp
     rescue
-      return "Cannot read the file '#{a}'"
+      return "Cannot read the file \"#{a}\""
     end
   end
 end
