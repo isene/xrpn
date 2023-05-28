@@ -10,7 +10,7 @@ require 'open-uri'
 require 'json'
 require 'tty-prompt'
 
-#$gem = Gem.latest_spec_for("xrpn").gem_dir
+$gem = Gem.latest_spec_for("xrpn").gem_dir
 
 # ENSURE DIRs
 Dir.mkdir(Dir.home + "/.xrpn") unless File.exist?(Dir.home + "/.xrpn")
@@ -33,6 +33,7 @@ optparse = OptionParser.new do |opts|
   opts.banner = "Usage: xrpn [options]"
 
   # Define the options, and what they do
+  opts.on('-e', '--execute string', 'Interpret string as program and run')   { |e| $exe   = e  }
   opts.on('-f', '--file program', 'Specify the file to process')             { |f| $rfile = f  }
   opts.on('-l', '--load program(s)', Array, 'File(s) to load, but not run')  { |l| $lfile = l  }
   opts.on('-s', '--state STATE', 'Load a State file')                        { |s| $sfile = s  }
@@ -58,7 +59,8 @@ load(Dir.home+'/.xrpn/conf') if File.exist?(Dir.home+'/.xrpn/conf')
 @p.x, @p.y, @p.z, @p.t, @p.a = @x, @y, @z, @t, @a
 
 # INITIALIZE XRPN PROGRAM
-@p.prg[@p.pg] = ["LBL \"XRPN\"", "END"] unless $rfile   # Put dummy program in page 0 if no file to run
+@p.prg[@p.pg] = ["LBL \"XRPN\"", "END"]                 # Put dummy program in page 0 if no file/string to run
+@p.prg[@p.pg] = hp_41($exe.split(",")) if $exe          # Read in string as program is supplied by -e/--execute
 @p.prg[@p.pg] = hp_41(@p.prg[@p.pg]) if $rfile          # Substitute HP-41 commands with XRPN commands
 if $lfile                                               # Read file to load but not run if -l switch is used
   $lfile.each_with_index do |f, i|

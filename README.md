@@ -25,10 +25,11 @@ To run XRPN, make sure the program file ("bin/xrpn") is copied or linked to a di
 The full synopsis goes like this:
 ```
 Usage: xrpn [options]
-    -f, --file XRPN-file             Specify the file to process
-    -l, --load XRPN-file             Specify a file to load, but not run
+    -e, --execute string             Interpret string as program and run
+    -f, --file program               Specify the file to process
+    -l, --load program(s)            File(s) to load, but not run
     -s, --state STATE                Load a State file
-	-c, --check program              Program file to check for errors
+    -c, --check program              Program file to check for errors
     -x, --X X-value                  Set initial value in the X register
     -y, --Y Y-value                  Set initial value in the Y register
     -z, --Z Z-value                  Set initial value in the Z register

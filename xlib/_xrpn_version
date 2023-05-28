@@ -1,5 +1,5 @@
 def xrpn_version
-  puts "XRPN version: 1.3"
+  puts "XRPN version: 1.4"
 end
  
 # vim:ft=ruby:
