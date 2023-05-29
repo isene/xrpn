@@ -1,5 +1,19 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
+#
+# SCRIPT INFO 
+# Name:       XRPN - eXtended Reverse Polish Notation programming language
+# Language:   Pure Ruby, best viewed in VIM
+# Author:     Geir Isene <g@isene.com>
+# Web_site:   http://isene.com/
+# Github:     https://github.com/isene/xrpn
+# License:    I release all copyright claims. This code is in the public domain.
+#             Permission is granted to use, copy modify, distribute, and sell
+#             this software for any purpose. I make no guarantee about the
+#             suitability of this software for any purpose and I am not liable
+#             for any damages resulting from its use. Further, I am under no
+#             obligation to maintain or extend this software. It is provided 
+#             on an 'as is' basis without any expressed or implied warranty.
 
 # GET EXTENSIONS
 require 'optparse'
@@ -48,6 +62,9 @@ optparse = OptionParser.new do |opts|
   opts.on('-v', '--version', 'Display the XRPN version number')              { xrpn_version; exit }
 end
 optparse.parse!
+
+input = (STDIN.tty?) ? '' : $stdin.read
+$exe  = input unless input == ''
 
 # INITIALIZE CLASS
 @p = XRPN.new($rfile)
