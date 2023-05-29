@@ -1,4 +1,5 @@
 # XRPN
+![Ruby](https://img.shields.io/badge/language-Ruby-red) ![Unlicense](https://img.shields.io/badge/license-Unlicense-green) ![Stay Amazing](https://img.shields.io/badge/Stay-Amazing-important)
 
 ## Introduction
 
@@ -39,6 +40,11 @@ Usage: xrpn [options]
         --help                       Display LONG help text
     -v, --version                    Display the XRPN version number
 ```
+A program can be run by supplying a program file (option -f), by supplying a string with commands separated by commas (option -e) or by starting xrpn without any options and keying in the program manually.
+
+Using the -eoption, you could do e.g. `xrpn -e "43, sin, 1/x, prx"`.
+
+You can also pipe a string into xrpn like this: `echo "1,2,+,4,/,prx" | xrpn`.
 
 ## FOCAL and the HP-41 system
 
