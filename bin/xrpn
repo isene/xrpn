@@ -63,6 +63,7 @@ optparse = OptionParser.new do |opts|
 end
 optparse.parse!
 
+# HANDLE INPUT FROM STDIN (PIPE) OR STRING VIA -e
 input = (STDIN.tty?) ? '' : $stdin.read
 $exe  = input unless input == ''
 
@@ -85,6 +86,8 @@ if $lfile                                               # Read file to load but 
     @p.prg[i] = hp_41(@p.prg[i])
   end
 end
+@p.prg[@p.pg].push("END") unless @p.prg[@p.pg].last.upcase == "END"
+
 read_state($sfile) if $sfile                            # Read state file in ~.xrpn/ if -s switch is used
 $debug = true      if $lfile or $sfile                  # Do not run loaded program or program in state file
 
@@ -107,13 +110,13 @@ until @p.pc == @p.prg[@p.pg].length do
     @p.x = @line.to_f
     @p.flg["22"] = true  # Number has been entered
     @p.flg["23"] = false
-  elsif @line.match(/^>?".*"/) # If an Alpha string is supplied 
-    if @line.match(/^"\|/)
+  elsif @line.match(/^>?["'].*["']/) # If an Alpha string is supplied 
+    if @line.match(/^["']\|/)
       @p.a += @line.sub(/\|-?/, '').gsub(/\"/, '') # Append to Alpha if "|abc", "|-abc"
-    elsif @line.match(/^>"/)
+    elsif @line.match(/^>["']/)
       @p.a += @line.sub(/>/, '').gsub(/\"/, '')    # Append to Alpha if >"abc"
     else
-      @p.a = @line.gsub(/\"/, '') # ...or set Alpha to the supplied string
+      @p.a = @line.gsub(/["']/, '') # ...or set Alpha to the supplied string
     end
     @p.flg["22"] = false
     @p.flg["23"] = true  # String has been entered
@@ -125,6 +128,7 @@ until @p.pc == @p.prg[@p.pg].length do
     l1 = "" if l1 == nil
     if not $cmd.include?(l1.downcase) # Catch unknown command
       puts "No such command: #{l1}"
+      exit if $exe
       @p.stop
     elsif XRPN.method_defined?(l1.downcase) # Or execute the command with either 1 or 2 parts
       begin
