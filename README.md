@@ -1,5 +1,5 @@
 # XRPN
-![Ruby](https://img.shields.io/badge/language-Ruby-red) ![Unlicense](https://img.shields.io/badge/license-Unlicense-green) ![Stay Amazing](https://img.shields.io/badge/Stay-Amazing-important)
+![Ruby](https://img.shields.io/badge/language-Ruby-red) [![Gem Version](https://badge.fury.io/rb/xrpn.svg)](https://badge.fury.io/rb/xrpn) ![Unlicense](https://img.shields.io/badge/license-Unlicense-green) ![Stay Amazing](https://img.shields.io/badge/Stay-Amazing-important)
 
 ## Introduction
 
