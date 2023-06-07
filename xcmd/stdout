@@ -1,0 +1,8 @@
+class XRPN
+# Send content of X to STDOUT
+  def stdout
+    $stdout.write @x
+  end
+end
+ 
+# vim:ft=ruby:
