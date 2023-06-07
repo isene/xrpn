@@ -135,15 +135,22 @@ until @p.pc == @p.prg[@p.pg].length do
         l2 ? ret = @p.send(l1.downcase, l2) : ret = @p.send(l1.downcase)
       rescue ArgumentError
         puts "Command needs an argument."
-        @p.stop
+        exit if $exe
       rescue TypeError
         error("ERROR: Wrong type.")
+        exit if $exe
       rescue ZeroDivisionError
         error("ERROR: Division by zero.")
+        exit if $exe
       rescue FloatDomainError
         error("ERROR: Number out of range.")
+        exit if $exe
       rescue Math::DomainError
         error("ERROR: Number out of domain.")
+        exit if $exe
+      rescue Exception => err
+        puts "\n#{err}"
+        exit if $exe
       end
       puts ret if     $debug and ret.instance_of? String
       puts ret if not $debug and ret.to_s.match(/Error:/)
