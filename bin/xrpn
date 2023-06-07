@@ -148,9 +148,6 @@ until @p.pc == @p.prg[@p.pg].length do
       rescue Math::DomainError
         error("ERROR: Number out of domain.")
         exit if $exe
-      rescue Exception => err
-        puts "\n#{err}"
-        exit if $exe
       end
       puts ret if     $debug and ret.instance_of? String
       puts ret if not $debug and ret.to_s.match(/Error:/)
