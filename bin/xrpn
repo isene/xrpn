@@ -24,7 +24,11 @@ require 'open-uri'
 require 'json'
 require 'tty-prompt'
 
-$gem = Gem.latest_spec_for("xrpn").gem_dir
+$gem = nil
+begin
+  $gem = Gem.latest_spec_for("xrpn").gem_dir
+rescue
+end
 
 # ENSURE DIRs
 Dir.mkdir(Dir.home + "/.xrpn") unless File.exist?(Dir.home + "/.xrpn")
