@@ -1,0 +1,8 @@
+class XRPN
+# Load program named in Alpha into new page
+  def load
+    self.prg[self.prg.length] = hp_41(File.read(@a).split("\n"))
+  end
+end
+ 
+# vim:ft=ruby:

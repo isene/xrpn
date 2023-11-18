@@ -1,0 +1,9 @@
+class XRPN
+# Get the index/number of the last page
+  def lastpage
+    lift
+    @x = self.prg.length
+  end
+end
+ 
+# vim:ft=ruby:
