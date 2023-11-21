@@ -1,6 +1,7 @@
 def hp_41 (a)
   a.map!{|x| x.sub( /^\s+/,      ""           )} # Remove spaces at start of line
   a.map!{|x| x.sub( /^\d\d+[^0-9.]/, ""       )} # Remove line numbers from program
+  a.map!{|x| x.sub( /\t+; .*/,    ""          )} # Remove comments
   a.map!{|x| x.sub( /\s+$/,      ""           )} # Remove trailing spaces
   a.map!{|x| x.sub( /\s\s+/,      ""          )} # Remove multiple spaces
   a.map!{|x| x.sub( /([a-zA-Z ]*)/, &:downcase)} # Downcase everything (use the /i below here)
