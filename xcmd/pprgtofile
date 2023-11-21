@@ -1,0 +1,30 @@
+class XRPN
+# Print program
+  def pprgtofile
+    page = @pg
+    pos  = 0
+    if @a != ""
+      pr = "\"#{@a}\""
+      page, pos, prgm = locate_prg (pr)
+      if pos == nil
+        puts "No such program to print #{pr}"
+        return
+      end
+    end
+    prog = ""
+    @prg[page].each_index do |i|
+      next if i < pos
+      prog += "#{format('%02d', i + 1)}"
+      if @prg[page][i].downcase.match(/lbl/)
+        prog += "◆"
+      else
+        prog += " "
+      end
+      prog += "#{@prg[page][i]}\n"
+      break if @prg[page][i] == "END"
+    end
+    File.write(@x, prog)
+  end
+end
+ 
+# vim:ft=ruby:
