@@ -9,8 +9,8 @@ def debug_mode
       @p.prstk
       @line = @debugprompt.ask(">")
       unless @line == nil or @line.length == 1
-        @line = [@line]
-        @line = hp_41(@line)[0]
+        @line = hp_41([@line])[0]
+        #@line = rxcmd(@line)
       end
     end
     case @line

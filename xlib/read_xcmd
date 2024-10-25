@@ -1,12 +1,14 @@
 def read_xcmd
-  $cmd = []
   if $gem
-    Dir[$gem+"/xcmd/*"].each do |file|
-      load file
-      l = File.read(file)
-      c = l.sub(/.*\s*def /m, '')
-      c = c.sub(/\s.*/m, '')
-      $cmd.push(c)
+    begin
+      Dir[$gem+"/xcmd/*"].each do |file|
+        load file
+        l = File.read(file)
+        c = l.sub(/.*\s*def /m, '')
+        c = c.sub(/\s.*/m, '')
+        $cmd.push(c)
+      end
+    rescue
     end
   end
   Dir[Dir.home+"/.xrpn/xcmd/*"].each do |file|
@@ -17,6 +19,7 @@ def read_xcmd
     $cmd.push(c)
   end
   $cmd.sort!
+  $cmd.uniq!
 end
  
 # vim:ft=ruby:

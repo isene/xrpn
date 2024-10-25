@@ -1,5 +1,5 @@
 def check(file)
-  load Dir.home+"/.xrpn/lib/read_cmd"
+  load Dir.home+"/.xrpn/xlib/read_xcmd"
   read_cmd
   errors = 0
   if File.exist?(file) 

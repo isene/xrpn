@@ -1,5 +1,6 @@
 def xrpn_version
-  puts "XRPN version: 1.9"
+  puts "XRPN version:    2.0"
+  puts "RubyGem version: " + Gem.latest_spec_for("xrpn").version.to_s
 end
  
 # vim:ft=ruby:

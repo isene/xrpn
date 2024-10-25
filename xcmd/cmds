@@ -1,0 +1,8 @@
+class XRPN
+# Print all available commands
+  def cmds
+    p $cmd
+  end
+end
+ 
+# vim:ft=ruby:

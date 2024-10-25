@@ -36,12 +36,12 @@ class Numeric
     s  = x.to_i.to_s
     self < 0 ? m = "-" : m  = ""
     s.sub!(/-/, '')
-    f  = x.frc.to_s[0..(i + 1)].to_f
-    f  = f.to_s.sub(/../, '')
+    f  = (x.frc * 10 ** i).round.to_i.to_s
+    f  = f.to_s
     i > 0 ? s.sub!(/(\d*\.)(\d{,#{i}}).*/, '\1\2') : s.sub!(/(\d*).*/, '\1') 
     if e.abs >= n # If exponent kicks in
       s += "." + f.ljust(i, "0")
-      s += "e"
+      s += " e"
       if ge < 0
         s += "-"
         s.sub!(/0\.(\d)/, '\1.')

@@ -1,0 +1,20 @@
+def rxcmd(xcmd)
+  return xcmd if $cmd.include?(xcmd)
+  $gem ? gfile = $gem+"/xcmd/#{xcmd}" : gfile = ""
+  xfile = Dir.home+"/.xrpn/xcmd/#{xcmd}"
+  [gfile, xfile].each do |file|
+    if File.exist?(file)
+      load file
+      l    = File.read(file)
+      c    = l.sub(/.*\s*def /m, '')
+      c    = c.sub(/\s.*/m, '')
+      $cmd.push(c)
+      $cmd.sort!
+      $cmd.uniq!
+      return xcmd
+    end
+  end
+  return nil
+end
+ 
+# vim:ft=ruby:

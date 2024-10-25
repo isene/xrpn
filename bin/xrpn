@@ -23,12 +23,8 @@ require 'bigdecimal'
 require 'open-uri'
 require 'json'
 require 'tty-prompt'
+require 'timeout'
 
-$gem = nil
-begin
-  $gem = Gem.latest_spec_for("xrpn").gem_dir
-rescue
-end
 
 # ENSURE DIRs
 Dir.mkdir(Dir.home + "/.xrpn") unless File.exist?(Dir.home + "/.xrpn")
@@ -37,8 +33,11 @@ Dir.mkdir(Dir.home + "/.xrpn") unless File.exist?(Dir.home + "/.xrpn")
 end
 
 # READ LIBRARY AND COMMANDS
+$gem = `VISUAL=echo gem open xrpn`.chomp
+$gem = nil if $gem =~ /^Unable/
+$cmd = []
 Dir[$gem+"/xlib/*"].each { |file| load file } if $gem   # Read xlib directory from the Gem
-Dir[Dir.home+"/.xrpn/xlib/*"].each { |file| load file } # Read xlib directory from home dir
+Dir[Dir.home+"/.xrpn/xlib/*"].each { |file| load file unless $cmd.include?(file) } # Read xlib directory from home dir
 read_xcmd # Read XRPN commands (both from Gem and home dir)
 
 # INITIALIZE VARIABLES
@@ -134,6 +133,8 @@ until @p.pc == @p.prg[@p.pg].length do
       puts "No such command: #{l1}"
       exit if $exe
       @p.stop
+    elsif l1.downcase == "reload"
+      read_xcmd
     elsif XRPN.method_defined?(l1.downcase) # Or execute the command with either 1 or 2 parts
       begin
         l2 ? ret = @p.send(l1.downcase, l2) : ret = @p.send(l1.downcase)
