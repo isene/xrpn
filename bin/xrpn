@@ -138,8 +138,11 @@ until @p.pc == @p.prg[@p.pg].length do
     elsif XRPN.method_defined?(l1.downcase) # Or execute the command with either 1 or 2 parts
       begin
         if @p.flg["25"] == true
-          @p.flg["25"] = false
-          unerror { l2 ? ret = @p.send(l1.downcase, l2) : ret = @p.send(l1.downcase) }
+          begin
+            l2 ? ret = @p.send(l1.downcase, l2) : ret = @p.send(l1.downcase)
+          rescue
+            @p.flg["25"] = false
+          end
         else
           l2 ? ret = @p.send(l1.downcase, l2) : ret = @p.send(l1.downcase)
         end
