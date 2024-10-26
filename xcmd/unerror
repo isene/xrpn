@@ -1,0 +1,8 @@
+class XRPN
+# Sets Flag 25 (error flag)
+  def error
+    @p.flg["25"] = true
+  end
+end
+ 
+# vim:ft=ruby:

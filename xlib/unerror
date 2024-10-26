@@ -1,0 +1,6 @@
+def unerror
+   begin
+     yield  
+   rescue Exception
+   end
+end
