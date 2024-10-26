@@ -37,6 +37,10 @@ class Numeric
     self < 0 ? m = "-" : m  = ""
     s.sub!(/-/, '')
     f  = (x.frc * 10 ** i).round.to_i.to_s
+    if f.length > i # Fix rounding overflow
+      s = (x + 1).to_i.to_s
+      f = f[1..-1]
+    end
     f  = f.to_s
     i > 0 ? s.sub!(/(\d*\.)(\d{,#{i}}).*/, '\1\2') : s.sub!(/(\d*).*/, '\1') 
     if e.abs >= n # If exponent kicks in

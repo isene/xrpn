@@ -1,5 +1,5 @@
 def xrpn_version
-  puts "XRPN version:    2.0"
+  puts "XRPN version:    2.1"
   puts "RubyGem version: " + Gem.latest_spec_for("xrpn").version.to_s
 end
  

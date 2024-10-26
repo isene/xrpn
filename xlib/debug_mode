@@ -87,6 +87,13 @@ def debug_mode
       @p.prg[@p.pg].insert(@p.pc + 1, @line.sub(/^\+\+ /, ''))
     when "--"
       @p.prg[@p.pg].delete_at(@p.pc)
+    when /^:/
+      begin
+        eval @line[1..-1]
+      rescue StandardError => err
+        puts err
+      end
+      break
     when nil # A simple ENTER
       @line = "lift"
       break
