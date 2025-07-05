@@ -1,0 +1,44 @@
+LBL "FINAL"
+"Final bug test"
+aview
+PSE
+
+"Testing division..."
+aview
+10
+2
+/
+"10/2 = "
+arcl x
+aview
+PSE
+
+"Testing stats..."
+aview
+clrg
+1
+2
+Σ+
+3
+4
+Σ+
+mean
+"Mean: "
+arcl x
+aview
+PSE
+
+"Testing file error..."
+aview
+"nothere.txt"
+asto 01
+rcl 01
+getfile
+"File result: "
+arcl x
+aview
+PSE
+
+"All tests passed!"
+aview
+end

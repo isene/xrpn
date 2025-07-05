@@ -11,7 +11,8 @@ def ind(l3)
   when "l"
     l2 = @p.l.to_i.to_s
   else
-    l2 = @p.reg[l3].to_i.to_s 
+    reg_val = @p.reg[l3] || 0
+    l2 = reg_val.to_i.to_s 
   end
   l2 = "%02d" % [l2] if l2 == l2.to_i.to_s
   return l2

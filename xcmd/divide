@@ -2,8 +2,12 @@ class XRPN
 # Return 1\/X to X
   def /
     @l = @x
-    @x = @y / @x
-    dropy
+    if @x == 0
+      throw :stop, "ERROR: Division by zero"
+    else
+      @x = @y / @x
+      dropy
+    end
   end
 end
  

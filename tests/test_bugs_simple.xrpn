@@ -1,0 +1,121 @@
+LBL "TESTALL"
+"XRPN Bug Test"
+aview
+PSE
+xeq "TEST1"
+xeq "TEST2"
+xeq "TEST3"
+xeq "TEST4"
+xeq "TEST5"
+xeq "TEST6"
+"All Tests Done"
+aview
+end
+
+LBL "TEST1"
+"Test 1: Division/0"
+aview
+PSE
+5
+0
+/
+"DIV/0 Failed"
+aview
+stop
+
+LBL "TEST2"
+"Test 2: Stats/empty"
+aview
+PSE
+clrg
+mean
+"Stats Failed"
+aview
+stop
+
+LBL "TEST3"
+"Test 3: Bad file"
+aview
+PSE
+"nonexistent_file_12345.txt"
+asto 01
+rcl 01
+getfile
+"File err Failed"
+aview
+stop
+
+LBL "TEST4"
+"Test 4: IND nil"
+aview
+PSE
+clrg
+100
+sto 50
+51
+sto ind x
+"IND nil Failed"
+aview
+stop
+
+LBL "TEST5"
+"Test 5: Round ovfl"
+aview
+PSE
+9.9999999999
+fix 2
+"Rounding: "
+arcl x
+aview
+PSE
+10
+x!=y?
+gto 05
+"Round OK"
+aview
+PSE
+rtn
+LBL 05
+"Round Failed"
+aview
+stop
+
+LBL "TEST6"
+"Test 6: Stats calc"
+aview
+PSE
+clrg
+1
+enter
+2
+Σ+
+3
+enter
+4
+Σ+
+5
+enter
+6
+Σ+
+mean
+"Mean Y="
+arcl y
+" X="
+arcl x
+aview
+PSE
+2
+x!=y?
+gto 06
+rdwn
+4
+x!=y?
+gto 06
+"Stats calc OK"
+aview
+PSE
+rtn
+LBL 06
+"Stats calc Failed"
+aview
+stop

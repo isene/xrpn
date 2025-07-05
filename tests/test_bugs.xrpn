@@ -1,0 +1,148 @@
+# XRPN Test Program for Bug Fixes and Performance
+# Tests critical bugs and performance issues
+
+LBL "TESTALL"
+"=== XRPN Bug Test ===" 
+aview
+PSE
+
+# Test 1: Division by zero
+LBL "TEST1"
+"Test 1: Division/0"
+aview
+PSE
+5
+0
+/
+"DIV/0 Failed"
+aview
+stop
+LBL 01
+"DIV/0 Caught OK"
+aview
+PSE
+
+# Test 2: Statistics with empty registers
+LBL "TEST2"
+"Test 2: Stats/empty"
+aview
+PSE
+clrg
+mean
+"Stats Failed"
+aview
+stop
+LBL 02
+"Stats Caught OK"
+aview
+PSE
+
+# Test 3: File operations with non-existent file
+LBL "TEST3"
+"Test 3: Bad file"
+aview
+PSE
+"nonexistent_file_12345.txt"
+asto 01
+rcl 01
+getfile
+"File err Failed"
+aview
+stop
+LBL 03
+"File err OK"
+aview
+PSE
+
+# Test 4: Indirect addressing with nil register
+LBL "TEST4"
+"Test 4: IND nil"
+aview
+PSE
+clrg
+100
+sto 50
+# Register 51 is nil/empty
+51
+sto ind x
+"IND nil Failed"
+aview
+stop
+LBL 04
+"IND nil OK"
+aview
+PSE
+
+# Test 5: Numeric rounding overflow
+LBL "TEST5"
+"Test 5: Round ovfl"
+aview
+PSE
+9.9999999999
+fix 2
+# This should round to 10.00
+"Rounding: "
+arcl x
+aview
+PSE
+10
+x!=y?
+gto 05
+"Round OK"
+aview
+PSE
+gto "TEST6"
+LBL 05
+"Round Failed"
+aview
+stop
+
+# Test 6: Statistics with data
+LBL "TEST6"
+"Test 6: Stats calc"
+aview
+PSE
+clrg
+1
+enter
+2
+Σ+
+3
+enter
+4
+Σ+
+5
+enter
+6
+Σ+
+mean
+"Mean Y="
+arcl y
+" X="
+arcl x
+aview
+PSE
+# Should be Y=2, X=4
+2
+x!=y?
+gto 06
+rdwn
+4
+x!=y?
+gto 06
+"Stats calc OK"
+aview
+PSE
+gto "DONE"
+LBL 06
+"Stats calc Failed"
+aview
+stop
+
+LBL "DONE"
+"=== All Tests Done ==="
+aview
+PSE
+"Check for errors"
+aview
+end

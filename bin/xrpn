@@ -27,9 +27,11 @@ require 'timeout'
 
 
 # ENSURE DIRs
-Dir.mkdir(Dir.home + "/.xrpn") unless File.exist?(Dir.home + "/.xrpn")
+require 'fileutils'
+home_xrpn = File.join(Dir.home, ".xrpn")
+FileUtils.mkdir_p(home_xrpn)
 ["data", "extra", "print", "xcmd", "xlib"].each do |d|
-  Dir.mkdir(Dir.home + "/.xrpn/" + d) unless File.exist?(Dir.home + "/.xrpn/" + d)
+  FileUtils.mkdir_p(File.join(home_xrpn, d))
 end
 
 # READ LIBRARY AND COMMANDS
@@ -102,7 +104,7 @@ load(Dir.home+'/.xrpn/theme') if File.exist?(Dir.home+'/.xrpn/theme') # Override
 # THE CORE OF THE RPN PROGRAM
 @nl = false # Nolift set to false
 @i  = 0     # Counter to prevent infinite loops
-@debugprompt = TTY::Prompt.new
+@debugprompt = nil
 until @p.pc == @p.prg[@p.pg].length do
   # Enter debug mode if $debug or $prompt is set, else read next program line
   ($debug or $prompt) ? debug_mode : @line = @p.prg[@p.pg][@p.pc]

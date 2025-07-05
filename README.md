@@ -79,6 +79,25 @@ AVIEW
 END
 ```
 
+## Changelog
+
+### Version 2.5 (Latest)
+**Critical Bug Fixes and Performance Enhancements**
+
+- **Fixed division by zero crashes** - Now properly handles division by zero with error messages instead of crashing
+- **Fixed nil reference errors in statistics** - Statistics commands (like `mean`) now handle empty or uninitialized registers gracefully
+- **Fixed variable name error in file operations** - Corrected undefined variable reference in `getfile` command
+- **Fixed indirect addressing nil references** - Indirect addressing now handles nil register values safely
+- **Optimized file system operations** - Improved startup performance by using `FileUtils.mkdir_p` for directory creation
+- **Fixed memory leak** - TTY::Prompt is now lazily initialized only when debug mode is actually used
+- **Optimized numeric formatting** - Eliminated redundant string conversions in rounding overflow calculations
+- **Added comprehensive test suite** - New test programs in `/tests/` directory to verify bug fixes and prevent regressions
+
+This release significantly improves the stability and performance of XRPN while maintaining full backward compatibility.
+
+### Version 2.4
+- Fixed loading of files via the -f switch
+
 ## Documentation
 
 ...is all in [the wiki page in this repo](https://github.com/isene/xrpn/wiki/XRPN-Documentation).

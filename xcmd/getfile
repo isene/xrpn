@@ -5,7 +5,7 @@ class XRPN
     begin
       @x = File.read(@a).chomp
     rescue
-      return "Cannot read the file \"#{a}\""
+      return "Cannot read the file \"#{@a}\""
     end
   end
 end

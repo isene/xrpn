@@ -4,8 +4,18 @@ class XRPN
     @l = @x
     lift
     lift
-    @x = @reg[@srg] / @reg[@srg + 5]
-    @y = @reg[@srg + 2] / @reg[@srg + 5]
+    # Check for nil registers and zero divisor
+    sum_x = @reg[@srg] || 0
+    sum_y = @reg[@srg + 2] || 0
+    count = @reg[@srg + 5] || 0
+    
+    if count == 0
+      @x = 0
+      @y = 0
+    else
+      @x = sum_x / count
+      @y = sum_y / count
+    end
   end
 end
  

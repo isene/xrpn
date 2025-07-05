@@ -1,5 +1,6 @@
 def debug_mode
-  #prompt = TTY::Prompt.new
+  # Lazy initialization of TTY::Prompt
+  @debugprompt ||= TTY::Prompt.new
   loop do
     if $prompt
       @line = @debugprompt.ask(":")

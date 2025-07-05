@@ -1,0 +1,35 @@
+LBL "MAIN"
+"Starting tests"
+aview
+PSE
+
+"Test div by zero"
+aview
+5
+0
+/
+"DIV OK"
+aview
+PSE
+
+"Test stats empty"
+aview
+clrg
+mean
+"STATS OK"
+aview
+PSE
+
+"Test bad file"
+aview
+"nonexistent.txt"
+asto 01
+rcl 01
+getfile
+"FILE OK"
+aview
+PSE
+
+"All tests done"
+aview
+end
