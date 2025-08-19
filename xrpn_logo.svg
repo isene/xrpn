@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect x="0" y="0" width="200" height="200" rx="15" fill="#1a1a1a"/>
+  
+  <!-- HP-41 style display -->
+  <rect x="25" y="25" width="150" height="40" rx="5" fill="#2d3d2d" stroke="#444" stroke-width="2"/>
+  <rect x="30" y="30" width="140" height="30" fill="#3a4a3a"/>
+  
+  <!-- Stack display (RPN style) - brighter green -->
+  <g font-family="monospace" font-size="10" fill="#40ff40">
+    <text x="35" y="42" opacity="0.8">T:  3.141592654</text>
+    <text x="35" y="54" font-weight="bold">X:  42.000000000</text>
+  </g>
+  
+  <!-- XRPN text in display -->
+  <text x="165" y="54" font-family="monospace" font-size="8" fill="#40ff40" text-anchor="end" opacity="0.9">XRPN</text>
+  
+  <!-- Program listing area - black background -->
+  <rect x="25" y="75" width="150" height="85" rx="5" fill="#000000" stroke="#CC342D" stroke-width="2"/>
+  
+  <!-- HP-41/FOCAL style code - white text on black -->
+  <g font-family="monospace" font-size="12" fill="#ffffff">
+    <text x="35" y="95">01 LBL "CALC"</text>
+    <text x="35" y="110">02 RCL 01</text>
+    <text x="35" y="125">03 X²</text>
+    <text x="35" y="140">04 PI</text>
+    <text x="35" y="155">05 *</text>
+  </g>
+  
+  <!-- HP-41 heritage indicator -->
+  <text x="100" y="185" font-family="monospace" font-size="9" fill="#888" text-anchor="middle">HP-41CX COMPATIBLE</text>
+  
+  <!-- Ruby gem indicator -->
+  <g transform="translate(175, 175) scale(0.25)">
+    <path d="M -20 -10 L 20 -10 L 30 0 L 20 10 L -20 10 L -30 0 Z" fill="#CC342D" opacity="0.7"/>
+  </g>
+</svg>

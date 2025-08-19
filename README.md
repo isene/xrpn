@@ -1,4 +1,9 @@
 # XRPN
+
+<p align="center">
+  <img src="xrpn_logo.svg" alt="XRPN" width="300">
+</p>
+
 ![Ruby](https://img.shields.io/badge/language-Ruby-red) [![Gem Version](https://badge.fury.io/rb/xrpn.svg)](https://badge.fury.io/rb/xrpn) ![Unlicense](https://img.shields.io/badge/license-Unlicense-green) ![Stay Amazing](https://img.shields.io/badge/Stay-Amazing-important)
 
 ## Introduction
