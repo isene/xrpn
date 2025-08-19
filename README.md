@@ -2,11 +2,7 @@
 
 ![Ruby](https://img.shields.io/badge/language-Ruby-red) [![Gem Version](https://badge.fury.io/rb/xrpn.svg)](https://badge.fury.io/rb/xrpn) ![Unlicense](https://img.shields.io/badge/license-Unlicense-green) ![Stay Amazing](https://img.shields.io/badge/Stay-Amazing-important)
 
-<img src="xrpn_logo.svg" width="150" height="150">
-
-## Introduction
-
-XRPN is a stack-based programming language, similar to [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)), but simpler in nature.
+<img src="xrpn_logo.svg" align="left" width="150" height="150"> XRPN is a stack-based programming language, similar to [Forth](https://en.wikipedia.org/wiki/Forth_(programming_language)), but simpler in nature.
  
 XRPN is on-the-fly extensible. Language functions can be upgraded or implemented while programs are running.
 
