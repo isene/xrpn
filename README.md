@@ -99,14 +99,14 @@ This displays:
 
 ## Changelog
 
-### Version 2.6 (Development)
+### Version 2.6 (Latest)
 **New Features and Testing**
 
 - **Added HP-41 RAW file viewer** - New `RAWINFO` command displays labels, strings, and hex dump from HP-41 RAW program files
 - **Comprehensive regression test framework** - 58 automated tests across 7 command categories with 100% pass rate
 - **Test infrastructure** - YAML-based test specifications for easy maintenance and extension
 
-### Version 2.5 (Latest)
+### Version 2.5
 **Critical Bug Fixes and Performance Enhancements**
 
 - **Fixed division by zero crashes** - Now properly handles division by zero with error messages instead of crashing
