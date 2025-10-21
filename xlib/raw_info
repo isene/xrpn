@@ -1,0 +1,155 @@
+# HP-41 RAW File Information Viewer
+# Displays labels, strings, and basic info from HP-41 RAW files
+
+def raw_info(filename)
+  begin
+    data = File.binread(filename)
+
+    puts "=" * 60
+    puts "HP-41 RAW File: #{File.basename(filename)}"
+    puts "File size: #{data.length} bytes"
+    puts "=" * 60
+    puts
+
+    # Extract labels
+    labels = []
+    strings = []
+    pos = 0
+
+    while pos < data.length
+      byte = data[pos].ord
+
+      # Global label (C0 00 Fx yy LABELNAME)
+      if byte == 0xC0 && pos + 3 < data.length && data[pos + 1].ord == 0x00
+        label_type = data[pos + 2].ord
+        pos += 4
+
+        # Extract label name
+        label = ""
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          label << data[pos]
+          pos += 1
+        end
+
+        type_str = case label_type
+                   when 0xF4 then "Alpha"
+                   when 0xF5 then "Numeric"
+                   else "Unknown"
+                   end
+
+        labels << "  LBL \"#{label}\" (#{type_str})"
+        next
+      end
+
+      # Local label (F6 00 LABELNAME)
+      if byte == 0xF6 && pos + 1 < data.length && data[pos + 1].ord == 0x00
+        pos += 2
+
+        # Extract label name
+        label = ""
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          label << data[pos]
+          pos += 1
+        end
+
+        labels << "  LBL \"#{label}\" (Local)"
+        next
+      end
+
+      # Text strings (multiple formats)
+      # Format 1: 7F 20 TEXT
+      if byte == 0x7F && pos + 1 < data.length && data[pos + 1].ord == 0x20
+        pos += 2
+        text = ""
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          text << data[pos]
+          pos += 1
+        end
+        strings << "  \"#{text}\"" unless text.empty?
+        next
+      end
+
+      # Format 2: FD TEXT (string literals in prompts)
+      if byte == 0xFD && pos + 1 < data.length
+        pos += 1
+        text = ""
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          text << data[pos]
+          pos += 1
+        end
+        strings << "  \"#{text}\"" unless text.empty?
+        next
+      end
+
+      # Format 3: F8 TEXT (another string format)
+      if byte == 0xF8 && pos + 1 < data.length
+        pos += 1
+        text = ""
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          text << data[pos]
+          pos += 1
+        end
+        strings << "  \"#{text}\"" unless text.empty?
+        next
+      end
+
+      # Format 4: F3 TEXT (yet another string format)
+      if byte == 0xF3 && pos + 1 < data.length
+        pos += 1
+        text = ""
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          text << data[pos]
+          pos += 1
+        end
+        strings << "  \"#{text}\"" unless text.empty?
+        next
+      end
+
+      # Format 5: FB TEXT (text string marker)
+      if byte == 0xFB && pos + 1 < data.length
+        pos += 1
+        text = ""
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          text << data[pos]
+          pos += 1
+        end
+        strings << "  \"#{text}\"" unless text.empty?
+        next
+      end
+
+      pos += 1
+    end
+
+    # Display findings
+    puts "Labels found (#{labels.length}):"
+    if labels.empty?
+      puts "  (none)"
+    else
+      labels.each { |l| puts l }
+    end
+    puts
+
+    puts "Text strings found (#{strings.length}):"
+    if strings.empty?
+      puts "  (none)"
+    else
+      strings.each { |s| puts s }
+    end
+    puts
+
+    puts "Hex dump (first 256 bytes):"
+    puts "-" * 60
+    system("hexdump -C '#{filename}' | head -20")
+    puts
+
+    puts "Note: Full RAW to XRPN conversion requires comprehensive"
+    puts "HP-41 bytecode documentation. This viewer extracts readable"
+    puts "labels and strings for informational purposes."
+    puts "=" * 60
+
+  rescue => e
+    puts "Error reading RAW file: #{e.message}"
+  end
+end
+
+# vim:ft=ruby:

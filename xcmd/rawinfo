@@ -1,0 +1,22 @@
+class XRPN
+# Display information about HP-41 RAW file
+# Usage: "filename.raw" then RAWINFO
+  def rawinfo
+    filename = @a
+    if filename.empty?
+      puts "Error: No filename in Alpha register"
+      puts "Usage: Put RAW filename in Alpha, then run RAWINFO"
+      return
+    end
+
+    # Check file exists
+    unless File.exist?(filename)
+      puts "Error: File not found: #{filename}"
+      return
+    end
+
+    raw_info(filename)
+  end
+end
+
+# vim:ft=ruby:

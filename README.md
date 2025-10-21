@@ -79,7 +79,32 @@ AVIEW
 END
 ```
 
+## HP-41 RAW File Support
+
+XRPN can now inspect HP-41 RAW format program files. Use the `RAWINFO` command to view labels, strings, and hex dump of RAW files.
+
+**Usage:**
+```
+xrpn
+> "/path/to/program.raw"
+> rawinfo
+```
+
+This displays:
+- All program labels (global and local)
+- Text strings found in the program
+- Hex dump for analysis
+
+**Note:** Full RAW-to-XRPN conversion requires comprehensive HP-41 bytecode documentation and is planned for future releases. The current implementation provides informational viewing of RAW files.
+
 ## Changelog
+
+### Version 2.6 (Development)
+**New Features and Testing**
+
+- **Added HP-41 RAW file viewer** - New `RAWINFO` command displays labels, strings, and hex dump from HP-41 RAW program files
+- **Comprehensive regression test framework** - 58 automated tests across 7 command categories with 100% pass rate
+- **Test infrastructure** - YAML-based test specifications for easy maintenance and extension
 
 ### Version 2.5 (Latest)
 **Critical Bug Fixes and Performance Enhancements**
