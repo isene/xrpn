@@ -1,0 +1,78 @@
+---
+# Stack Operations Tests
+- name: "ENTER duplicates X register"
+  commands:
+    - "42"
+    - "enter"
+    - "+"
+  expected:
+    x: 84
+
+- name: "SWAP exchanges X and Y"
+  setup:
+    - "5"
+    - "10"
+  commands:
+    - "swap"
+  expected:
+    x: 5
+
+- name: "DROP removes X register"
+  setup:
+    - "1"
+    - "2"
+    - "3"
+  commands:
+    - "drop"
+  expected:
+    x: 2
+
+- name: "RDN rotates stack down"
+  setup:
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+  commands:
+    - "rdn"
+  expected:
+    x: 3
+
+- name: "RUP rotates stack up"
+  setup:
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+  commands:
+    - "rup"
+  expected:
+    x: 1
+
+- name: "CLX clears X register"
+  setup:
+    - "42"
+  commands:
+    - "clx"
+  expected:
+    x: 0
+
+- name: "LASTX recalls last X"
+  commands:
+    - "7"
+    - "3"
+    - "+"
+    - "lastx"
+  expected:
+    x: 3
+
+- name: "CLEAR clears stack"
+  setup:
+    - "1"
+    - "2"
+    - "3"
+    - "4"
+  commands:
+    - "clear"
+  expected:
+    x: 0

@@ -1,0 +1,120 @@
+---
+# Basic Arithmetic Operations Tests
+- name: "Addition: 5 + 3 = 8"
+  commands:
+    - "5"
+    - "3"
+    - "+"
+  expected:
+    x: 8
+
+- name: "Subtraction: 10 - 4 = 6"
+  commands:
+    - "10"
+    - "4"
+    - "-"
+  expected:
+    x: 6
+
+- name: "Multiplication: 6 * 7 = 42"
+  commands:
+    - "6"
+    - "7"
+    - "*"
+  expected:
+    x: 42
+
+- name: "Division: 20 / 4 = 5"
+  commands:
+    - "20"
+    - "4"
+    - "/"
+  expected:
+    x: 5
+
+- name: "Reciprocal: 1/4 = 0.25"
+  commands:
+    - "4"
+    - "1/x"
+  expected:
+    x: 0.25
+
+- name: "Change sign: -(5) = -5"
+  commands:
+    - "5"
+    - "chs"
+  expected:
+    x: -5
+
+- name: "Absolute value: abs(-7) = 7"
+  commands:
+    - "-7"
+    - "abs"
+  expected:
+    x: 7
+
+- name: "Square: 9^2 = 81"
+  commands:
+    - "9"
+    - "sqr"
+  expected:
+    x: 81
+
+- name: "Square root: sqrt(144) = 12"
+  commands:
+    - "144"
+    - "sqrt"
+  expected:
+    x: 12
+
+- name: "Cube: 3^3 = 27"
+  commands:
+    - "3"
+    - "cube"
+  expected:
+    x: 27
+
+- name: "Power: 2^8 = 256"
+  commands:
+    - "2"
+    - "8"
+    - "pow"
+  expected:
+    x: 256
+
+- name: "Modulo: 17 mod 5 = 2"
+  commands:
+    - "17"
+    - "5"
+    - "mod"
+  expected:
+    x: 2
+
+- name: "Factorial: 5! = 120"
+  commands:
+    - "5"
+    - "fact"
+  expected:
+    x: 120
+
+- name: "Integer part: int(7.89) = 7"
+  commands:
+    - "7.89"
+    - "int"
+  expected:
+    x: 7
+
+- name: "Fractional part: frc(7.89) = 0.89"
+  commands:
+    - "7.89"
+    - "frc"
+  expected:
+    x: 0.89
+
+- name: "Percent: 5% of 200 = 10"
+  commands:
+    - "200"
+    - "5"
+    - "%"
+  expected:
+    x: 10

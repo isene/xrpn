@@ -1,0 +1,85 @@
+---
+# Statistics Tests
+- name: "Σ+ adds data point"
+  setup:
+    - "clrg"
+  commands:
+    - "5"
+    - "10"
+    - "Σ+"
+    - "rcl 11"
+  expected:
+    x: 1
+
+- name: "Mean of data set"
+  setup:
+    - "clrg"
+    - "1"
+    - "2"
+    - "Σ+"
+    - "3"
+    - "4"
+    - "Σ+"
+    - "5"
+    - "6"
+    - "Σ+"
+  commands:
+    - "mean"
+  expected:
+    x: 4
+
+- name: "Standard deviation"
+  setup:
+    - "clrg"
+    - "2"
+    - "4"
+    - "Σ+"
+    - "4"
+    - "16"
+    - "Σ+"
+    - "6"
+    - "36"
+    - "Σ+"
+  commands:
+    - "sdev"
+  expected:
+    x: 1.63299
+
+- name: "Σ- removes data point"
+  setup:
+    - "clrg"
+    - "1"
+    - "2"
+    - "Σ+"
+    - "3"
+    - "4"
+    - "Σ+"
+  commands:
+    - "1"
+    - "2"
+    - "Σ-"
+    - "rcl 11"
+  expected:
+    x: 1
+
+- name: "Statistics with empty registers should error"
+  setup:
+    - "clrg"
+  commands:
+    - "mean"
+  should_error: true
+
+- name: "CLS clears statistics"
+  setup:
+    - "clrg"
+    - "1"
+    - "2"
+    - "Σ+"
+    - "3"
+    - "4"
+    - "Σ+"
+  commands:
+    - "cls"
+    - "rcl 11"
+  expected:
+    x: 0

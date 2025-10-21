@@ -1,0 +1,73 @@
+---
+# Trigonometry Tests
+- name: "sin(30°) = 0.5"
+  setup:
+    - "deg"
+  commands:
+    - "30"
+    - "sin"
+  expected:
+    x: 0.5
+
+- name: "cos(60°) = 0.5"
+  setup:
+    - "deg"
+  commands:
+    - "60"
+    - "cos"
+  expected:
+    x: 0.5
+
+- name: "tan(45°) = 1"
+  setup:
+    - "deg"
+  commands:
+    - "45"
+    - "tan"
+  expected:
+    x: 1
+
+- name: "asin(0.5) = 30°"
+  setup:
+    - "deg"
+  commands:
+    - "0.5"
+    - "asin"
+  expected:
+    x: 30
+
+- name: "acos(0.5) = 60°"
+  setup:
+    - "deg"
+  commands:
+    - "0.5"
+    - "acos"
+  expected:
+    x: 60
+
+- name: "atan(1) = 45°"
+  setup:
+    - "deg"
+  commands:
+    - "1"
+    - "atan"
+  expected:
+    x: 45
+
+- name: "Radians to degrees"
+  setup:
+    - "rad"
+  commands:
+    - "3.14159265359"
+    - "r->d"
+  expected:
+    x: 180
+
+- name: "Degrees to radians"
+  setup:
+    - "deg"
+  commands:
+    - "180"
+    - "d->r"
+  expected:
+    x: 3.14159

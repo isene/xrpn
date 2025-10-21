@@ -1,0 +1,43 @@
+---
+# Logarithm and Exponential Tests
+- name: "Natural log: ln(e) = 1"
+  commands:
+    - "2.718281828"
+    - "ln"
+  expected:
+    x: 1
+
+- name: "Log base 10: log(100) = 2"
+  commands:
+    - "100"
+    - "log"
+  expected:
+    x: 2
+
+- name: "Exponential: e^1 = e"
+  commands:
+    - "1"
+    - "exp"
+  expected:
+    x: 2.71828
+
+- name: "10^x: 10^3 = 1000"
+  commands:
+    - "3"
+    - "10^x"
+  expected:
+    x: 1000
+
+- name: "ln(1+x) for small x"
+  commands:
+    - "0.01"
+    - "ln1+x"
+  expected:
+    x: 0.00995
+
+- name: "e^x-1 for small x"
+  commands:
+    - "0.01"
+    - "exp(x-1)"
+  expected:
+    x: 0.01005

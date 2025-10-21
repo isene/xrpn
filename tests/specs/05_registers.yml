@@ -1,0 +1,113 @@
+---
+# Register Operations Tests
+- name: "STO stores value in register"
+  commands:
+    - "42"
+    - "sto 10"
+    - "0"
+    - "rcl 10"
+  expected:
+    x: 42
+
+- name: "RCL recalls value from register"
+  setup:
+    - "123"
+    - "sto 05"
+  commands:
+    - "0"
+    - "rcl 05"
+  expected:
+    x: 123
+
+- name: "ST+ adds to register"
+  setup:
+    - "10"
+    - "sto 01"
+  commands:
+    - "5"
+    - "st+ 01"
+    - "rcl 01"
+  expected:
+    x: 15
+
+- name: "ST- subtracts from register"
+  setup:
+    - "20"
+    - "sto 02"
+  commands:
+    - "8"
+    - "st- 02"
+    - "rcl 02"
+  expected:
+    x: 12
+
+- name: "ST* multiplies register"
+  setup:
+    - "5"
+    - "sto 03"
+  commands:
+    - "7"
+    - "st* 03"
+    - "rcl 03"
+  expected:
+    x: 35
+
+- name: "ST/ divides register"
+  setup:
+    - "100"
+    - "sto 04"
+  commands:
+    - "4"
+    - "st/ 04"
+    - "rcl 04"
+  expected:
+    x: 25
+
+- name: "CLRG clears registers"
+  setup:
+    - "99"
+    - "sto 10"
+    - "88"
+    - "sto 11"
+  commands:
+    - "clrg"
+    - "rcl 10"
+  expected:
+    x: 0
+
+- name: "Indirect addressing: STO IND X"
+  setup:
+    - "5"
+    - "sto 00"
+  commands:
+    - "99"
+    - "sto ind 00"
+    - "rcl 05"
+  expected:
+    x: 99
+
+- name: "Register swap"
+  setup:
+    - "10"
+    - "sto 01"
+    - "20"
+    - "sto 02"
+  commands:
+    - "1"
+    - "2"
+    - "regswap"
+    - "rcl 01"
+  expected:
+    x: 20
+
+- name: "Register move"
+  setup:
+    - "42"
+    - "sto 10"
+  commands:
+    - "10"
+    - "20"
+    - "regmove"
+    - "rcl 20"
+  expected:
+    x: 42

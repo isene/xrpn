@@ -1,0 +1,39 @@
+---
+# Alpha Register Tests
+- name: "String literal sets Alpha"
+  commands:
+    - '"Hello World"'
+  expected:
+    alpha: "Hello World"
+
+- name: "XTOA converts X to Alpha (ASCII char)"
+  commands:
+    - "42"
+    - "xtoa"
+  expected:
+    alpha: "*"
+
+- name: "CLA clears Alpha"
+  setup:
+    - '"Some text"'
+  commands:
+    - "cla"
+  expected:
+    alpha: ""
+
+- name: "ALENG returns Alpha length"
+  setup:
+    - '"12345"'
+  commands:
+    - "aleng"
+  expected:
+    x: 5
+
+- name: "AROT rotates Alpha left"
+  setup:
+    - '"ABCDE"'
+    - "1"
+  commands:
+    - "arot"
+  expected:
+    alpha: "BCDEA"
