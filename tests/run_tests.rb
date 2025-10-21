@@ -160,6 +160,19 @@ class XRPNTestRunner
       end
     end
 
+    # Parse string in X register (for commands like dechex that put strings in X)
+    if expected['x_string']
+      first_line = output.split("\n").first.to_s.strip
+      actual_string = first_line
+      expected_string = expected['x_string']
+
+      if actual_string != expected_string
+        result[:passed] = false
+        result[:expected]['x_string'] = expected_string
+        result[:actual]['x_string'] = actual_string
+      end
+    end
+
     # Check for specific output patterns
     if expected['contains']
       unless output.include?(expected['contains'])

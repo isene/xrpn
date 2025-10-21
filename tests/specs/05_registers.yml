@@ -92,9 +92,8 @@
     - "sto 01"
     - "20"
     - "sto 02"
+    - "1.002001"
   commands:
-    - "1"
-    - "2"
     - "regswap"
     - "rcl 01"
   expected:
@@ -104,9 +103,8 @@
   setup:
     - "42"
     - "sto 10"
+    - "10.020001"
   commands:
-    - "10"
-    - "20"
     - "regmove"
     - "rcl 20"
   expected:

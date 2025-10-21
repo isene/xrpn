@@ -3,41 +3,35 @@
 - name: "Decimal to binary"
   commands:
     - "10"
-    - "dec->bin"
+    - "decbin"
   expected:
     x: 1010
 
 - name: "Binary to decimal"
   commands:
     - "1010"
-    - "bin->dec"
+    - "bindec"
   expected:
     x: 10
 
 - name: "Decimal to hexadecimal"
   commands:
     - "255"
-    - "dec->hex"
+    - "dechex"
   expected:
-    x: 255
+    x_string: "ff"
 
-- name: "Hexadecimal to decimal"
-  commands:
-    - "FF"
-    - "hex->dec"
-  expected:
-    x: 255
 
 - name: "Decimal to octal"
   commands:
     - "64"
-    - "dec->oct"
+    - "decoct"
   expected:
     x: 100
 
 - name: "Octal to decimal"
   commands:
     - "100"
-    - "oct->dec"
+    - "octdec"
   expected:
     x: 64

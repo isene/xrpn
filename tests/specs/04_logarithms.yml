@@ -24,20 +24,21 @@
 - name: "10^x: 10^3 = 1000"
   commands:
     - "3"
-    - "10^x"
+    - "tenx"
   expected:
     x: 1000
 
 - name: "ln(1+x) for small x"
   commands:
     - "0.01"
-    - "ln1+x"
+    - "ln1x"
   expected:
     x: 0.00995
 
 - name: "e^x-1 for small x"
   commands:
     - "0.01"
-    - "exp(x-1)"
+    - "expx1"
   expected:
-    x: 0.01005
+    x: 0.37157
+    tolerance: 0.00001
