@@ -102,14 +102,14 @@ def raw_encode(program, label_name = "PROG")
       next
     end
 
-    # RCL register
+    # RCL register - Always use two-byte format to avoid label conflicts
     if line =~ /^RCL\s+(\d+)$/i
       reg = $1.to_i
       result += [0xA7, reg]
       next
     end
 
-    # STO register
+    # STO register - Always use two-byte format to avoid label conflicts
     if line =~ /^STO\s+(\d+)$/i
       reg = $1.to_i
       result += [0xB2, reg]
@@ -173,23 +173,20 @@ def raw_encode(program, label_name = "PROG")
       end
     end
 
-    # Numeric literals
-    # Single digit (0-9) using F1 XX format - SAFE
+    # Numeric literals - Use F1 XX format to avoid label conflicts
     if line =~ /^([0-9])$/
       digit = $1.to_i
       result += [0xF1, 0x30 + digit]
       next
     end
 
-    # Multi-digit numbers - NOT IMPLEMENTED
-    # Direct encoding (10-99 as 0x0A-0x63) causes ASCII corruption
-    # HP-41 uses complex multi-byte number format - needs more research
-    # For now, users must enter multi-digit numbers digit-by-digit
-
-    # Hex digits (10-15 as A-F)
-    if line =~ /^(1[0-5])$/
-      val = $1.to_i
-      result += [0xF1, 0x41 + (val - 10)]
+    # Multi-digit numbers - NOT SAFELY ENCODABLE
+    # Problem: 0x00-0x7E would corrupt labels
+    # HP-41 uses these ONLY in program body after non-ASCII bytes
+    # For export: Use digit-by-digit entry or register storage
+    if line =~ /^([1-9][0-9]+)$/
+      num = $1
+      puts "Warning: Multi-digit number #{num} - enter digit-by-digit or use RCL"
       next
     end
 

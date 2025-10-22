@@ -70,12 +70,19 @@ def raw_decode(data)
     0x7E => "~",     # Tilde separator
     0x7F => "\"",    # Quote character
 
+    # Arithmetic variants (0x40-0x43)
+    0x40 => "+",     # Addition variant
+    0x41 => "-",     # Subtraction variant
+    0x42 => "*",     # Multiplication variant
+    0x43 => "/",     # Division variant
+
     # Control flow markers (not commands)
-    0x00 => nil,  # NOP/padding
+    0x00 => nil,  # NOP/padding - handled specially
   }
 
   result = []
   pos = 0
+  in_number_context = false  # Track if we just saw an operation/END
 
   while pos < data.length
     byte = data[pos].ord
@@ -85,14 +92,20 @@ def raw_decode(data)
       label_type = data[pos + 2].ord
       pos += 4
 
-      # Extract label name
+      # Extract label name (ASCII letters, digits, space 0x20-0x7E)
       label = ""
-      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+      while pos < data.length
+        b = data[pos].ord
+        # Accept alphanumeric and common symbols (0x20-0x7E)
+        # But NOT control chars (< 0x20) or high-bit (>= 0x80)
+        # Special case: 0x7F (DEL) terminates
+        break if b < 0x20 || b >= 0x7F
         label << data[pos]
         pos += 1
       end
 
       result << "LBL \"#{label}\""
+      in_number_context = true  # Numbers can follow labels
       next
     end
 
@@ -102,12 +115,15 @@ def raw_decode(data)
 
       # Extract label name
       label = ""
-      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+      while pos < data.length
+        b = data[pos].ord
+        break if b < 0x20 || b >= 0x7F
         label << data[pos]
         pos += 1
       end
 
       result << "LBL \"#{label}\""
+      in_number_context = true
       next
     end
 
@@ -121,12 +137,15 @@ def raw_decode(data)
 
       # Extract label name
       label = ""
-      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+      while pos < data.length
+        b = data[pos].ord
+        break if b < 0x20 || b >= 0x7F
         label << data[pos]
         pos += 1
       end
 
       result << "LBL \"#{label}\""
+      in_number_context = true
       next
     end
 
@@ -244,13 +263,39 @@ def raw_decode(data)
       next
     end
 
+    # Direct register operations (Phase 5) - Single byte RCL/STO
+    # 0x20-0x2F = RCL 00-15, 0x30-0x3F = STO 00-15
+    if byte >= 0x20 && byte <= 0x2F && pos > 0
+      prev_byte = data[pos - 1].ord
+      # Safe if after non-ASCII (avoid being part of strings)
+      if prev_byte >= 0x80 || prev_byte <= 0x1F
+        reg = byte - 0x20
+        result << "RCL #{sprintf('%02d', reg)}"
+        pos += 1
+        in_number_context = true
+        next
+      end
+    end
+
+    if byte >= 0x30 && byte <= 0x3F && pos > 0
+      prev_byte = data[pos - 1].ord
+      # Safe if after non-ASCII
+      if prev_byte >= 0x80 || prev_byte <= 0x1F
+        reg = byte - 0x30
+        result << "STO #{sprintf('%02d', reg)}"
+        pos += 1
+        in_number_context = true
+        next
+      end
+    end
+
     # Math functions in ASCII range (0x50-0x66) - Phase 4
     # Only decode as math if NOT in label/string context
-    # Safe after: opcodes >= 0x80, numbers 0x00-0x0F, END (0x85)
+    # Safe after: opcodes >= 0x80, numbers 0x00-0x1F, END (0x85)
     if byte >= 0x50 && byte <= 0x66 && pos > 0
       prev_byte = data[pos - 1].ord
       # Safe context: after operations, numbers, or non-ASCII
-      if prev_byte >= 0x80 || prev_byte <= 0x0F || prev_byte == 0x85
+      if prev_byte >= 0x80 || prev_byte <= 0x1F || prev_byte == 0x85
         math_ops = {
           0x50 => "LN",
           0x51 => "X^2",
@@ -274,8 +319,29 @@ def raw_decode(data)
         if math_ops[byte]
           result << math_ops[byte]
           pos += 1
+          in_number_context = true
           next
         end
+      end
+    end
+
+    # Numeric literals (Phase 5) - 0x00-0x63 = 0-99
+    # Safe after: operations (0x80+), END (0x85), labels, or in number context
+    if byte >= 0x00 && byte <= 0x63 && pos > 0
+      prev_byte = data[pos - 1].ord
+      # Multiple safe contexts
+      safe_contexts = [
+        prev_byte >= 0x80,           # After operations
+        prev_byte == 0x85,           # After END
+        in_number_context,           # After recent operation
+        prev_byte >= 0x00 && prev_byte <= 0x1F  # After another number
+      ]
+
+      if safe_contexts.any?
+        result << byte.to_s
+        pos += 1
+        in_number_context = true
+        next
       end
     end
 
@@ -410,6 +476,8 @@ def raw_decode(data)
     if opcodes[byte]
       result << opcodes[byte]
       pos += 1
+      # Set number context for operations that commonly precede numbers
+      in_number_context = [0x85, 0x8E].include?(byte)  # After END, PROMPT
       next
     end
 
