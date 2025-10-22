@@ -43,6 +43,7 @@ def raw_encode(program, label_name = "PROG")
     "CLX" => [0x8D],
 
     # Display/IO
+    "CLA" => [0x80],
     "PROMPT" => [0x8E],
     "RTN" => [0x8F],
     "AVIEW" => [0x9B, 0x73],
@@ -52,13 +53,19 @@ def raw_encode(program, label_name = "PROG")
     "STOP" => [0x9E],
 
     # Extended operations (Phase 2)
+    "X<>" => [0x92],
     "DEG" => [0x93],
     "RAD" => [0x94],
     "GRAD" => [0x95],
     "FIX" => [0x96],
     "SCI" => [0x97],
     "ENG" => [0x98],
+    "DSE" => [0x9A],
     "ISG" => [0x9F],
+
+    # Additional
+    "ASTO" => [0xCE],
+    "~" => [0x7E],  # Tilde separator
   }
 
   result = []
@@ -166,12 +173,18 @@ def raw_encode(program, label_name = "PROG")
       end
     end
 
-    # Single digit literals (0-9)
-    if line =~ /^(\d)$/
+    # Numeric literals
+    # Single digit (0-9) using F1 XX format - SAFE
+    if line =~ /^([0-9])$/
       digit = $1.to_i
       result += [0xF1, 0x30 + digit]
       next
     end
+
+    # Multi-digit numbers - NOT IMPLEMENTED
+    # Direct encoding (10-99 as 0x0A-0x63) causes ASCII corruption
+    # HP-41 uses complex multi-byte number format - needs more research
+    # For now, users must enter multi-digit numbers digit-by-digit
 
     # Hex digits (10-15 as A-F)
     if line =~ /^(1[0-5])$/

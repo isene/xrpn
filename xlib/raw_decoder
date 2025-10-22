@@ -43,6 +43,7 @@ def raw_decode(data)
     0x8D => "CLX",
 
     # Display/IO operations
+    0x80 => "CLA",   # Clear alpha
     0x8E => "PROMPT",
     0x9B => "AVIEW",
     0x9C => "PSE",   # Pause
@@ -50,6 +51,7 @@ def raw_decode(data)
     0x9E => "STOP",
 
     # Extended operations (Phase 2)
+    0x92 => "X<>",   # X exchange (with register parameter)
     0x93 => "DEG",   # Degree mode
     0x94 => "RAD",   # Radian mode
     0x95 => "GRAD",  # Gradian mode
@@ -57,10 +59,16 @@ def raw_decode(data)
     0x97 => "SCI",   # Scientific notation
     0x98 => "ENG",   # Engineering notation
     0x99 => "RCL",   # RCL variant
+    0x9A => "DSE",   # Decrement and skip if equal (with register)
     0x9F => "ISG",   # Increment and skip if greater
 
-    # Flow control (90-92 often with parameters)
+    # Flow control
     0x8F => "RTN",   # Return
+
+    # Additional useful opcodes
+    0xCE => "ASTO",  # Append string to alpha (with register)
+    0x7E => "~",     # Tilde separator
+    0x7F => "\"",    # Quote character
 
     # Control flow markers (not commands)
     0x00 => nil,  # NOP/padding
