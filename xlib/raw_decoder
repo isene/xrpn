@@ -218,6 +218,89 @@ def raw_decode(data)
       next
     end
 
+    # XROM multi-byte instructions (Phase 3)
+    # Format: PREFIX MODULE FUNCTION
+    if (byte == 0xE0 || byte == 0xD0 || byte == 0xCF) && pos + 2 < data.length
+      prefix = byte
+      mod_id = data[pos + 1].ord
+      func_id = data[pos + 2].ord
+
+      # E0 = XROM extended functions
+      if prefix == 0xE0 && mod_id == 0x00
+        xrom_funcs = {
+          0x00 => "ANUM",
+          0x01 => "ALENG",
+          0x02 => "APPCHR",
+          0x03 => "APPREC",
+          0x04 => "ARCLREC",
+          0x05 => "AROT",
+          0x06 => "ATOX",
+          0x07 => "CLFL",
+          0x08 => "CLKEYS",
+          0x09 => "CRFLAS",
+          0x0A => "CRFLD",
+          0x0B => "DELCHR",
+          0x0C => "DELREC",
+          0x0D => "EMDIR",
+          0x0E => "FLSIZE",
+          0x0F => "GETAS",
+          0x10 => "GETKEY",
+          0x11 => "GETP",
+          0x12 => "GETR",
+          0x13 => "GETREC",
+          0x14 => "GETRX",
+          0x15 => "GETSUB",
+          0x17 => "GETX",
+          0x1B => "INSCHR",
+          0x1F => "INSREC",
+          0x20 => "PASN",
+          0x21 => "PCLPS",
+          0x3A => "POSA",
+          0x3B => "POSFL",
+          0x38 => "PSIZE",
+          0x4E => "PURFL",
+          0x61 => "RCLFLAG",
+          0x62 => "RCLPT",
+          0x63 => "RCLPTA",
+          0x66 => "REGMOVE",
+          0x67 => "REGSWAP",
+          0x68 => "SAVEAS",
+          0x69 => "SAVEP",
+          0x7C => "SAVER",
+          0x7E => "SAVERX",
+          0x7F => "SAVEX",
+        }
+        if xrom_funcs[func_id]
+          result << xrom_funcs[func_id]
+          pos += 3
+          next
+        else
+          result << "XROM 00,#{func_id}"
+          pos += 3
+          next
+        end
+      end
+
+      # D0 00 = Data/register operations
+      if prefix == 0xD0 && mod_id == 0x00
+        result << "# D0-OP #{func_id}"
+        pos += 3
+        next
+      end
+
+      # CF = Control flow extended
+      if prefix == 0xCF
+        result << "# CF-OP #{mod_id},#{func_id}"
+        pos += 3
+        next
+      end
+
+      # Unknown XROM
+      result << "# XROM #{mod_id},#{func_id}"
+      pos += 3
+      next
+    end
+
     # Conditionals (0x67-0x78 range for X comparisons)
     if byte >= 0x67 && byte <= 0x78
       cond_map = {

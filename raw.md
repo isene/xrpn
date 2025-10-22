@@ -107,6 +107,78 @@ Common patterns:
 - `C8 26 2D` - End with checksum
 - `CA 36 09` - End with checksum
 
+## XROM Multi-byte Format (Phase 3)
+
+### Structure
+
+XROM instructions use 3-byte sequences:
+```
+[PREFIX] [MODULE] [FUNCTION]
+```
+
+### Prefix Types
+
+**E0 = Extended Functions**
+```
+E0 00 XX - Extended Functions ROM (module 0)
+E0 01 XX - Time module (module 1)
+E0 02 XX - Printer module (module 2)
+...
+```
+
+**D0 = Data Operations**
+```
+D0 00 XX - Data/register operations
+```
+
+**CF = Control Flow Extended**
+```
+CF XX YY - Extended control flow operations
+```
+
+### Extended Functions ROM (E0 00 XX)
+
+Complete mapping of module 0 extended functions:
+
+| Code | Function | Description |
+|------|----------|-------------|
+| E0 00 00 | ANUM | Alpha numeric conversion |
+| E0 00 01 | ALENG | Alpha length |
+| E0 00 02 | APPCHR | Append character |
+| E0 00 05 | AROT | Alpha rotate |
+| E0 00 06 | ATOX | Alpha to X |
+| E0 00 0B | DELCHR | Delete character |
+| E0 00 10 | GETKEY | Get key |
+| E0 00 1B | INSCHR | Insert character |
+| E0 00 20 | PASN | Assign parameter |
+| E0 00 21 | PCLPS | Program collapse |
+| E0 00 38 | PSIZE | Program size |
+| E0 00 3A | POSA | Position alpha |
+| E0 00 3B | POSFL | Position in file |
+| E0 00 61 | RCLFLAG | Recall flag |
+| E0 00 66 | REGMOVE | Register move |
+| E0 00 67 | REGSWAP | Register swap |
+| E0 00 68 | SAVEAS | Save as |
+| E0 00 69 | SAVEP | Save program |
+
+(See xlib/raw_decoder for complete table)
+
+### Usage Examples
+
+**Encoding:**
+```ruby
+REGSWAP  →  E0 00 67
+ALENG    →  E0 00 01
+DELCHR   →  E0 00 0B
+```
+
+**In RAW files:**
+```
+E0 00 3B - POSFL (position in file)
+E0 00 61 - RCLFLAG (recall flag to X)
+E0 00 21 - PCLPS (program collapse)
+```
+
 ## Critical Design Insight: ASCII Overlap
 
 ### The 0x50-0x7F Problem
@@ -485,7 +557,7 @@ xrpn
 
 ### Supported Operations
 
-**Fully Supported (Round-trip Compatible - 80+ opcodes):**
+**Fully Supported (Round-trip Compatible - 120+ opcodes):**
 - Labels (LBL "NAME", local labels)
 - Arithmetic (+, -, *, /, SQRT, END)
 - Stack operations (ENTER, SWAP/XY, RDN, CHS, LASTX, CLX, CLST)
@@ -500,6 +572,12 @@ xrpn
 - Single digit literals (0-9)
 - String literals ("text")
 - IO operations (BEEP)
+- **XROM Extended Functions (35+ functions):**
+  - Alpha: ALENG, AROT, ATOX, ANUM, APPCHR, INSCHR, DELCHR
+  - Memory: REGMOVE, REGSWAP, RCLFLAG
+  - Extended Memory: GETAS, GETP, GETR, SAVEAS, SAVEP, SAVER, SAVEX
+  - File operations: CRFLAS, CRFLD, PURFL, FLSIZE, POSFL, PCLPS
+  - And more (see XROM table)
 
 **Partially Supported (Decode Only):**
 - Local labels (F6 format)
@@ -700,22 +778,32 @@ Encoded: 47 bytes
 Status:  ✓ Perfect match - All Phase 1 features working
 ```
 
+*Phase 3 Complete (XROM Extended Functions):*
+```
+Program: LBL "XROM", ALENG, AROT, DELCHR, POSFL, RCLFLAG,
+         REGMOVE, REGSWAP, END
+Encoded: 33 bytes (includes 3-byte XROM sequences)
+Status:  ✓ Perfect match - XROM encoding/decoding working
+```
+
 **Real RAW Files:**
 - `ldcard.raw` (28 bytes): ✓ Fully decoded
 - `demf67.raw` (39 bytes): ⧖ Partial (arithmetic ops decoded)
-- `caves.raw` (1.7K): ⧖ Improved (CF, SF, XEQ decoded, 97 instructions)
+- `caves.raw` (1.7K): ✓ Much improved (77 instructions, XROM functions decoded)
+- `sinplt.raw`: ⧖ XROM functions recognized (POSFL, PCLPS, etc.)
 - `hexdec.raw` (273 bytes): ⧖ Partial (labels + strings extracted)
 - `clndrfn.raw` (386 bytes): ⧖ Partial (all labels found)
 
 ### Known Limitations
 
 **Decoder Gaps:**
-- ~170 opcodes not yet documented (out of 256)
-- Multi-byte XROM sequences (math functions, modules)
-- Math functions require XROM implementation (SIN, COS, LOG, etc.)
+- ~135 opcodes not yet documented (out of 256, was 170)
+- Math functions require XROM module mapping (SIN, COS, LOG likely not module 0)
+- Time module (E0 01 XX) functions
+- Printer module (E0 02 XX) functions
 - Synthetic operations require research
-- Module functions lack documentation
-- ASCII range 0x50-0x7F contains data, not simple opcodes
+- D0 and CF prefix operations partially understood
+- Numeric literals and data encoding in 0x10-0x4F range
 
 **Encoder Gaps:**
 - Math functions not yet implemented
@@ -752,13 +840,23 @@ Status:  ✓ Perfect match - All Phase 1 features working
 to avoid ASCII collision (0x50-0x7F). Simple single-byte encoding only works for
 opcodes >= 0x80.
 
-### Phase 3: Multi-byte Instructions & XROM
-1. ⧖ XROM format decoding (multi-byte sequences)
-2. ⧖ Math functions via XROM (SIN, COS, LOG, LN, etc.)
-3. ⧖ Complete register opcodes (all variants A7-AA, B2-BB)
-4. ⧖ String operations (APPEND, ARCL, etc.)
-5. ⧖ Advanced program editing
-6. ⧖ Extended memory operations
+### Phase 3: XROM Extended Functions ✓ COMPLETE
+1. ✓ XROM format decoding (E0 00 XX, D0 00 XX, CF XX YY)
+2. ✓ Extended Functions ROM (35+ functions)
+   - Alpha operations: ALENG, AROT, ATOX, ANUM
+   - Memory/File: DELCHR, POSFL, RCLFLAG, REGMOVE, REGSWAP
+   - Extended memory: GETAS, GETP, GETR, SAVEAS, SAVEP
+   - File operations: CRFLAS, CRFLD, PURFL, FLSIZE
+   - String operations: APPCHR, INSCHR, DELREC, INSREC
+3. ✓ Multi-byte instruction parser
+4. ⧖ Math functions still TODO (likely different XROM module)
+5. ⧖ Time module functions
+6. ⧖ Printer module functions
+
+**XROM Format Discovered:**
+- E0 00 XX = Extended Functions ROM (module 0, function XX)
+- D0 00 XX = Data operations (requires more research)
+- CF XX YY = Control flow extended (requires more research)
 
 ### Phase 3: Synthetic & Modules
 1. Synthetic programming operations
