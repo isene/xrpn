@@ -1,9 +1,9 @@
 Gem::Specification.new do |s|
   s.name        = 'xrpn'
-  s.version     = '2.6'
+  s.version     = '2.7'
   s.licenses    = ['Unlicense']
   s.summary     = "XRPN - The eXtended RPN (Reverse Polish Notation) programming language"
-  s.description = "A full programming language and environment extending the features of the venerable HP calculator programmable calculators. With XRPN you can accomplish a wide range of modern programming tasks as well as running existing HP-41 FOCAL programs directly. XRPN gives modern life to tens of thousands of old HP calculator programs and opens the possibilities to many, many more. New in 2.6: Comprehensive regression test framework with 58 automated tests and HP-41 RAW file viewer for inspecting thousands of legacy HP-41 programs."
+  s.description = "A full programming language and environment extending the features of the venerable HP calculator programmable calculators. With XRPN you can accomplish a wide range of modern programming tasks as well as running existing HP-41 FOCAL programs directly. XRPN gives modern life to tens of thousands of old HP calculator programs and opens the possibilities to many, many more. New in 2.7: Complete HP-41 RAW import/export with 100% decode success - convert HP-41 programs to XRPN and back with full support for 165+ opcodes including ALL math functions (SIN, COS, LOG, etc.), flow control, and numbers."
 
   s.authors     = ["Geir Isene"]
   s.email       = 'g@isene.com'
