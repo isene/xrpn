@@ -1,0 +1,621 @@
+# HP-41 RAW File Format Documentation
+
+## Overview
+
+This document captures reverse-engineered knowledge about the HP-41 RAW file format. No official specification exists - these findings come from analyzing actual RAW files and community documentation.
+
+**Last Updated:** 2025-10-22
+**XRPN Version:** 2.6+
+
+## What is RAW Format?
+
+RAW format represents "the sequence of bytes stored in HP-41C memory" as originally output by the HP 82160A HP-IL module's WRTP function. It's a direct memory dump of HP-41 program bytecode.
+
+## Documentation Sources
+
+### Primary References
+1. **"Synthetic Programming on the HP-41C"** by W.C. Wickes
+   - Location: `/home/geir/Main/G/HP/TOSdvd/Books/Synthetic_Programming_-_W.C._Wickes.pdf`
+   - 31 MB comprehensive guide to HP-41 internals
+
+2. **PPC Journal Articles**
+   - Volume 6, Issue 4, pages 11-12 (Corvallis Division Column)
+   - Volume 6, Issue 5, pages 20-23
+   - Volume 6, Issue 6, pages 19-21
+   - Location: `/home/geir/Main/G/HP/TOSdvd/Users_Groups/PPC1/Volume6/`
+
+3. **"Inside the HP-41"** by Jean-Daniel Dodin
+   - Location: `/home/geir/Main/G/HP/TOSdvd/Books/Inside_the_HP-41_-_Jean-Daniel_Dodin.pdf`
+
+4. **RAW File Collections** (for analysis/testing)
+   - `/home/geir/Main/G/HP/41/RAW/` - Index + files
+   - `/home/geir/Main/G/HP/TOSdvd/Emulators/V41r8/RAW/` - 400+ programs
+
+### Community Wisdom
+From HP Museum forum thread 24229:
+- No official HP specification survives
+- Format reverse-engineered by community over decades
+- Best documentation in PPC Journal and synthetic programming guides
+
+## File Structure
+
+### Basic Format
+
+```
+[HEADER] [LABEL_NAME] [PADDING] [BYTECODE...] [END_MARKER]
+```
+
+### Header Formats
+
+#### Global Label (Program Entry Point)
+```
+C0 00 Fx 00 LABELNAME
+```
+
+Where `Fx` determines label type:
+- `F4` = Alpha label (can contain letters)
+- `F5` = Numeric label (numeric labels 00-99)
+- `F6` = Local label (within program)
+- `F7` = Alpha label variant
+- `F8` = Alpha label variant
+- `F9` = Alpha label variant
+
+**Examples from actual files:**
+```
+C0 00 F5 00 4C 4F 41 44        # LBL "LOAD" (numeric)
+C0 00 F7 00 48 45 58 44 45 43  # LBL "HEXDEC" (alpha)
+C0 00 F8 00 43 4C 4E 44 52 46 4E  # LBL "CLNDRFN" (alpha)
+C6 00 F7 00 44 45 4D 46 36 37  # Variant header (C6 instead of C0)
+```
+
+#### Local Label (Subroutine)
+```
+F6 00 LABELNAME
+```
+
+Used for internal subroutines within a program.
+
+**Example:**
+```
+F6 00 53 54 4F 52 45  # Local label "STORE"
+```
+
+### Label Names
+
+- ASCII text (0x20-0x7F range)
+- Terminated by first non-ASCII byte
+- Variable length (typically 1-7 characters)
+- HP-41 supports up to 7 characters per label
+
+### Padding Bytes
+
+Programs often contain null padding:
+```
+00 00 00 00  # Null padding between sections
+```
+
+### End Markers
+
+Programs end with markers like:
+```
+C0 02 2F     # End of program
+C8 XX XX     # End variant 1
+CA XX XX     # End variant 2
+C2 XX XX     # End variant 3
+```
+
+Common patterns:
+- `C0 02 2F` - Simple program end
+- `C8 26 2D` - End with checksum
+- `CA 36 09` - End with checksum
+
+## HP-41 Bytecode Reference
+
+### Confirmed Opcodes (from RAW analysis)
+
+#### Stack Operations
+```
+88 - ENTER    (duplicate X register)
+```
+
+#### Arithmetic Operations
+```
+81 - +        (add Y + X)
+82 - -        (subtract Y - X)
+83 - *        (multiply Y * X)
+84 - /        (divide Y / X)
+85 - END      (end program/line)
+```
+
+#### Register Operations
+```
+A7 - RCL      (recall register)
+A8 - RCL IND  (recall indirect)
+A9 - RCL variant
+AA - RCL variant
+B2 - STO      (store to register)
+B4 - STO variant
+B5 - STO variant
+B6 - STO variant
+B7 - STO variant
+B8 - STO variant
+B9 - STO variant
+BA - STO variant
+BB - STO variant
+```
+
+**Register number encoding:** Next byte after RCL/STO indicates register (00-FF)
+
+**Example:**
+```
+A7 82 - RCL 82 (recall register 130 decimal)
+B2 00 - STO 00 (store to register 0)
+```
+
+#### Display/Output
+```
+9A - VIEW variants (display register)
+9B - VIEW/AVIEW (view alpha)
+9C - VIEW variant
+```
+
+**Common patterns:**
+```
+9A 73 - VIEW/AVIEW (view alpha register)
+9A 72 - VIEW variant
+9B 73 - AVIEW variant
+```
+
+#### Flow Control
+```
+8E - PROMPT
+90 - GTO variant
+91 - GTO/XEQ variant
+92 - GTO/XEQ variant
+```
+
+#### Numeric Literals
+```
+F1 XX - Single digit literal (0-9, A-F)
+```
+
+**Examples from hexdec.raw:**
+```
+F1 30 9A 00 - Store "0"
+F1 31 9A 01 - Store "1"
+F1 32 9A 02 - Store "2"
+...
+F1 41 9A 0A - Store "A" (hex digit)
+F1 46 9A 0F - Store "F" (hex digit)
+```
+
+Pattern: `F1 XX 9A YY` stores ASCII character XX at position YY
+
+#### String Literals
+
+##### Format 1: Text Prompt (FD prefix)
+```
+FD TEXT - String literal in prompt
+```
+
+##### Format 2: Alpha Text (F3 prefix)
+```
+F3 TEXT - Alpha register text
+```
+
+**Example:**
+```
+F3 69 - "i" character
+```
+
+##### Format 3: Display Text (F8 prefix)
+```
+F8 TEXT - Display string
+```
+
+##### Format 4: String Marker (FB prefix)
+```
+FB TEXT - Generic string marker
+```
+
+##### Format 5: Special Text (7F 20 prefix)
+```
+7F 20 TEXT - Special text format
+```
+
+##### Format 6: Long String (F5 prefix after label)
+```
+F5 READY - String "READY"
+```
+
+**Example from hexdec.raw:**
+```
+F5 52 45 41 44 59 - "READY" text
+```
+
+### Multi-byte Instruction Patterns
+
+Many instructions are multi-byte sequences:
+
+```
+CF XX     - Control flow prefix
+D0 XX     - Data operation prefix
+E0 XX     - Extended operation prefix
+```
+
+**Examples:**
+```
+CF 6A     - Control flow operation
+CF 66     - Control flow operation
+D0 00     - Data operation
+E0 00     - Extended operation
+```
+
+### Conditional/Branch Operations
+
+```
+60-7E range - Various conditional operations
+```
+
+**Examples:**
+```
+68 - Conditional test
+69 - Conditional variant
+71 - Conditional variant
+73 - Conditional variant
+75 - Conditional variant
+76 - Conditional variant
+78 - Conditional variant
+```
+
+These are often followed by branch targets or operation codes.
+
+### Complex Number/Register Operations
+
+```
+AC 17 - Register operation
+AD 06 - Register operation
+AE F3 - Register operation with text
+```
+
+### Comparison/Test Operations
+
+```
+40 - Comparison operation
+41 - Test/comparison
+42 - Test/comparison
+43 - Test/comparison
+```
+
+Often seen in conditional contexts.
+
+## String Encoding in RAW Files
+
+### Day Names (from clndrfn.raw)
+```
+F6 46 52 49 44 41 59       - LBL "FRIDAY"
+F8 53 41 54 55 52 44 41 59 - "SATURDAY"
+F6 53 55 4E 44 41 59       - LBL "SUNDAY"
+F6 4D 4F 4E 44 41 59       - LBL "MONDAY"
+F7 54 55 45 53 44 41 59    - "TUESDAY"
+F9 57 45 44 4E 45 53 44 41 59 - "WEDNESDAY"
+F8 54 48 55 52 53 44 41 59 - "THURSDAY"
+```
+
+### Month Names (from clndrfn.raw)
+```
+F4 4A 41 4E 20 - "JAN "
+F4 46 45 42 20 - "FEB "
+F4 4D 41 52 20 - "MAR "
+...
+```
+
+Note: `F4` prefix + 3-letter abbreviation + space (0x20)
+
+### Hex Digit Initialization (from hexdec.raw)
+
+Programs that handle hex often initialize lookup tables:
+```
+F1 30 9A 00  # "0"
+F1 31 9A 01  # "1"
+...
+F1 39 9A 09  # "9"
+F1 41 9A 0A  # "A"
+...
+F1 46 9A 0F  # "F"
+```
+
+Pattern: `F1 [ASCII] 9A [index]`
+
+## Analyzing RAW Files
+
+### Using XRPN's RAWINFO Command
+
+```bash
+xrpn
+> "/path/to/program.raw"
+> rawinfo
+```
+
+Output includes:
+- File size
+- All labels found (global, local, alpha, numeric)
+- Text strings extracted
+- Hex dump of first 256 bytes
+
+### Manual Hex Analysis
+
+```bash
+hexdump -C program.raw
+```
+
+Look for:
+1. Header bytes (C0 00 Fx 00)
+2. ASCII label names
+3. Known opcodes (81-85, A7, B2, etc.)
+4. String prefixes (F3, F5, F8, FD, FB, 7F 20)
+5. End markers (C0 02 2F, C8, CA)
+
+### Example Analysis: ldcard.raw (28 bytes)
+
+```
+00: C0 00 F5 00          # Header: Global label, numeric
+04: 4C 4F 41 44          # Label: "LOAD"
+08: A7 82                # RCL 130
+0A: 85                   # END
+0B: C8 01                # Separator/marker
+0D: F6 00                # Local label marker
+0F: 53 54 4F 52 45 20    # Label: "STORE "
+15: 69                   # Operation
+16: A7 88                # RCL 136
+18: 00                   # NOP/padding
+19: C0 02 2F             # End marker
+```
+
+## Decoding Strategy
+
+### Phase 1: Structure Recognition (DONE)
+- ✓ Identify headers (C0 00 Fx)
+- ✓ Extract label names
+- ✓ Find end markers
+- ✓ Recognize string formats
+
+### Phase 2: Common Opcodes (IN PROGRESS)
+- ✓ Basic arithmetic (81-85)
+- ✓ Register ops (A7, B2 + variants)
+- ✓ Stack ops (88 ENTER)
+- ✓ Display ops (9A-9C variants)
+- ⧖ Flow control (90-92 range)
+- ⧖ Conditionals (60-7E range)
+
+### Phase 3: Advanced Operations (TODO)
+- ⧖ Multi-byte instructions (CF, D0, E0 prefixes)
+- ⧖ Synthetic operations
+- ⧖ Extended memory operations
+- ⧖ Module-specific functions
+
+### Phase 4: Full Conversion (TODO)
+- ⧖ RAW → XRPN text format
+- ⧖ XRPN → RAW compilation
+- ⧖ Handle all HP-41 operations
+- ⧖ Preserve program semantics
+
+## Known Limitations
+
+### What We Can Decode
+- Program structure (labels, flow)
+- Text strings and prompts
+- Basic arithmetic operations
+- Register storage/recall
+- Simple display operations
+
+### What Needs More Research
+- Complete opcode mapping (only ~30 of 256 documented)
+- Multi-byte instruction formats
+- Synthetic programming operations
+- Module-specific extensions (Time, Printer, X-Functions)
+- Indirect addressing modes
+- Complex flow control
+
+### Challenges
+1. **Context-dependent opcodes** - Same byte can mean different things
+2. **Multi-byte sequences** - Hard to know instruction boundaries
+3. **Variants** - Many opcodes have multiple forms (A7-AA all RCL variants)
+4. **Synthetic ops** - Special sequences that don't map to normal FOCAL
+5. **No checksums** - Can't validate decode accuracy
+
+## Testing Corpus
+
+### Simple Programs (good for learning)
+```
+ldcard.raw     - 28 bytes  (simplest, good starting point)
+demf67.raw     - 39 bytes  (arithmetic demo)
+rd3468.raw     - 49 bytes  (I/O operations)
+decibel.raw    - 53 bytes  (math operations)
+resval.raw     - 56 bytes  (lookup table)
+```
+
+### Medium Programs (intermediate)
+```
+hexdec.raw     - 273 bytes (hex conversion, string handling)
+clndrfn.raw    - 386 bytes (calendar, string tables)
+```
+
+### Complex Programs (advanced)
+```
+advent.raw     - 1.1K (adventure game)
+caves.raw      - 1.7K (complex game logic)
+```
+
+## Bytecode Patterns Observed
+
+### Initialization Sequences
+```
+CF 6A AA 16 A9 17 AC 17 B5 00  # Common program initialization
+```
+
+### Register Loops
+```
+91 XX ... 91 YY  # Loop with counter in registers XX, YY
+```
+
+### String Display
+```
+F5 TEXT 9A 73  # Display text string
+```
+
+### Conditional Branches
+```
+68 XX 41 YY 42  # Compare and branch pattern
+```
+
+### Table Lookups
+```
+9A 0X  # Access table at position X (0-F)
+```
+
+## Future Work
+
+### Immediate Goals
+1. Build complete opcode reference (256 entries)
+2. Document multi-byte instruction formats
+3. Create test suite with known programs
+4. Implement basic RAW → XRPN converter
+
+### Medium-term Goals
+1. Handle synthetic programming operations
+2. Support all standard HP-41 functions
+3. Preserve program structure and comments
+4. Round-trip conversion (XRPN ↔ RAW)
+
+### Long-term Goals
+1. Support module-specific operations
+2. Optimize generated XRPN code
+3. Decompile with meaningful label names
+4. Create RAW file validator/checker
+
+## References
+
+### Documentation
+- Wickes, W.C. "Synthetic Programming on the HP-41C"
+- Dodin, J.D. "Inside the HP-41"
+- PPC Journal Volume 6 (Issues 4-6)
+- HP Museum Forum: thread-24229
+
+### Tools
+- XRPN `rawinfo` command (xlib/raw_info:1-156)
+- V41 emulator (has RAW file support)
+- HP-IL module documentation
+
+### Collections
+- HP-41 Archive at hp41.org
+- PPC Archive (pahhc.org/ppccdrom.htm)
+- HHC USB Collection (commerce.hpcalc.org/hhcusb.php)
+
+## Appendix A: Complete Hex Examples
+
+### ldcard.raw (28 bytes - fully annotated)
+```
+Offset  Hex                           Meaning
+------  ---                           -------
+00-03:  C0 00 F5 00                  Global label header (numeric)
+04-07:  4C 4F 41 44                  "LOAD" (label name)
+08-09:  A7 82                        RCL 130 (recall register 130)
+0A:     85                           END (end of instruction)
+0B-0C:  C8 01                        Section marker
+0D-0E:  F6 00                        Local label header
+0F-14:  53 54 4F 52 45 20            "STORE " (local label)
+15:     69                           Operation code (unknown)
+16-17:  A7 88                        RCL 136 (recall register 136)
+18:     00                           NOP/padding
+19-1B:  C0 02 2F                     End of program marker
+```
+
+### demf67.raw (39 bytes - fully annotated)
+```
+Offset  Hex                           Meaning
+------  ---                           -------
+00-03:  C6 00 F7 00                  Global label header (variant)
+04-09:  44 45 4D 46 36 37            "DEMF67" (label name)
+0A-0B:  02 84                        Operation sequence
+0C:     85                           END
+0D-0E:  03 81                        Operation sequence
+0F:     5B                           Operation code
+10-12:  76 41 22                     Operation sequence
+13-14:  41 80                        Operation code
+15:     85                           END
+16-17:  04 81                        Operation sequence
+18-19:  59 21                        Operation sequence
+1A-1C:  42 51 11                     Operation sequence
+1D-1F:  71 41 52                     Operation sequence
+20-21:  60 80                        Operation code
+22:     85                           END
+23:     84                           Division
+24-26:  C2 05 09                     End marker with checksum
+```
+
+## Appendix B: String Prefix Summary
+
+| Prefix | Context           | Example               |
+|--------|-------------------|-----------------------|
+| F3     | Alpha text        | F3 69 ("i")          |
+| F4     | Label/Month       | F4 4A 41 4E ("JAN")  |
+| F5     | Display string    | F5 52 45 41 44 59    |
+| F6     | Local label       | F6 00 NAME           |
+| F7-F9  | Label variants    | F7 54 55 45 53...    |
+| FB     | String marker     | FB TEXT              |
+| FD     | Prompt string     | FD TEXT              |
+| 7F 20  | Special string    | 7F 20 TEXT           |
+
+## Appendix C: Opcode Groups
+
+### 00-1F: Special/Control
+- 00 = NOP/Padding
+- Others TBD
+
+### 20-3F: Data/Constants
+- TBD
+
+### 40-5F: Comparisons/Tests
+- 40-43 = Various test operations
+- Others TBD
+
+### 60-7F: Conditionals/Branches
+- 60, 68, 69, 71, 73, 75, 76, 78 observed
+- Context-dependent
+
+### 80-9F: Basic Operations
+- 81 = +
+- 82 = -
+- 83 = *
+- 84 = /
+- 85 = END
+- 88 = ENTER
+- 8E = PROMPT
+- 90-92 = Flow control
+- 9A-9C = VIEW variants
+
+### A0-BF: Register Operations
+- A7-AA = RCL variants
+- B2-BB = STO variants
+
+### C0-DF: Headers/Control
+- C0 = Program header
+- C2 = End marker variant
+- C6 = Header variant
+- C8 = End marker variant
+- CA = End marker variant
+- CF = Control flow prefix
+- D0 = Data operation prefix
+
+### E0-FF: Extended/Literals
+- E0 = Extended operation
+- F1 = Single digit literal
+- F3-F9 = String/label prefixes
+- FB-FD = String prefixes
+
+---
+
+**Status:** Living document - updated as new bytecodes are decoded
+**Contributors:** Community reverse engineering, XRPN development
+**License:** Public domain knowledge
