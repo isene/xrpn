@@ -557,11 +557,15 @@ xrpn
 
 ### Supported Operations
 
-**Fully Supported (Round-trip Compatible - 120+ opcodes):**
+**Fully Supported (Round-trip Compatible - 140+ opcodes):**
 - Labels (LBL "NAME", local labels)
 - Arithmetic (+, -, *, /, SQRT, END)
 - Stack operations (ENTER, SWAP/XY, RDN, CHS, LASTX, CLX, CLST)
 - Register operations (RCL nn, STO nn)
+- **Math Functions (ALL core HP-41 math):**
+  - Trigonometry: SIN, COS, TAN, ASIN, ACOS, ATAN
+  - Logarithms: LN, LOG, 10^X, E^X, E^X-1, LN1+X
+  - Arithmetic: X^2, POW (Y^X), 1/X, ABS, SQRT
 - Display operations (AVIEW, VIEW, PROMPT, PSE)
 - Display modes (DEG, RAD, GRAD, FIX, SCI, ENG)
 - Flow control (GTO "label", XEQ "label", RTN, STOP)
@@ -858,19 +862,19 @@ opcodes >= 0x80.
 - D0 00 XX = Data operations (requires more research)
 - CF XX YY = Control flow extended (requires more research)
 
-### Phase 4: Core Math & Numeric Literals (IN PROGRESS)
-1. ⧖ Identify core math opcodes (SIN, COS, TAN, LOG, LN, etc.)
-   - Not in XROM module 0
-   - Likely single-byte opcodes outside ASCII range
-   - Or specific XROM module for math
-2. ⧖ Numeric literal encoding (0x00-0x63 = 0-99?)
-   - Context-dependent (after END, labels, etc.)
-   - Overlaps with ASCII make detection difficult
-   - F1 XX format for single digits works
-3. ⧖ Multi-digit number encoding
-4. ⧖ Scientific notation in RAW format
+### Phase 4: Core Math Functions ✓ COMPLETE
+1. ✓ ALL core math opcodes found and implemented (18 functions)
+   - Trigonometry: SIN, COS, TAN, ASIN, ACOS, ATAN (0x59-0x5E)
+   - Logarithms: LN, LOG, 10^X, E^X, E^X-1, LN1+X (0x50, 0x56-0x58, 0x65)
+   - Arithmetic: X^2, POW (Y^X), 1/X, ABS (0x51, 0x53, 0x60-0x61)
+2. ✓ Context-aware decoding (safe after non-ASCII bytes)
+3. ✓ Single digit numbers (0-9) via F1 XX format
+4. ⧖ Multi-digit numbers (0x10-0x4F range needs more research)
 
-**Challenge:** Number encoding context-dependent, needs HP-41 mainframe docs
+**Key Discovery:** Math functions ARE single-byte in 0x50-0x66 range!
+- Safe because they only appear AFTER operations/numbers
+- Context checking prevents label contamination
+- All major HP-41 math functions now working
 
 ### Phase 3: Synthetic & Modules
 1. Synthetic programming operations

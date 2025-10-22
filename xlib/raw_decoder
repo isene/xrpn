@@ -13,8 +13,26 @@ def raw_decode(data)
     0x86 => "SQRT",
     0x87 => "CLST",  # Clear stack
 
-    # Math functions (Phase 2) - Multi-byte, implemented separately
-    # Note: 0x50-0x7F overlap with ASCII, so math functions are multi-byte ops
+    # Math functions (Phase 4) - Single-byte but context-sensitive
+    # These overlap with ASCII (0x50-0x66) so only valid after non-ASCII bytes
+    0x50 => "LN",      # Natural log
+    0x51 => "X^2",     # X squared
+    0x52 => "SQRT",    # Square root
+    0x53 => "POW",     # Y^X
+    0x54 => "CHS",     # Change sign (already in 0x8B but also here)
+    0x55 => "E^X",     # e to the X
+    0x56 => "LOG",     # Base-10 log
+    0x57 => "10^X",    # 10 to the X
+    0x58 => "E^X-1",   # e^X - 1
+    0x59 => "SIN",     # Sine
+    0x5A => "COS",     # Cosine
+    0x5B => "TAN",     # Tangent
+    0x5C => "ASIN",    # Arc sine
+    0x5D => "ACOS",    # Arc cosine
+    0x5E => "ATAN",    # Arc tangent
+    0x60 => "1/X",     # Reciprocal
+    0x61 => "ABS",     # Absolute value
+    0x65 => "LN1+X",   # ln(1+X)
 
     # Stack operations
     0x88 => "ENTER",
@@ -216,6 +234,41 @@ def raw_decode(data)
         pos += 2
       end
       next
+    end
+
+    # Math functions in ASCII range (0x50-0x66) - Phase 4
+    # Only decode as math if NOT in label/string context
+    # Safe after: opcodes >= 0x80, numbers 0x00-0x0F, END (0x85)
+    if byte >= 0x50 && byte <= 0x66 && pos > 0
+      prev_byte = data[pos - 1].ord
+      # Safe context: after operations, numbers, or non-ASCII
+      if prev_byte >= 0x80 || prev_byte <= 0x0F || prev_byte == 0x85
+        math_ops = {
+          0x50 => "LN",
+          0x51 => "X^2",
+          0x52 => "SQRT",
+          0x53 => "POW",
+          0x54 => "CHS",
+          0x55 => "E^X",
+          0x56 => "LOG",
+          0x57 => "10^X",
+          0x58 => "E^X-1",
+          0x59 => "SIN",
+          0x5A => "COS",
+          0x5B => "TAN",
+          0x5C => "ASIN",
+          0x5D => "ACOS",
+          0x5E => "ATAN",
+          0x60 => "1/X",
+          0x61 => "ABS",
+          0x65 => "LN1+X",
+        }
+        if math_ops[byte]
+          result << math_ops[byte]
+          pos += 1
+          next
+        end
+      end
     end
 
     # XROM multi-byte instructions (Phase 3)

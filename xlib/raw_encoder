@@ -13,8 +13,25 @@ def raw_encode(program, label_name = "PROG")
     "SQRT" => [0x86],
     "CLST" => [0x87],
 
-    # Math functions (Phase 2) - TODO: Multi-byte instructions needed
-    # Note: 0x50-0x7F overlap with ASCII, math uses multi-byte XROM calls
+    # Math functions (Phase 4) - Core ROM single-byte opcodes
+    # Safe to encode - will appear after operations/numbers (non-ASCII context)
+    "LN" => [0x50],
+    "X^2" => [0x51],
+    "POW" => [0x53],
+    "E^X" => [0x55],
+    "LOG" => [0x56],
+    "10^X" => [0x57],
+    "E^X-1" => [0x58],
+    "SIN" => [0x59],
+    "COS" => [0x5A],
+    "TAN" => [0x5B],
+    "ASIN" => [0x5C],
+    "ACOS" => [0x5D],
+    "ATAN" => [0x5E],
+    "1/X" => [0x60],
+    "ABS" => [0x61],
+    "LN1+X" => [0x65],
+    "LN1X" => [0x65],  # XRPN alias
 
     # Stack operations
     "ENTER" => [0x88],
