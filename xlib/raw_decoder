@@ -149,28 +149,29 @@ def raw_decode(data)
       next
     end
 
-    # String literals (various formats)
-    # Format: FD TEXT (string literal)
-    if byte == 0xFD && pos + 1 < data.length
-      pos += 1
-      text = ""
-      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
-        text << data[pos]
-        pos += 1
-      end
-      result << "\"#{text}\"" unless text.empty?
+    # F2 XX YY pattern - Parameter/data encoding
+    if byte == 0xF2 && pos + 2 < data.length
+      param = data[pos + 1].ord
+      marker = data[pos + 2].ord
+      # F2 is a data marker - skip the 3-byte sequence
+      pos += 3
       next
     end
 
-    # Format: F5 TEXT (display string after label)
-    if byte == 0xF5 && pos > 4 && result.length > 0
+    # String literals (various formats F4, F5, F9, FA, FB, FD)
+    if [0xF4, 0xF5, 0xF9, 0xFA, 0xFB, 0xFD].include?(byte) && pos + 1 < data.length
+      string_type = byte
       pos += 1
       text = ""
       while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
         text << data[pos]
         pos += 1
       end
-      result << "\"#{text}\"" unless text.empty?
+      # Output string unless empty
+      unless text.empty?
+        result << "\"#{text}\""
+      end
+      in_number_context = false  # Strings break number context
       next
     end
 
@@ -408,21 +409,23 @@ def raw_decode(data)
         end
       end
 
-      # D0 00 = Data/register operations
+      # D0 00 XX = Data/register operations (synthetic/advanced)
       if prefix == 0xD0 && mod_id == 0x00
-        result << "# D0-OP #{func_id}"
+        # These are advanced data operations - treat as NOP for now
+        # Don't add to result, just skip the bytes
         pos += 3
         next
       end
 
-      # CF = Control flow extended
+      # CF XX YY = Control flow extended (synthetic/advanced)
       if prefix == 0xCF
-        result << "# CF-OP #{mod_id},#{func_id}"
+        # Advanced control flow - treat as NOP for now
+        # Don't add to result, just skip the bytes
         pos += 3
         next
       end
 
-      # Unknown XROM
+      # Unknown XROM - output as comment
       result << "# XROM #{mod_id},#{func_id}"
       pos += 3
       next
