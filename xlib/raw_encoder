@@ -2,17 +2,34 @@
 # Converts XRPN text format to RAW bytecode
 
 def raw_encode(program, label_name = "PROG")
-  # Command to opcode mapping (inverse of decoder)
+  # Command to opcode mapping (inverse of decoder) - Phase 1 complete
   commands = {
+    # Arithmetic
     "+" => [0x81],
     "-" => [0x82],
     "*" => [0x83],
     "/" => [0x84],
     "END" => [0x85],
+    "SQRT" => [0x86],
+    "CLST" => [0x87],
+
+    # Stack operations
     "ENTER" => [0x88],
+    "SWAP" => [0x89],
+    "XY" => [0x89],     # Alias for SWAP
+    "RDN" => [0x8A],
+    "CHS" => [0x8B],
+    "LASTX" => [0x8C],
+    "CLX" => [0x8D],
+
+    # Display/IO
     "PROMPT" => [0x8E],
+    "RTN" => [0x8F],
     "AVIEW" => [0x9B, 0x73],
     "VIEW" => [0x9A, 0x72],
+    "PSE" => [0x9C],
+    "BEEP" => [0x9D],
+    "STOP" => [0x9E],
   }
 
   result = []
@@ -61,6 +78,63 @@ def raw_encode(program, label_name = "PROG")
       next
     end
 
+    # GTO with label
+    if line =~ /^GTO\s+"(.+)"$/i
+      label = $1
+      result << 0x90
+      result += label.bytes
+      next
+    end
+
+    # XEQ with label
+    if line =~ /^XEQ\s+"(.+)"$/i
+      label = $1
+      result << 0x91
+      result += label.bytes
+      next
+    end
+
+    # Conditionals
+    conditionals = {
+      "X=0?" => 0x67,
+      "X!=0?" => 0x68,
+      "X>0?" => 0x69,
+      "X<0?" => 0x6A,
+      "X>=0?" => 0x6B,
+      "X<=0?" => 0x6C,
+      "X=Y?" => 0x71,
+      "X!=Y?" => 0x72,
+      "X>Y?" => 0x73,
+      "X<Y?" => 0x74,
+      "X>=Y?" => 0x75,
+      "X<=Y?" => 0x76,
+      "X<>Y?" => 0x78,
+    }
+    cmd_upper = line.upcase
+    if conditionals[cmd_upper]
+      result << conditionals[cmd_upper]
+      next
+    end
+
+    # Flag operations
+    if line =~ /^(SF|CF|FS\?|FC\?|FS\?C|FC\?C|FSC\?)\s+(\d+)$/i
+      op = $1.upcase
+      flag = $2.to_i
+      flag_ops = {
+        "SF" => 0xA8,
+        "CF" => 0xA9,
+        "FS?" => 0xAA,
+        "FC?" => 0xAB,
+        "FS?C" => 0xAC,
+        "FC?C" => 0xAD,
+        "FSC?" => 0xAE,
+      }
+      if flag_ops[op]
+        result += [flag_ops[op], flag]
+        next
+      end
+    end
+
     # Single digit literals (0-9)
     if line =~ /^(\d)$/
       digit = $1.to_i
@@ -76,7 +150,6 @@ def raw_encode(program, label_name = "PROG")
     end
 
     # Known commands
-    cmd_upper = line.upcase
     if commands[cmd_upper]
       result += commands[cmd_upper]
       next

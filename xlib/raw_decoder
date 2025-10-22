@@ -2,7 +2,7 @@
 # Converts RAW bytecode to XRPN text format
 
 def raw_decode(data)
-  # Opcode mapping table (from raw.md documentation)
+  # Opcode mapping table (from raw.md documentation + Phase 1)
   opcodes = {
     # Arithmetic
     0x81 => "+",
@@ -10,13 +10,26 @@ def raw_decode(data)
     0x83 => "*",
     0x84 => "/",
     0x85 => "END",
+    0x86 => "SQRT",
+    0x87 => "CLST",  # Clear stack
 
     # Stack operations
     0x88 => "ENTER",
+    0x89 => "SWAP",  # X<>Y
+    0x8A => "RDN",   # Roll down
+    0x8B => "CHS",   # Change sign
+    0x8C => "LASTX",
+    0x8D => "CLX",
 
-    # Display operations
+    # Display/IO operations
     0x8E => "PROMPT",
     0x9B => "AVIEW",
+    0x9C => "PSE",   # Pause
+    0x9D => "BEEP",
+    0x9E => "STOP",
+
+    # Flow control (90-92 often with parameters)
+    0x8F => "RTN",   # Return
 
     # Control flow markers (not commands)
     0x00 => nil,  # NOP/padding
@@ -103,8 +116,27 @@ def raw_decode(data)
       next
     end
 
-    # RCL operations (A7-AA range + register number)
-    if byte >= 0xA7 && byte <= 0xAA && pos + 1 < data.length
+    # Flag operations (A8-AE range) - CHECK BEFORE RCL!
+    if byte >= 0xA8 && byte <= 0xAE && pos + 1 < data.length
+      flag_num = data[pos + 1].ord
+      flag_ops = {
+        0xA8 => "SF",   # Set flag
+        0xA9 => "CF",   # Clear flag
+        0xAA => "FS?",  # Flag set?
+        0xAB => "FC?",  # Flag clear?
+        0xAC => "FS?C", # Flag set? then clear
+        0xAD => "FC?C", # Flag clear? then clear
+        0xAE => "FSC?", # Flag set/clear?
+      }
+      if flag_ops[byte]
+        result << "#{flag_ops[byte]} #{flag_num}"
+        pos += 2
+        next
+      end
+    end
+
+    # RCL operations (A7 + register number)
+    if byte == 0xA7 && pos + 1 < data.length
       reg_num = data[pos + 1].ord
       result << "RCL #{reg_num}"
       pos += 2
@@ -132,6 +164,70 @@ def raw_decode(data)
         result << "VIEW #{next_byte}"
         pos += 2
       end
+      next
+    end
+
+    # GTO (0x90 + label reference or register)
+    if byte == 0x90 && pos + 1 < data.length
+      next_byte = data[pos + 1].ord
+      if next_byte >= 0x41 && next_byte <= 0x5A  # ASCII A-Z
+        # Label name follows
+        label = ""
+        pos += 1
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          label << data[pos]
+          pos += 1
+        end
+        result << "GTO \"#{label}\""
+      else
+        result << "GTO #{next_byte}"
+        pos += 2
+      end
+      next
+    end
+
+    # XEQ (0x91 + label reference)
+    if byte == 0x91 && pos + 1 < data.length
+      next_byte = data[pos + 1].ord
+      if next_byte >= 0x41 && next_byte <= 0x5A  # ASCII A-Z
+        # Label name follows
+        label = ""
+        pos += 1
+        while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+          label << data[pos]
+          pos += 1
+        end
+        result << "XEQ \"#{label}\""
+      else
+        result << "XEQ #{next_byte}"
+        pos += 2
+      end
+      next
+    end
+
+    # Conditionals (0x67-0x78 range for X comparisons)
+    if byte >= 0x67 && byte <= 0x78
+      cond_map = {
+        0x67 => "X=0?",
+        0x68 => "X!=0?",
+        0x69 => "X>0?",
+        0x6A => "X<0?",
+        0x6B => "X>=0?",
+        0x6C => "X<=0?",
+        0x71 => "X=Y?",
+        0x72 => "X!=Y?",
+        0x73 => "X>Y?",
+        0x74 => "X<Y?",
+        0x75 => "X>=Y?",
+        0x76 => "X<=Y?",
+        0x78 => "X<>Y?",  # X exchange Y test
+      }
+      if cond_map[byte]
+        result << cond_map[byte]
+      else
+        result << "# Conditional: 0x#{byte.to_s(16).upcase}"
+      end
+      pos += 1
       next
     end
 

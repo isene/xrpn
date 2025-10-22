@@ -403,13 +403,17 @@ xrpn
 
 **Fully Supported (Round-trip Compatible):**
 - Labels (LBL "NAME")
-- Basic arithmetic (+, -, *, /, END)
-- Stack operations (ENTER)
+- Arithmetic (+, -, *, /, SQRT, END)
+- Stack operations (ENTER, SWAP/XY, RDN, CHS, LASTX, CLX, CLST)
 - Register operations (RCL nn, STO nn)
-- Display operations (AVIEW, VIEW)
+- Display operations (AVIEW, VIEW, PROMPT, PSE)
+- Flow control (GTO "label", XEQ "label", RTN, STOP)
+- Conditionals (X=0?, X!=0?, X>0?, X<0?, X>=0?, X<=0?)
+- Conditionals (X=Y?, X!=Y?, X>Y?, X<Y?, X>=Y?, X<=Y?, X<>Y?)
+- Flags (SF nn, CF nn, FS? nn, FC? nn, FS?C nn, FC?C nn, FSC? nn)
 - Single digit literals (0-9)
 - String literals ("text")
-- Display commands (PROMPT)
+- IO operations (BEEP)
 
 **Partially Supported (Decode Only):**
 - Local labels (F6 format)
@@ -418,11 +422,12 @@ xrpn
 - End markers (multiple formats)
 
 **Not Yet Supported:**
-- Flow control (GTO, XEQ, RTN)
-- Conditionals (X=Y?, etc.)
 - Multi-byte instructions
+- Math functions (SIN, COS, LOG, LN, etc.)
+- Advanced register ops (ISG, DSE, etc.)
 - Synthetic operations
 - Module-specific functions
+- Indirect addressing modes
 
 ### Manual Hex Analysis
 
@@ -591,7 +596,9 @@ F5 TEXT 9A 73  # Display text string
 
 ### Test Results
 
-**Round-trip Test (Encode → Decode):**
+**Round-trip Tests (Encode → Decode):**
+
+*Basic Operations:*
 ```
 Original: LBL "TEST", 5, 3, +, AVIEW, END
 Encoded:  19 bytes
@@ -599,25 +606,35 @@ Decoded:  LBL "TEST", 5, 3, +, AVIEW, END
 Status:   ✓ Perfect match
 ```
 
+*Phase 1 Complete (Flow/Conditionals/Flags):*
+```
+Program: LBL "PHASE1", SF 1, X>0?, GTO "SKIP", SQRT,
+         LBL "SKIP", FS? 1, XEQ "SUB1", RTN, LBL "SUB1", CLX, END
+Encoded: 47 bytes
+Status:  ✓ Perfect match - All Phase 1 features working
+```
+
 **Real RAW Files:**
 - `ldcard.raw` (28 bytes): ✓ Fully decoded
 - `demf67.raw` (39 bytes): ⧖ Partial (arithmetic ops decoded)
+- `caves.raw` (1.7K): ⧖ Improved (CF, SF, XEQ decoded, 97 instructions)
 - `hexdec.raw` (273 bytes): ⧖ Partial (labels + strings extracted)
 - `clndrfn.raw` (386 bytes): ⧖ Partial (all labels found)
 
 ### Known Limitations
 
 **Decoder Gaps:**
-- ~226 opcodes not yet documented (out of 256)
+- ~190 opcodes not yet documented (out of 256, was 226)
 - Multi-byte sequences need context analysis
+- Math functions (SIN, COS, LOG, etc.)
 - Synthetic operations require research
 - Module functions lack documentation
 
 **Encoder Gaps:**
-- Flow control (GTO, XEQ, RTN) not implemented
-- Conditionals not supported
+- Math functions not yet implemented
 - Indirect addressing incomplete
-- Complex instructions missing
+- Complex multi-byte instructions missing
+- Module-specific functions
 
 **Architecture Issues:**
 - No checksum validation
@@ -627,13 +644,14 @@ Status:   ✓ Perfect match
 
 ## Future Work
 
-### Phase 1: Core Operations (Priority)
-1. ✓ Basic arithmetic (+, -, *, /, END)
-2. ✓ Stack operations (ENTER)
+### Phase 1: Core Operations ✓ COMPLETE
+1. ✓ Basic arithmetic (+, -, *, /, SQRT, END)
+2. ✓ Stack operations (ENTER, SWAP, RDN, CHS, LASTX, CLX, CLST)
 3. ✓ Register operations (RCL, STO)
-4. ⧖ Flow control (GTO, XEQ, RTN, STOP)
-5. ⧖ Conditionals (X=Y?, X<Y?, etc.)
-6. ⧖ Flags (SF, CF, FS?, FC?)
+4. ✓ Flow control (GTO, XEQ, RTN, STOP)
+5. ✓ Conditionals (X=Y?, X<Y?, X>0?, etc. - 13 variations)
+6. ✓ Flags (SF, CF, FS?, FC?, FS?C, FC?C, FSC?)
+7. ✓ Display/IO (AVIEW, VIEW, PROMPT, PSE, BEEP)
 
 ### Phase 2: Advanced Operations
 1. Complete register opcodes (all variants A7-AA, B2-BB)
