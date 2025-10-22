@@ -107,6 +107,33 @@ Common patterns:
 - `C8 26 2D` - End with checksum
 - `CA 36 09` - End with checksum
 
+## Critical Design Insight: ASCII Overlap
+
+### The 0x50-0x7F Problem
+
+**Discovery:** Opcodes in range 0x50-0x7F overlap with ASCII printable characters.
+
+This creates a fundamental encoding constraint:
+```
+0x50 = 'P'    0x60 = '`'    0x70 = 'p'
+0x54 = 'T'    0x64 = 'd'    0x74 = 't'
+0x5C = '\'    0x6C = 'l'    0x7C = '|'
+...etc
+```
+
+**Impact:**
+- Label names use ASCII encoding (terminated by non-ASCII byte)
+- Single-byte opcodes MUST be >= 0x80 to avoid label contamination
+- Math functions (SIN, COS, LOG) cannot be single-byte in 0x50-0x7F
+- HP-41 uses multi-byte XROM sequences for math operations
+
+**Solution:**
+- Phase 1-2: Implement opcodes >= 0x80 (working perfectly)
+- Phase 3: Implement XROM multi-byte instruction parser
+- Phase 4: Map XROM sequences to math functions
+
+This explains why simple RAW files work but complex math programs need more research.
+
 ## HP-41 Bytecode Reference
 
 ### Confirmed Opcodes (from RAW analysis)
@@ -114,6 +141,12 @@ Common patterns:
 #### Stack Operations
 ```
 88 - ENTER    (duplicate X register)
+89 - SWAP     (X <> Y exchange)
+8A - RDN      (roll down stack)
+8B - CHS      (change sign)
+8C - LASTX    (recall last X)
+8D - CLX      (clear X register)
+87 - CLST     (clear stack)
 ```
 
 #### Arithmetic Operations
@@ -123,6 +156,7 @@ Common patterns:
 83 - *        (multiply Y * X)
 84 - /        (divide Y / X)
 85 - END      (end program/line)
+86 - SQRT     (square root)
 ```
 
 #### Register Operations
@@ -150,26 +184,76 @@ A7 82 - RCL 82 (recall register 130 decimal)
 B2 00 - STO 00 (store to register 0)
 ```
 
-#### Display/Output
+#### Display/Output & Control
 ```
+8E - PROMPT   (prompt for input)
+8F - RTN      (return from subroutine)
 9A - VIEW variants (display register)
-9B - VIEW/AVIEW (view alpha)
-9C - VIEW variant
+9B - AVIEW    (view alpha register)
+9C - PSE      (pause display)
+9D - BEEP     (sound beep)
+9E - STOP     (stop program)
 ```
 
-**Common patterns:**
+**VIEW variants:**
 ```
-9A 73 - VIEW/AVIEW (view alpha register)
-9A 72 - VIEW variant
-9B 73 - AVIEW variant
+9A 72 - VIEW (view X register)
+9A 73 - VIEW variant
+9B 73 - AVIEW (view alpha)
 ```
 
-#### Flow Control
+#### Display Modes (Phase 2)
 ```
-8E - PROMPT
-90 - GTO variant
-91 - GTO/XEQ variant
-92 - GTO/XEQ variant
+93 - DEG      (degree mode)
+94 - RAD      (radian mode)
+95 - GRAD     (gradian mode)
+96 - FIX      (fix decimal places)
+97 - SCI      (scientific notation)
+98 - ENG      (engineering notation)
+9F - ISG      (increment and skip if greater)
+```
+
+#### Flow Control (Phase 1)
+```
+8F - RTN       (return from subroutine)
+90 - GTO       (goto label or line number)
+91 - XEQ       (execute subroutine)
+92 - GTO/XEQ   (variant with parameters)
+9E - STOP      (stop program)
+```
+
+**Usage patterns:**
+```
+90 4A - GTO to label starting with 'J'
+91 4B - XEQ subroutine starting with 'K'
+```
+
+#### Conditionals (Phase 1)
+```
+67 - X=0?      (skip next if X not equal 0)
+68 - X!=0?     (skip next if X equals 0)
+69 - X>0?      (skip next if X not greater than 0)
+6A - X<0?      (skip next if X not less than 0)
+6B - X>=0?     (skip next if X less than 0)
+6C - X<=0?     (skip next if X greater than 0)
+71 - X=Y?      (skip next if X not equal Y)
+72 - X!=Y?     (skip next if X equals Y)
+73 - X>Y?      (skip next if X not greater than Y)
+74 - X<Y?      (skip next if X not less than Y)
+75 - X>=Y?     (skip next if X less than Y)
+76 - X<=Y?     (skip next if X greater than Y)
+78 - X<>Y?     (test X exchange Y)
+```
+
+#### Flags (Phase 1)
+```
+A8 nn - SF nn      (set flag number nn)
+A9 nn - CF nn      (clear flag number nn)
+AA nn - FS? nn     (test if flag set)
+AB nn - FC? nn     (test if flag clear)
+AC nn - FS?C nn    (test flag set, then clear)
+AD nn - FC?C nn    (test flag clear, then clear)
+AE nn - FSC? nn    (flag set/clear test)
 ```
 
 #### Numeric Literals
@@ -401,16 +485,18 @@ xrpn
 
 ### Supported Operations
 
-**Fully Supported (Round-trip Compatible):**
-- Labels (LBL "NAME")
+**Fully Supported (Round-trip Compatible - 80+ opcodes):**
+- Labels (LBL "NAME", local labels)
 - Arithmetic (+, -, *, /, SQRT, END)
 - Stack operations (ENTER, SWAP/XY, RDN, CHS, LASTX, CLX, CLST)
 - Register operations (RCL nn, STO nn)
 - Display operations (AVIEW, VIEW, PROMPT, PSE)
+- Display modes (DEG, RAD, GRAD, FIX, SCI, ENG)
 - Flow control (GTO "label", XEQ "label", RTN, STOP)
 - Conditionals (X=0?, X!=0?, X>0?, X<0?, X>=0?, X<=0?)
 - Conditionals (X=Y?, X!=Y?, X>Y?, X<Y?, X>=Y?, X<=Y?, X<>Y?)
 - Flags (SF nn, CF nn, FS? nn, FC? nn, FS?C nn, FC?C nn, FSC? nn)
+- Loop operations (ISG)
 - Single digit literals (0-9)
 - String literals ("text")
 - IO operations (BEEP)
@@ -624,11 +710,12 @@ Status:  ✓ Perfect match - All Phase 1 features working
 ### Known Limitations
 
 **Decoder Gaps:**
-- ~190 opcodes not yet documented (out of 256, was 226)
-- Multi-byte sequences need context analysis
-- Math functions (SIN, COS, LOG, etc.)
+- ~170 opcodes not yet documented (out of 256)
+- Multi-byte XROM sequences (math functions, modules)
+- Math functions require XROM implementation (SIN, COS, LOG, etc.)
 - Synthetic operations require research
 - Module functions lack documentation
+- ASCII range 0x50-0x7F contains data, not simple opcodes
 
 **Encoder Gaps:**
 - Math functions not yet implemented
@@ -653,12 +740,25 @@ Status:  ✓ Perfect match - All Phase 1 features working
 6. ✓ Flags (SF, CF, FS?, FC?, FS?C, FC?C, FSC?)
 7. ✓ Display/IO (AVIEW, VIEW, PROMPT, PSE, BEEP)
 
-### Phase 2: Advanced Operations
-1. Complete register opcodes (all variants A7-AA, B2-BB)
-2. Math functions (SQRT, SIN, COS, LOG, etc.)
-3. String operations (APPEND, ARCL, etc.)
-4. Program editing (DEL, ISG, DSE)
-5. Extended memory operations
+### Phase 2: Extended Operations ✓ COMPLETE
+1. ✓ Display modes (DEG, RAD, GRAD, FIX, SCI, ENG)
+2. ✓ Loop operations (ISG, DSE variants)
+3. ⧖ Math functions - Discovered multi-byte encoding needed
+   - Single-byte opcodes 0x50-0x7F overlap with ASCII
+   - HP-41 math uses XROM multi-byte sequences
+   - Requires XROM implementation (Phase 3)
+
+**Key Discovery:** HP-41 RAW format uses multi-byte XROM calls for math functions
+to avoid ASCII collision (0x50-0x7F). Simple single-byte encoding only works for
+opcodes >= 0x80.
+
+### Phase 3: Multi-byte Instructions & XROM
+1. ⧖ XROM format decoding (multi-byte sequences)
+2. ⧖ Math functions via XROM (SIN, COS, LOG, LN, etc.)
+3. ⧖ Complete register opcodes (all variants A7-AA, B2-BB)
+4. ⧖ String operations (APPEND, ARCL, etc.)
+5. ⧖ Advanced program editing
+6. ⧖ Extended memory operations
 
 ### Phase 3: Synthetic & Modules
 1. Synthetic programming operations

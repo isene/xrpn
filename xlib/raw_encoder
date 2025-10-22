@@ -2,7 +2,7 @@
 # Converts XRPN text format to RAW bytecode
 
 def raw_encode(program, label_name = "PROG")
-  # Command to opcode mapping (inverse of decoder) - Phase 1 complete
+  # Command to opcode mapping (inverse of decoder) - Phase 1 + 2
   commands = {
     # Arithmetic
     "+" => [0x81],
@@ -12,6 +12,9 @@ def raw_encode(program, label_name = "PROG")
     "END" => [0x85],
     "SQRT" => [0x86],
     "CLST" => [0x87],
+
+    # Math functions (Phase 2) - TODO: Multi-byte instructions needed
+    # Note: 0x50-0x7F overlap with ASCII, math uses multi-byte XROM calls
 
     # Stack operations
     "ENTER" => [0x88],
@@ -30,6 +33,15 @@ def raw_encode(program, label_name = "PROG")
     "PSE" => [0x9C],
     "BEEP" => [0x9D],
     "STOP" => [0x9E],
+
+    # Extended operations (Phase 2)
+    "DEG" => [0x93],
+    "RAD" => [0x94],
+    "GRAD" => [0x95],
+    "FIX" => [0x96],
+    "SCI" => [0x97],
+    "ENG" => [0x98],
+    "ISG" => [0x9F],
   }
 
   result = []
@@ -47,11 +59,13 @@ def raw_encode(program, label_name = "PROG")
         # First label is global (main entry point)
         result += [0xC0, 0x00, 0xF7, 0x00]  # Global label header
         result += lbl_name.bytes
+        # No terminator needed - next opcode (non-ASCII) terminates naturally
         main_label_written = true
       else
         # Subsequent labels are local
         result += [0xF6, 0x00]
         result += lbl_name.bytes
+        # No terminator needed
       end
       next
     end

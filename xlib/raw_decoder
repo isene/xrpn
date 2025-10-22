@@ -13,6 +13,9 @@ def raw_decode(data)
     0x86 => "SQRT",
     0x87 => "CLST",  # Clear stack
 
+    # Math functions (Phase 2) - Multi-byte, implemented separately
+    # Note: 0x50-0x7F overlap with ASCII, so math functions are multi-byte ops
+
     # Stack operations
     0x88 => "ENTER",
     0x89 => "SWAP",  # X<>Y
@@ -27,6 +30,16 @@ def raw_decode(data)
     0x9C => "PSE",   # Pause
     0x9D => "BEEP",
     0x9E => "STOP",
+
+    # Extended operations (Phase 2)
+    0x93 => "DEG",   # Degree mode
+    0x94 => "RAD",   # Radian mode
+    0x95 => "GRAD",  # Gradian mode
+    0x96 => "FIX",   # Fix decimal places (parameter follows)
+    0x97 => "SCI",   # Scientific notation
+    0x98 => "ENG",   # Engineering notation
+    0x99 => "RCL",   # RCL variant
+    0x9F => "ISG",   # Increment and skip if greater
 
     # Flow control (90-92 often with parameters)
     0x8F => "RTN",   # Return
