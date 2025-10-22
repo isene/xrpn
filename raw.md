@@ -840,7 +840,7 @@ Status:  ✓ Perfect match - XROM encoding/decoding working
 to avoid ASCII collision (0x50-0x7F). Simple single-byte encoding only works for
 opcodes >= 0x80.
 
-### Phase 3: XROM Extended Functions ✓ COMPLETE
+### Phase 3: XROM Extended Functions ✓ COMPLETE (Committed)
 1. ✓ XROM format decoding (E0 00 XX, D0 00 XX, CF XX YY)
 2. ✓ Extended Functions ROM (35+ functions)
    - Alpha operations: ALENG, AROT, ATOX, ANUM
@@ -857,6 +857,20 @@ opcodes >= 0x80.
 - E0 00 XX = Extended Functions ROM (module 0, function XX)
 - D0 00 XX = Data operations (requires more research)
 - CF XX YY = Control flow extended (requires more research)
+
+### Phase 4: Core Math & Numeric Literals (IN PROGRESS)
+1. ⧖ Identify core math opcodes (SIN, COS, TAN, LOG, LN, etc.)
+   - Not in XROM module 0
+   - Likely single-byte opcodes outside ASCII range
+   - Or specific XROM module for math
+2. ⧖ Numeric literal encoding (0x00-0x63 = 0-99?)
+   - Context-dependent (after END, labels, etc.)
+   - Overlaps with ASCII make detection difficult
+   - F1 XX format for single digits works
+3. ⧖ Multi-digit number encoding
+4. ⧖ Scientific notation in RAW format
+
+**Challenge:** Number encoding context-dependent, needs HP-41 mainframe docs
 
 ### Phase 3: Synthetic & Modules
 1. Synthetic programming operations

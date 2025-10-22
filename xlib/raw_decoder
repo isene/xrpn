@@ -327,7 +327,13 @@ def raw_decode(data)
       next
     end
 
-    # Single digit literals (F1 XX)
+    # Numeric literals (Phase 4 - EXPERIMENTAL)
+    # Numbers 0x00-0x63 (0-99) but only in safe contexts
+    # This is tricky because 0x10-0x7F overlaps with ASCII and opcodes
+    # For now, skip numeric literal auto-detection to avoid false positives
+    # TODO: Need more research on exact number encoding rules
+
+    # Single digit literals via F1 XX (alternate encoding)
     if byte == 0xF1 && pos + 1 < data.length
       digit = data[pos + 1].ord
       if digit >= 0x30 && digit <= 0x39
