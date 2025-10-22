@@ -1,0 +1,183 @@
+# HP-41 RAW File Decoder
+# Converts RAW bytecode to XRPN text format
+
+def raw_decode(data)
+  # Opcode mapping table (from raw.md documentation)
+  opcodes = {
+    # Arithmetic
+    0x81 => "+",
+    0x82 => "-",
+    0x83 => "*",
+    0x84 => "/",
+    0x85 => "END",
+
+    # Stack operations
+    0x88 => "ENTER",
+
+    # Display operations
+    0x8E => "PROMPT",
+    0x9B => "AVIEW",
+
+    # Control flow markers (not commands)
+    0x00 => nil,  # NOP/padding
+  }
+
+  result = []
+  pos = 0
+
+  while pos < data.length
+    byte = data[pos].ord
+
+    # Global label header (C0 00 Fx 00 LABELNAME)
+    if byte == 0xC0 && pos + 3 < data.length && data[pos + 1].ord == 0x00
+      label_type = data[pos + 2].ord
+      pos += 4
+
+      # Extract label name
+      label = ""
+      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+        label << data[pos]
+        pos += 1
+      end
+
+      result << "LBL \"#{label}\""
+      next
+    end
+
+    # Variant header (C6 00 Fx 00 LABELNAME)
+    if byte == 0xC6 && pos + 3 < data.length && data[pos + 1].ord == 0x00
+      pos += 4
+
+      # Extract label name
+      label = ""
+      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+        label << data[pos]
+        pos += 1
+      end
+
+      result << "LBL \"#{label}\""
+      next
+    end
+
+    # Local label (F6 00 LABELNAME or F6 LABELNAME)
+    if byte == 0xF6
+      if pos + 1 < data.length && data[pos + 1].ord == 0x00
+        pos += 2
+      else
+        pos += 1
+      end
+
+      # Extract label name
+      label = ""
+      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+        label << data[pos]
+        pos += 1
+      end
+
+      result << "LBL \"#{label}\""
+      next
+    end
+
+    # String literals (various formats)
+    # Format: FD TEXT (string literal)
+    if byte == 0xFD && pos + 1 < data.length
+      pos += 1
+      text = ""
+      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+        text << data[pos]
+        pos += 1
+      end
+      result << "\"#{text}\"" unless text.empty?
+      next
+    end
+
+    # Format: F5 TEXT (display string after label)
+    if byte == 0xF5 && pos > 4 && result.length > 0
+      pos += 1
+      text = ""
+      while pos < data.length && data[pos].ord >= 0x20 && data[pos].ord < 0x7F
+        text << data[pos]
+        pos += 1
+      end
+      result << "\"#{text}\"" unless text.empty?
+      next
+    end
+
+    # RCL operations (A7-AA range + register number)
+    if byte >= 0xA7 && byte <= 0xAA && pos + 1 < data.length
+      reg_num = data[pos + 1].ord
+      result << "RCL #{reg_num}"
+      pos += 2
+      next
+    end
+
+    # STO operations (B2-BB range + register number)
+    if byte >= 0xB2 && byte <= 0xBB && pos + 1 < data.length
+      reg_num = data[pos + 1].ord
+      result << "STO #{reg_num}"
+      pos += 2
+      next
+    end
+
+    # VIEW operations (9A-9C variants)
+    if byte >= 0x9A && byte <= 0x9C && pos + 1 < data.length
+      next_byte = data[pos + 1].ord
+      if next_byte == 0x73
+        result << "AVIEW"
+        pos += 2
+      elsif next_byte == 0x72
+        result << "VIEW"
+        pos += 2
+      else
+        result << "VIEW #{next_byte}"
+        pos += 2
+      end
+      next
+    end
+
+    # Single digit literals (F1 XX)
+    if byte == 0xF1 && pos + 1 < data.length
+      digit = data[pos + 1].ord
+      if digit >= 0x30 && digit <= 0x39
+        result << (digit - 0x30).to_s  # 0-9
+      elsif digit >= 0x41 && digit <= 0x46
+        result << ((digit - 0x41 + 10)).to_s  # A-F (10-15)
+      end
+      pos += 2
+      next
+    end
+
+    # Known single-byte opcodes
+    if opcodes[byte]
+      result << opcodes[byte]
+      pos += 1
+      next
+    end
+
+    # End markers - stop processing
+    if byte == 0xC2 || byte == 0xC8 || byte == 0xCA
+      break
+    end
+
+    # End marker (C0 02 2F)
+    if byte == 0xC0 && pos + 2 < data.length
+      if data[pos + 1].ord == 0x02 && data[pos + 2].ord == 0x2F
+        break
+      end
+    end
+
+    # Unknown opcode - output as comment
+    if byte > 0x20 && byte < 0x7F
+      # Skip - might be part of string
+      pos += 1
+    else
+      result << "# Unknown: 0x#{byte.to_s(16).upcase}"
+      pos += 1
+    end
+  end
+
+  # Remove nil entries and return
+  result.compact
+end
+
+# vim:ft=ruby:

@@ -1,0 +1,58 @@
+class XRPN
+# Import HP-41 RAW file and convert to XRPN program
+# Usage: "filename.raw" then RAWIMPORT
+# Converts RAW bytecode to XRPN text format and loads into current program page
+  def rawimport
+    filename = @a
+    if filename.empty?
+      puts "Error: No filename in Alpha register"
+      puts "Usage: Put RAW filename in Alpha, then run RAWIMPORT"
+      return
+    end
+
+    # Check file exists
+    unless File.exist?(filename)
+      puts "Error: File not found: #{filename}"
+      return
+    end
+
+    begin
+      # Read RAW file
+      data = File.binread(filename)
+
+      puts "=" * 60
+      puts "Importing HP-41 RAW: #{File.basename(filename)}"
+      puts "File size: #{data.length} bytes"
+      puts "=" * 60
+
+      # Decode RAW bytecode to XRPN commands
+      program = raw_decode(data)
+
+      if program.empty?
+        puts "Warning: No decodable instructions found"
+        return
+      end
+
+      # Load into current program page
+      @prg[@pg] = program
+
+      puts "Imported #{program.length} instructions to page #{@pg}"
+      puts
+      puts "Program preview:"
+      program.first(10).each_with_index do |line, i|
+        puts "  #{i.to_s.rjust(3)}: #{line}"
+      end
+      puts "  ..." if program.length > 10
+      puts
+      puts "Use 'prp' to view full program"
+      puts "Use 'run' to execute program"
+      puts "=" * 60
+
+    rescue => e
+      puts "Error importing RAW file: #{e.message}"
+      puts e.backtrace.first(3)
+    end
+  end
+end
+
+# vim:ft=ruby:

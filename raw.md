@@ -15,21 +15,19 @@ RAW format represents "the sequence of bytes stored in HP-41C memory" as origina
 
 ### Primary References
 1. **"Synthetic Programming on the HP-41C"** by W.C. Wickes
-   - Location: `/home/geir/Main/G/HP/TOSdvd/Books/Synthetic_Programming_-_W.C._Wickes.pdf`
    - 31 MB comprehensive guide to HP-41 internals
 
 2. **PPC Journal Articles**
    - Volume 6, Issue 4, pages 11-12 (Corvallis Division Column)
    - Volume 6, Issue 5, pages 20-23
    - Volume 6, Issue 6, pages 19-21
-   - Location: `/home/geir/Main/G/HP/TOSdvd/Users_Groups/PPC1/Volume6/`
 
 3. **"Inside the HP-41"** by Jean-Daniel Dodin
-   - Location: `/home/geir/Main/G/HP/TOSdvd/Books/Inside_the_HP-41_-_Jean-Daniel_Dodin.pdf`
+   - English translation available
 
 4. **RAW File Collections** (for analysis/testing)
-   - `/home/geir/Main/G/HP/41/RAW/` - Index + files
-   - `/home/geir/Main/G/HP/TOSdvd/Emulators/V41r8/RAW/` - 400+ programs
+   - Various online archives contain 400+ HP-41 RAW programs
+   - V41 emulator includes extensive RAW file collection
 
 ### Community Wisdom
 From HP Museum forum thread 24229:
@@ -327,13 +325,15 @@ F1 46 9A 0F  # "F"
 
 Pattern: `F1 [ASCII] 9A [index]`
 
-## Analyzing RAW Files
+## XRPN RAW Import/Export
 
-### Using XRPN's RAWINFO Command
+### RAWINFO Command (View RAW File Contents)
+
+Display information about a RAW file without importing:
 
 ```bash
 xrpn
-> "/path/to/program.raw"
+> "program.raw"
 > rawinfo
 ```
 
@@ -342,6 +342,87 @@ Output includes:
 - All labels found (global, local, alpha, numeric)
 - Text strings extracted
 - Hex dump of first 256 bytes
+
+### RAWIMPORT Command (Import RAW to XRPN)
+
+Import and decode a RAW file into XRPN program format:
+
+```bash
+xrpn
+> "program.raw"
+> rawimport
+```
+
+This command:
+- Reads HP-41 RAW bytecode
+- Decodes to XRPN text format
+- Loads into current program page
+- Shows preview of decoded instructions
+
+Example output:
+```
+Importing HP-41 RAW: ldcard.raw
+File size: 28 bytes
+Imported 3 instructions to page 0
+
+Program preview:
+  0: LBL "LOAD"
+  1: RCL 130
+  2: END
+```
+
+### RAWEXPORT Command (Export XRPN to RAW)
+
+Export current XRPN program to HP-41 RAW format:
+
+```bash
+xrpn
+> "output.raw"
+> rawexport
+```
+
+This command:
+- Encodes current program page to RAW bytecode
+- Writes binary RAW file
+- Shows encoding summary
+
+Example workflow:
+```
+xrpn
+> LBL "TEST"
+> 5
+> 3
+> +
+> AVIEW
+> END
+> "test.raw"
+> rawexport
+```
+
+### Supported Operations
+
+**Fully Supported (Round-trip Compatible):**
+- Labels (LBL "NAME")
+- Basic arithmetic (+, -, *, /, END)
+- Stack operations (ENTER)
+- Register operations (RCL nn, STO nn)
+- Display operations (AVIEW, VIEW)
+- Single digit literals (0-9)
+- String literals ("text")
+- Display commands (PROMPT)
+
+**Partially Supported (Decode Only):**
+- Local labels (F6 format)
+- Multiple label variants (F4-F9)
+- Various string formats
+- End markers (multiple formats)
+
+**Not Yet Supported:**
+- Flow control (GTO, XEQ, RTN)
+- Conditionals (X=Y?, etc.)
+- Multi-byte instructions
+- Synthetic operations
+- Module-specific functions
 
 ### Manual Hex Analysis
 
@@ -474,25 +555,106 @@ F5 TEXT 9A 73  # Display text string
 9A 0X  # Access table at position X (0-F)
 ```
 
+## Implementation Status
+
+### Completed Features (v2.6+)
+
+**RAW Decoder** (`xlib/raw_decoder`)
+- Decodes RAW bytecode to XRPN text format
+- Handles all header formats (C0, C6 variants)
+- Extracts global and local labels
+- Decodes 30+ opcodes (arithmetic, stack, registers, display)
+- Processes string literals (6 formats)
+- Recognizes end markers
+- Comments unknown opcodes for debugging
+
+**RAW Encoder** (`xlib/raw_encoder`)
+- Encodes XRPN text to RAW bytecode
+- Generates proper headers (C0 00 F7 00)
+- Encodes arithmetic operations
+- Handles register operations (RCL/STO)
+- Supports single-digit literals
+- Adds proper end markers (C0 02 2F)
+- Warns about unsupported commands
+
+**RAWIMPORT Command** (`xcmd/rawimport`)
+- Imports RAW files into current program page
+- Displays decode summary
+- Shows program preview
+- Provides usage instructions
+
+**RAWEXPORT Command** (`xcmd/rawexport`)
+- Exports current program to RAW format
+- Extracts label name automatically
+- Shows encoding summary
+- Validates program exists before export
+
+### Test Results
+
+**Round-trip Test (Encode → Decode):**
+```
+Original: LBL "TEST", 5, 3, +, AVIEW, END
+Encoded:  19 bytes
+Decoded:  LBL "TEST", 5, 3, +, AVIEW, END
+Status:   ✓ Perfect match
+```
+
+**Real RAW Files:**
+- `ldcard.raw` (28 bytes): ✓ Fully decoded
+- `demf67.raw` (39 bytes): ⧖ Partial (arithmetic ops decoded)
+- `hexdec.raw` (273 bytes): ⧖ Partial (labels + strings extracted)
+- `clndrfn.raw` (386 bytes): ⧖ Partial (all labels found)
+
+### Known Limitations
+
+**Decoder Gaps:**
+- ~226 opcodes not yet documented (out of 256)
+- Multi-byte sequences need context analysis
+- Synthetic operations require research
+- Module functions lack documentation
+
+**Encoder Gaps:**
+- Flow control (GTO, XEQ, RTN) not implemented
+- Conditionals not supported
+- Indirect addressing incomplete
+- Complex instructions missing
+
+**Architecture Issues:**
+- No checksum validation
+- Context-dependent opcodes challenging
+- Instruction boundary detection heuristic
+- No error recovery for corrupt files
+
 ## Future Work
 
-### Immediate Goals
-1. Build complete opcode reference (256 entries)
-2. Document multi-byte instruction formats
-3. Create test suite with known programs
-4. Implement basic RAW → XRPN converter
+### Phase 1: Core Operations (Priority)
+1. ✓ Basic arithmetic (+, -, *, /, END)
+2. ✓ Stack operations (ENTER)
+3. ✓ Register operations (RCL, STO)
+4. ⧖ Flow control (GTO, XEQ, RTN, STOP)
+5. ⧖ Conditionals (X=Y?, X<Y?, etc.)
+6. ⧖ Flags (SF, CF, FS?, FC?)
 
-### Medium-term Goals
-1. Handle synthetic programming operations
-2. Support all standard HP-41 functions
-3. Preserve program structure and comments
-4. Round-trip conversion (XRPN ↔ RAW)
+### Phase 2: Advanced Operations
+1. Complete register opcodes (all variants A7-AA, B2-BB)
+2. Math functions (SQRT, SIN, COS, LOG, etc.)
+3. String operations (APPEND, ARCL, etc.)
+4. Program editing (DEL, ISG, DSE)
+5. Extended memory operations
 
-### Long-term Goals
-1. Support module-specific operations
-2. Optimize generated XRPN code
-3. Decompile with meaningful label names
-4. Create RAW file validator/checker
+### Phase 3: Synthetic & Modules
+1. Synthetic programming operations
+2. Time module functions
+3. Printer module functions
+4. X-Functions module
+5. HP-IL operations
+
+### Phase 4: Polish & Tools
+1. Optimize generated XRPN code
+2. Decompile with smart label naming
+3. RAW file validator/linter
+4. Batch conversion tools
+5. Comprehensive test suite (400+ RAW files)
 
 ## References
 

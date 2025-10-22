@@ -1,0 +1,95 @@
+# HP-41 RAW File Encoder
+# Converts XRPN text format to RAW bytecode
+
+def raw_encode(program, label_name = "PROG")
+  # Command to opcode mapping (inverse of decoder)
+  commands = {
+    "+" => [0x81],
+    "-" => [0x82],
+    "*" => [0x83],
+    "/" => [0x84],
+    "END" => [0x85],
+    "ENTER" => [0x88],
+    "PROMPT" => [0x8E],
+    "AVIEW" => [0x9B, 0x73],
+    "VIEW" => [0x9A, 0x72],
+  }
+
+  result = []
+  main_label_written = false
+
+  program.each do |line|
+    line = line.strip
+    next if line.empty?
+    next if line.start_with?("#")  # Skip comments
+
+    # Label definition
+    if line =~ /^LBL\s+"(.+)"$/i
+      lbl_name = $1
+      if !main_label_written
+        # First label is global (main entry point)
+        result += [0xC0, 0x00, 0xF7, 0x00]  # Global label header
+        result += lbl_name.bytes
+        main_label_written = true
+      else
+        # Subsequent labels are local
+        result += [0xF6, 0x00]
+        result += lbl_name.bytes
+      end
+      next
+    end
+
+    # String literals
+    if line =~ /^"(.+)"$/
+      text = $1
+      result << 0xFD
+      result += text.bytes
+      next
+    end
+
+    # RCL register
+    if line =~ /^RCL\s+(\d+)$/i
+      reg = $1.to_i
+      result += [0xA7, reg]
+      next
+    end
+
+    # STO register
+    if line =~ /^STO\s+(\d+)$/i
+      reg = $1.to_i
+      result += [0xB2, reg]
+      next
+    end
+
+    # Single digit literals (0-9)
+    if line =~ /^(\d)$/
+      digit = $1.to_i
+      result += [0xF1, 0x30 + digit]
+      next
+    end
+
+    # Hex digits (10-15 as A-F)
+    if line =~ /^(1[0-5])$/
+      val = $1.to_i
+      result += [0xF1, 0x41 + (val - 10)]
+      next
+    end
+
+    # Known commands
+    cmd_upper = line.upcase
+    if commands[cmd_upper]
+      result += commands[cmd_upper]
+      next
+    end
+
+    # Unknown command - add as comment in output
+    puts "Warning: Cannot encode command: #{line}"
+  end
+
+  # Add end marker
+  result += [0xC0, 0x02, 0x2F]
+
+  result.pack("C*")
+end
+
+# vim:ft=ruby:

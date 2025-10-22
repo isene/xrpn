@@ -1,0 +1,56 @@
+class XRPN
+# Export current XRPN program to HP-41 RAW format
+# Usage: "output.raw" then RAWEXPORT
+# Converts XRPN text format to RAW bytecode
+  def rawexport
+    filename = @a
+    if filename.empty?
+      puts "Error: No filename in Alpha register"
+      puts "Usage: Put RAW filename in Alpha, then run RAWEXPORT"
+      return
+    end
+
+    # Check if program exists
+    if @prg[@pg].nil? || @prg[@pg].empty?
+      puts "Error: No program loaded on page #{@pg}"
+      puts "Load a program first with 'loadp' or create one"
+      return
+    end
+
+    begin
+      puts "=" * 60
+      puts "Exporting to HP-41 RAW: #{filename}"
+      puts "Source: Page #{@pg} (#{@prg[@pg].length} instructions)"
+      puts "=" * 60
+
+      # Get label name from first LBL command if exists
+      label_name = "PROG"
+      first_line = @prg[@pg].first
+      if first_line =~ /^LBL\s+"(.+)"$/i
+        label_name = $1
+      end
+
+      # Encode XRPN program to RAW bytecode
+      raw_data = raw_encode(@prg[@pg], label_name)
+
+      # Write to file
+      File.binwrite(filename, raw_data)
+
+      puts "Exported #{raw_data.length} bytes"
+      puts "Label: #{label_name}"
+      puts
+      puts "Program exported:"
+      @prg[@pg].first(5).each { |line| puts "  #{line}" }
+      puts "  ..." if @prg[@pg].length > 5
+      puts
+      puts "File written: #{filename}"
+      puts "=" * 60
+
+    rescue => e
+      puts "Error exporting RAW file: #{e.message}"
+      puts e.backtrace.first(3)
+    end
+  end
+end
+
+# vim:ft=ruby:
