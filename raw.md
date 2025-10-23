@@ -49,39 +49,47 @@ From HP Museum forum thread 24229:
 
 ### Basic Format
 
+RAW files contain a sequence of bytecode instructions. Labels (if present) can appear at any step:
+
 ```
-[HEADER] [LABEL_NAME] [PADDING] [BYTECODE...] [END_MARKER]
+[BYTECODE...] [LABEL_MARKER] [LABEL_NAME] [BYTECODE...] [END_MARKER]
 ```
 
-### Header Formats
+**Important:** Labels are NOT headers or required entry points. A program can:
+- Have NO labels at all
+- Have labels at ANY program step (not just line 001)
+- Have MULTIPLE labels throughout the program
+- Start with any instruction (not necessarily a label)
 
-#### Global Label (Program Entry Point)
+### Label Marker Formats
+
+#### Global Label Marker
 ```
 C0 00 Fx 00 LABELNAME
 ```
 
 Where `Fx` determines label type:
-- `F4` = Alpha label (can contain letters)
-- `F5` = Numeric label (numeric labels 00-99)
-- `F6` = Local label (within program)
+- `F4` = Alpha label (can contain letters) - can appear anywhere in program
+- `F5` = Numeric label (numeric labels 00-99) - can appear anywhere in program
+- `F6` = Local label (within program) - can appear anywhere in program
 - `F7` = Alpha label variant
 - `F8` = Alpha label variant
 - `F9` = Alpha label variant
 
 **Examples from actual files:**
 ```
-C0 00 F5 00 4C 4F 41 44        # LBL "LOAD" (numeric)
-C0 00 F7 00 48 45 58 44 45 43  # LBL "HEXDEC" (alpha)
-C0 00 F8 00 43 4C 4E 44 52 46 4E  # LBL "CLNDRFN" (alpha)
-C6 00 F7 00 44 45 4D 46 36 37  # Variant header (C6 instead of C0)
+C0 00 F5 00 4C 4F 41 44        # LBL "LOAD" (numeric label)
+C0 00 F7 00 48 45 58 44 45 43  # LBL "HEXDEC" (alpha label)
+C0 00 F8 00 43 4C 4E 44 52 46 4E  # LBL "CLNDRFN" (alpha label)
+C6 00 F7 00 44 45 4D 46 36 37  # Variant marker (C6 instead of C0)
 ```
 
-#### Local Label (Subroutine)
+#### Local Label Marker
 ```
 F6 00 LABELNAME
 ```
 
-Used for internal subroutines within a program.
+Can appear at any step within a program for local subroutines or jump targets.
 
 **Example:**
 ```
@@ -624,7 +632,7 @@ hexdump -C program.raw
 ```
 
 Look for:
-1. Header bytes (C0 00 Fx 00)
+1. Label marker bytes (C0 00 Fx 00)
 2. ASCII label names
 3. Known opcodes (81-85, A7, B2, etc.)
 4. String prefixes (F3, F5, F8, FD, FB, 7F 20)
@@ -649,7 +657,7 @@ Look for:
 ## Decoding Strategy
 
 ### Phase 1: Structure Recognition (DONE)
-- ✓ Identify headers (C0 00 Fx)
+- ✓ Identify label markers (C0 00 Fx)
 - ✓ Extract label names
 - ✓ Find end markers
 - ✓ Recognize string formats
@@ -754,7 +762,7 @@ F5 TEXT 9A 73  # Display text string
 
 **RAW Decoder** (`xlib/raw_decoder`)
 - Decodes RAW bytecode to XRPN text format
-- Handles all header formats (C0, C6 variants)
+- Handles all label marker formats (C0, C6 variants)
 - Extracts global and local labels
 - Decodes 30+ opcodes (arithmetic, stack, registers, display)
 - Processes string literals (6 formats)
@@ -763,7 +771,7 @@ F5 TEXT 9A 73  # Display text string
 
 **RAW Encoder** (`xlib/raw_encoder`)
 - Encodes XRPN text to RAW bytecode
-- Generates proper headers (C0 00 F7 00)
+- Generates proper label markers (C0 00 F7 00)
 - Encodes arithmetic operations
 - Handles register operations (RCL/STO)
 - Supports single-digit literals
@@ -965,12 +973,12 @@ opcodes >= 0x80.
 ```
 Offset  Hex                           Meaning
 ------  ---                           -------
-00-03:  C0 00 F5 00                  Global label header (numeric)
+00-03:  C0 00 F5 00                  Global label marker (numeric)
 04-07:  4C 4F 41 44                  "LOAD" (label name)
 08-09:  A7 82                        RCL 130 (recall register 130)
 0A:     85                           END (end of instruction)
 0B-0C:  C8 01                        Section marker
-0D-0E:  F6 00                        Local label header
+0D-0E:  F6 00                        Local label marker
 0F-14:  53 54 4F 52 45 20            "STORE " (local label)
 15:     69                           Operation code (unknown)
 16-17:  A7 88                        RCL 136 (recall register 136)
@@ -982,7 +990,7 @@ Offset  Hex                           Meaning
 ```
 Offset  Hex                           Meaning
 ------  ---                           -------
-00-03:  C6 00 F7 00                  Global label header (variant)
+00-03:  C6 00 F7 00                  Global label marker (variant)
 04-09:  44 45 4D 46 36 37            "DEMF67" (label name)
 0A-0B:  02 84                        Operation sequence
 0C:     85                           END
@@ -1046,10 +1054,10 @@ Offset  Hex                           Meaning
 - A7-AA = RCL variants
 - B2-BB = STO variants
 
-### C0-DF: Headers/Control
-- C0 = Program header
+### C0-DF: Label Markers/Control
+- C0 = Label marker (can appear at any program step)
 - C2 = End marker variant
-- C6 = Header variant
+- C6 = Label marker variant
 - C8 = End marker variant
 - CA = End marker variant
 - CF = Control flow prefix
