@@ -6,8 +6,8 @@ This document captures reverse-engineered knowledge about the HP-41 RAW file for
 
 **Status: PRODUCTION READY - 100% decode rate achieved!**
 
-**Last Updated:** 2025-10-22
-**XRPN Version:** 2.6+
+**Last Updated:** 2025-10-30
+**XRPN Version:** 2.7
 
 ### Quick Summary
 - **165+ opcodes implemented** (all core HP-41 operations)
@@ -20,6 +20,12 @@ This document captures reverse-engineered knowledge about the HP-41 RAW file for
 ## What is RAW Format?
 
 RAW format represents "the sequence of bytes stored in HP-41C memory" as originally output by the HP 82160A HP-IL module's WRTP function. It's a direct memory dump of HP-41 program bytecode.
+
+**Important Distinction (brouhaha):**
+- **WRTP** (HP-IL): Pure RAW format - just the memory bytes
+- **OUTP** (Extended I/O): NOT pure RAW - adds length prefix and checksum as ASCII hex pairs
+
+XRPN handles the pure WRTP RAW format (the true "untouched raw" format).
 
 ## Documentation Sources
 
@@ -40,10 +46,18 @@ RAW format represents "the sequence of bytes stored in HP-41C memory" as origina
    - V41 emulator includes extensive RAW file collection
 
 ### Community Wisdom
-From HP Museum forum thread 24229:
+From HP Museum forum thread 24229 (brouhaha and community):
 - No official HP specification survives
+- RAW is "just the sequence of bytes stored in HP-41C memory"
 - Format reverse-engineered by community over decades
 - Best documentation in PPC Journal and synthetic programming guides
+
+**Key Clarifications (brouhaha):**
+- Alpha labels can appear anywhere in programs (not just line 001)
+- Programs can have zero, one, or multiple labels at any steps
+- Fn byte in labels encodes LENGTH (n = alpha chars + 1)
+- Local labels (F6 00) have entirely different structure than alpha labels
+- Alpha strings can contain any characters (not limited to keyboard entry)
 
 ## File Structure
 
@@ -68,13 +82,17 @@ RAW files contain a sequence of bytecode instructions. Labels (if present) can a
 C0 00 Fx 00 LABELNAME
 ```
 
-Where `Fx` determines label type:
-- `F4` = Alpha label (can contain letters) - can appear anywhere in program
-- `F5` = Numeric label (numeric labels 00-99) - can appear anywhere in program
-- `F6` = Local label (within program) - can appear anywhere in program
-- `F7` = Alpha label variant
-- `F8` = Alpha label variant
-- `F9` = Alpha label variant
+Where `Fx` encodes label LENGTH (critical detail from brouhaha):
+- `F4` = 4 characters follow (e.g., "TEST")
+- `F5` = 5 characters follow (e.g., "ALPHA")
+- `F6` = 6 characters follow (e.g., "HEXDEC")
+- `F7` = 7 characters follow (e.g., "PROGRAM")
+- `F8` = 8 characters follow
+- `F9` = 9 characters follow
+
+**Length Encoding:** The 'n' in Fn = number of alpha characters + 1 (for key assignment byte)
+
+**Note:** F6 is also used for local labels (different context, see below)
 
 **Examples from actual files:**
 ```
@@ -95,6 +113,11 @@ Can appear at any step within a program for local subroutines or jump targets.
 ```
 F6 00 53 54 4F 52 45  # Local label "STORE"
 ```
+
+**Important Distinction (brouhaha):**
+- When F6 appears as `C0 00 F6 00`: Alpha label with 6 characters
+- When F6 appears as `F6 00`: Local label marker (different structure)
+- Context determines interpretation - same byte, different meanings
 
 ### Label Names
 
