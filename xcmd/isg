@@ -18,7 +18,7 @@ class XRPN
     b, e, i = x2bei(c)
 	i2 = i
 	i2 = 1 if i2 == 0
-    b -= i2
+    b += i2
     @pc += 1 if b > e
     c = bei2x(b, e, i)
     case r.downcase
