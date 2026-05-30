@@ -120,7 +120,14 @@ See `raw.md` for complete technical documentation.
 
 ## Changelog
 
-### Version 2.7 (Latest)
+### Version 2.8 (Latest)
+**ISG / control-number fixes**
+
+- **ISG now increments** — `ISG` ("Increment, Skip if Greater") was decrementing the counter (DSE's behaviour), so count-up loops ran backwards. It now increments and skips the next step when the counter exceeds the end value.
+- **Robust control-number decode** — the `ccc.fffii` decode (`x2bei`) now scales by 100000 and rounds once, so binary-float dust no longer mis-reads controls like `1.003` (previously decoded with end=2 instead of 3).
+- The same corrected semantics ship in the nomad mobile XRPN calculator.
+
+### Version 2.7
 **HP-41 RAW Import/Export - 100% Success!**
 
 - **Complete HP-41 RAW import/export** - RAWIMPORT and RAWEXPORT commands with 100% decode rate on real HP-41 programs

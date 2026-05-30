@@ -1,7 +1,12 @@
 def x2bei (x)
-  b = x.to_i
-  e = (1000 * (x - b)).to_i
-  i = (((1000 * x) - (1000 * x).to_i) * 100).round()
+  # Decode a control number ccc.fffii. Scale by 100000 and round ONCE so
+  # binary-float dust does not bite: e.g. 1.003 must decode to e=3, not e=2
+  # ((1.003 - 1) = 0.0029999..., and (1000 * that).to_i would give 2).
+  b     = x.to_i
+  total = (x.abs * 100000).round
+  rem   = total - b.abs * 100000   # fffii as a <=5-digit integer
+  e     = rem / 100
+  i     = rem % 100
   i = 1 if i == 0
   return b, e, i
 end
